@@ -14,6 +14,12 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {
   vertical-align: baseline;
 }
 
+svg{
+position: absolute;
+  top: 0%;
+  right: 0%;
+}
+
 article, aside, dialog, figure, footer, header, hgroup, nav, section {
   display:block;
 }
