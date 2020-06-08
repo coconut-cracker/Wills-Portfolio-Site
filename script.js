@@ -33,6 +33,7 @@ let pointsArr = [
 ] 
  // ----------------------------------------
 
+ // ADD if() STATEMENT
  let path = document.getElementById("path");
  let transform = path.getAttribute("transform"); 
  let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g)
@@ -99,9 +100,9 @@ function render() {
     const ANCHOR_STIFFNESS = 1;
     const ANCHOR_DAMP = 0.7;
     const MOUSE_FORCE = 2; 
-    const MOUSE_RADIUS = 125;
+    const MOUSE_RADIUS = 140;
   
-    const SIMULATION_RATE = 50;
+    const SIMULATION_RATE = 30;
   
     const XOFF = 1.5;
     const YOFF = 1.5;
@@ -113,7 +114,7 @@ function render() {
     
   
   
-    const POINTS = newPoints.map(function(xy) { 
+    const POINTS = pointsArr.map(function(xy) { 
       if (RANDOM_OFFSET) {
         xy[0] += Math.random()-0.5;
         xy[1] += Math.random()-0.5;
@@ -127,7 +128,7 @@ function render() {
     Vec2.prototype.translate = function(x, y) { return this.set(this.x + x, this.y + y); };
     Vec2.prototype.scale = function(v) { return this.set(this.x * v, this.y * v); };
     Vec2.prototype.distance = function(o) {
-      let dx = this.x - o.x *1, dy = this.y - o.y /1;
+      let dx = this.x - o.x *3, dy = this.y - o.y /1000; //*3, /1000
       return Math.sqrt(dx * dx + dy * dy);
     };
   
