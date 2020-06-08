@@ -21,13 +21,16 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {
 body {
   line-height: 1.5;
   background: white;
+  overflow: hidden;
 }
 
-/* #screen {
+#screen {
   position: relative;
-} */
+  min-height: 100vh;
+  min-width: 100vw;
+}
 
-table {
+/* table {
   border-collapse: separate;
   border-spacing: 0;
 }
@@ -36,7 +39,7 @@ caption, th, td {
   text-align: left;
   font-weight: normal;
   float: none !important;
-}
+} */
 
 table, th, td {
   vertical-align: middle;
