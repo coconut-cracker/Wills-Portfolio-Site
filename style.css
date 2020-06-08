@@ -1,0 +1,153 @@
+html { margin:0; padding:0; border:0; }
+
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
+abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, dialog, figure, footer, header, hgroup, nav, section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, dialog, figure, footer, header, hgroup, nav, section {
+  display:block;
+}
+
+body {
+  line-height: 1.5;
+  background: white;
+}
+
+/* #screen {
+  position: relative;
+} */
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  float: none !important;
+}
+
+table, th, td {
+  vertical-align: middle;
+}
+
+a img { border: none; }
+html { height: 100%; }
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+body {
+  background-color: #333;
+  color: #ccc;
+  /* padding: 30px; */
+  font-family: "Helvetica Neue", "Verdana", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #999;
+}
+
+#content {
+  float: left;
+  position: relative;
+  left: 50%;
+}
+
+#wrap {
+  float: left;
+  display: inline;
+  margin: auto;
+  margin-left: -50%;
+}
+
+#main {
+  text-align: center;
+  padding: 24px;
+}
+
+.blob {
+  border-radius:8px;
+  float: left;
+  display: inline;
+  margin: 10px;
+  padding: 15px;
+  background-color: rgba(255,255,255,0.3);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+
+#fps {
+  text-align: center;
+  margin: 10px;
+  width: 150px;
+  cursor: pointer;
+}
+
+
+.option {
+  text-align: center;
+  cursor: pointer;
+  width: 150px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.option:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.option[data-active="1"] {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.option[data-active="1"]:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.option > input[type=checkbox] {
+  display: none;
+}
+
+#sidebar {
+  width: 200px;
+}
+
+a.blob {
+  width: 150px;
+  background-color: rgba(52, 93, 115, 0.8);
+  color: rgb(30, 34, 62);
+  text-align: center;
+}
+
+a.blob:hover {
+  background-color: rgba(54, 141, 148, 0.8);
+}
+
+
