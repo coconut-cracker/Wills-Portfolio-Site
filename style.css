@@ -18,6 +18,7 @@ svg{
 position: absolute;
   top: 0%;
   right: 0%;
+  display: none;
 }
 
 article, aside, dialog, figure, footer, header, hgroup, nav, section {

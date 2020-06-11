@@ -23,24 +23,22 @@ THE SOFTWARE.
 
 
 const canvas = document.getElementById("screen")
-let width = window.innerWidth;
-let height = window.innerHeight;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+let width = window.innerWidth;
+let height = window.innerHeight;
 
- // ----------------------------------------
-
- // ADD if() STATEMENT
+ // ---------- Declare + Assign coordinate variables  ----------
+ 
  let newPoints = []
  let path = document.getElementById("Path_1");
  let offsetArr = [0, 0];
  let offsetX = offsetArr[0]
  let offsetY = offsetArr[1]
-
  let findOffset = (path, offsetArr) => {
   const transform = path.getAttribute("transform");
  
-
+// if Transform, extract number values from the attribute
  if( transform ){
    let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g)
    offsetArr = [
@@ -51,26 +49,21 @@ canvas.height = window.innerHeight;
  return  offsetArr ? offsetArr : [0, 0]
 }
 
- // The first important function getTotalLength
+ // Find Total Length of the path; Set number of nodes according to window height 
  let totalLength = path.getTotalLength();
  let NODES = Math.floor(height / 15.08);
-
- console.log(height/15.08)
  
- 
-
- 
- for(let i = 0; i <= NODES; i ++){
+ // Divide path into equal segments (by no. of nodes)
+ for(let i = 0; i <= NODES -1; i ++){
    let distance = i * 1/NODES * totalLength;
    
-   // The second important function getPointAtLength
+   // Create a node at end of each segment and apply XY offsets to each coord; push each to array 
    let point = path.getPointAtLength(distance);
    newPoints.push([point.x + offsetX*0.97, point.y + offsetY*0.97])
  }
 
- console.log(newPoints)
 
- // -------------------
+ // --------- 
 
 
 window.addEventListener('load', () => {console.log(window.innerHeight);
@@ -78,6 +71,9 @@ window.addEventListener('load', () => {console.log(window.innerHeight);
   canvas.height = window.innerHeight;
   console.log(window.innerWidth) 
 })
+
+console.log(window.innerWidth) 
+
 
 //...........
 
@@ -145,8 +141,7 @@ function render(newPoints, width, height) {
     const COLOR_FILL = "#7de891";
     const COLOR_ANCHOR_DOT = "rgba(152, 65, 52, 0.5)";
   
-    const SCALE_X =  ((1536 - width)*0.7 + width)/ 1536;
-   
+    const SCALE_X =  ((1536 - width)*0.7 + width)/ 1536;   
     const SCALE_Y = height / 754;
     const DOT_RADIUS = 1;
     const ANCHOR_STIFFNESS = 1;
@@ -162,6 +157,8 @@ function render(newPoints, width, height) {
     const MAX_ACROSS_NEIGHBOR_DIST = 10;
     
     const RANDOM_OFFSET = false;
+    console.log(newPoints)
+
   
     
   
@@ -221,8 +218,9 @@ function render(newPoints, width, height) {
         }  
       }
       this.vel.scale(ANCHOR_DAMP);
-      let offx = (this.anchor.x - this.pos.x) * ANCHOR_STIFFNESS;
-      let offy = (this.anchor.y - this.pos.y) * ANCHOR_STIFFNESS;
+      let offx = this.anchor.x > 0 ? (this.anchor.x - this.pos.x) * ANCHOR_STIFFNESS : (this.anchor.x - this.pos.x) * (ANCHOR_STIFFNESS * 10);
+      let offy = this.anchor.y > 0 ? (this.anchor.y - this.pos.y) * ANCHOR_STIFFNESS : (this.anchor.y - this.pos.y) * (ANCHOR_STIFFNESS * 10);
+   
       this.vel.translate(offx, offy);
       let time = t * t * 0.5;
       let nx = this.pos.x + (this.pos.x - this.last.x) * 0.9 + this.vel.x * time;
