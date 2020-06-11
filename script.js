@@ -22,6 +22,8 @@ THE SOFTWARE.
 
 
 
+
+
 const canvas = document.getElementById("screen")
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -35,7 +37,8 @@ let height = window.innerHeight;
  let offsetArr = [0, 0];
  let offsetX = offsetArr[0]
  let offsetY = offsetArr[1]
- let findOffset = (path, offsetArr) => {
+ 
+  let findOffset = (path, offsetArr) => {
   const transform = path.getAttribute("transform");
  
 // if Transform, extract number values from the attribute
@@ -44,10 +47,10 @@ let height = window.innerHeight;
    offsetArr = [
      parseInt(transXY[0]),
      parseInt(transXY[1])
-   ]
+   ];
  } 
  return  offsetArr ? offsetArr : [0, 0]
-}
+};
 
  // Find Total Length of the path; Set number of nodes according to window height 
  let totalLength = path.getTotalLength();
@@ -59,7 +62,12 @@ let height = window.innerHeight;
    
    // Create a node at end of each segment and apply XY offsets to each coord; push each to array 
    let point = path.getPointAtLength(distance);
-   newPoints.push([point.x + offsetX*0.97, point.y + offsetY*0.97])
+   console.log(point.x)
+   if(point.x < 0){
+    newPoints.push([point.x + offsetX*0.97, point.y + offsetY*0.97])
+   } else {
+    newPoints.push([canvas.width*0.5, point.y + offsetY*0.97])
+   }
  }
 
 
@@ -77,16 +85,6 @@ console.log(window.innerWidth)
 
 //...........
 
-
-
-
-
-
-
-
-
-
-
 window.addEventListener("resize", function() {
   width = window.innerWidth;
   height = window.innerHeight;
@@ -95,56 +93,27 @@ window.addEventListener("resize", function() {
   render(newPoints, width, height);
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
 // let pointsArr = [
 //   [-100, -100], [280, -100], [280, 50], 
 //   [280, 150],  [280, 250],[280, 350],  [280, 450],  [280, 550],  [280, 650], [280, 750], [280, 850], [280, 950],  [-100, 950] // final [0, 0] is implicit
 // ] 
-
- 
- 
- 
- 
-
-
-
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
-
+// ---------- RENDER BLOB ----------
 
 render(newPoints, width, height);
 
 function render(newPoints, width, height) {
-
-  // ------------------------------------------------
-
- 
-
-
- 
-// ----------------------------------------------------------------------
 
     "use strict";
   
     const COLOR_FILL = "#7de891";
     const COLOR_ANCHOR_DOT = "rgba(152, 65, 52, 0.5)";
   
-    const SCALE_X =  ((1536 - width)*0.7 + width)/ 1536;   
+    const SCALE_X =  width/ 1536;   
     const SCALE_Y = height / 754;
     const DOT_RADIUS = 1;
-    const ANCHOR_STIFFNESS = 1;
+    const ANCHOR_STIFFNESS = 1.5;
     const ANCHOR_DAMP = 0.7;
     const MOUSE_FORCE = 2; 
     const MOUSE_RADIUS = 140*SCALE_X;
