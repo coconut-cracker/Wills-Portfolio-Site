@@ -22,44 +22,101 @@ THE SOFTWARE.
 
 
 
-
-
-
 const canvas = document.getElementById("screen")
+let width = window.innerWidth;
+let height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-let pointsArr = [
-  [-100, -100], [280, -100], [280, 50], 
-  [280, 150],  [280, 250],[280, 350],  [280, 450],  [280, 550],  [280, 650], [280, 750], [280, 850], [280, 950],  [-100, 950] // final [0, 0] is implicit
-] 
  // ----------------------------------------
 
  // ADD if() STATEMENT
- let path = document.getElementById("path");
- let transform = path.getAttribute("transform"); 
- let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g)
+ let newPoints = []
+ let path = document.getElementById("Path_1");
+ let offsetArr = [0, 0];
+ let offsetX = offsetArr[0]
+ let offsetY = offsetArr[1]
+
+ let findOffset = (path, offsetArr) => {
+  const transform = path.getAttribute("transform");
  
- let offsetX = parseInt(transXY[0])
- let offsetY = parseInt(transXY[1])
- 
- console.log( offsetX, offsetY)
- 
+
+ if( transform ){
+   let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g)
+   offsetArr = [
+     parseInt(transXY[0]),
+     parseInt(transXY[1])
+   ]
+ } 
+ return  offsetArr ? offsetArr : [0, 0]
+}
+
  // The first important function getTotalLength
  let totalLength = path.getTotalLength();
- let intersections = 20;
+ let NODES = Math.floor(height / 15.08);
+
+ console.log(height/15.08)
  
- console.log(totalLength)
  
- let newPoints = []
+
  
- for(let i = 0; i <= intersections; i ++){
-   let distance = i * 1/intersections * totalLength;
+ for(let i = 0; i <= NODES; i ++){
+   let distance = i * 1/NODES * totalLength;
    
    // The second important function getPointAtLength
    let point = path.getPointAtLength(distance);
    newPoints.push([point.x + offsetX*0.97, point.y + offsetY*0.97])
  }
- 
+
  console.log(newPoints)
+
+ // -------------------
+
+
+window.addEventListener('load', () => {console.log(window.innerHeight);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  console.log(window.innerWidth) 
+})
+
+//...........
+
+
+
+
+
+
+
+
+
+
+
+window.addEventListener("resize", function() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  render(newPoints, width, height);
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// let pointsArr = [
+//   [-100, -100], [280, -100], [280, 50], 
+//   [280, 150],  [280, 250],[280, 350],  [280, 450],  [280, 550],  [280, 650], [280, 750], [280, 850], [280, 950],  [-100, 950] // final [0, 0] is implicit
+// ] 
+
+ 
  
  
  
@@ -68,19 +125,12 @@ let pointsArr = [
 
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-function resize(pointsArr) {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  render(pointsArr);
-}
 
 
 
+render(newPoints, width, height);
 
-
-
-window.addEventListener('resize', resize, false); resize();
-function render() {
+function render(newPoints, width, height) {
 
   // ------------------------------------------------
 
@@ -95,12 +145,14 @@ function render() {
     const COLOR_FILL = "#7de891";
     const COLOR_ANCHOR_DOT = "rgba(152, 65, 52, 0.5)";
   
-    const SCALE = 1;
+    const SCALE_X =  ((1536 - width)*0.7 + width)/ 1536;
+   
+    const SCALE_Y = height / 754;
     const DOT_RADIUS = 1;
     const ANCHOR_STIFFNESS = 1;
     const ANCHOR_DAMP = 0.7;
     const MOUSE_FORCE = 2; 
-    const MOUSE_RADIUS = 140;
+    const MOUSE_RADIUS = 140*SCALE_X;
   
     const SIMULATION_RATE = 30;
   
@@ -114,12 +166,12 @@ function render() {
     
   
   
-    const POINTS = pointsArr.map(function(xy) { 
+    const POINTS = newPoints.map(function(xy) { 
       if (RANDOM_OFFSET) {
         xy[0] += Math.random()-0.5;
         xy[1] += Math.random()-0.5;
       }
-      return [(xy[0] + XOFF) * SCALE, (xy[1] + YOFF) * SCALE];
+      return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
     });
   
     function Vec2(x, y) { this.x = x; this.y = y; }
@@ -226,8 +278,8 @@ function render() {
     JellyIsland.prototype.wobble = function(amt) {
       for (let i = 0; i < this.points.length; ++i) {
         if (Math.random() < 0.5) continue;
-        let dx = amt * (Math.random()-0.5) * SCALE;
-        let dy = amt * (Math.random()-0.5) * SCALE;
+        let dx = amt * (Math.random()-0.5) * SCALE_X;
+        let dy = amt * (Math.random()-0.5) * SCALE_Y;
         this.points[i].pos.translate(dx, dy);
       }
     }
