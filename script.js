@@ -22,8 +22,6 @@ THE SOFTWARE.
 
 
 
-
-
 const canvas = document.getElementById("screen")
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -85,19 +83,9 @@ window.addEventListener("resize", function() {
  // ---------- Refactoring using OOP ----------
 
  // ---------- Set Blob Options Obj ----------
- let options = {
-   points: newPoints
- }
-
- console.log(newPoints)
-
-
-
-// let pointsArr = [
-//   [-100, -100], [280, -100], [280, 50], 
-//   [280, 150],  [280, 250],[280, 350],  [280, 450],  [280, 550],  [280, 650], [280, 750], [280, 850], [280, 950],  [-100, 950] // final [0, 0] is implicit
-// ] 
-// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//  let options = {
+//    points: newPoints
+//  }
 
 // ---------- RENDER BLOB ----------
 
@@ -112,7 +100,6 @@ function render(newPoints, width, height) {
   
     const SCALE_X =  width/ 1536;   
     const SCALE_Y = height / 754;
-    const DOT_RADIUS = 1;
     const ANCHOR_STIFFNESS = 1.5;
     const ANCHOR_DAMP = 0.7;
     const MOUSE_FORCE = 2; 
@@ -125,10 +112,7 @@ function render(newPoints, width, height) {
   
     const MAX_ACROSS_NEIGHBOR_DIST = 10;
     
-    const RANDOM_OFFSET = false;
-
-  
-    
+    const RANDOM_OFFSET = false;  
   
   
     const POINTS = newPoints.map(function(xy) { 
@@ -248,10 +232,8 @@ function render(newPoints, width, height) {
         let dy = amt * (Math.random()-0.5) * SCALE_Y;
         this.points[i].pos.translate(dx, dy);
       }
-    }
+    } 
     
-  
-  
     function Screen(view) {
       this.view = view;
       this.ctx = this.view.getContext('2d');
@@ -289,25 +271,17 @@ function render(newPoints, width, height) {
       this.ctx.moveTo(jellies[0].pos.x, jellies[0].pos.y);
       for (let idx = 1, jlen = jellies.length; idx < jlen; ++idx)
         this.ctx.lineTo(jellies[idx].pos.x, jellies[idx].pos.y);
-      this.ctx.closePath();
+        this.ctx.closePath();
     };
   
     Screen.prototype.drawIsland = function(island) {
       let jellies = island.points;
       let jlen = jellies.length;
-      this.ctx.fillStyle = COLOR_FILL;
-     
-        this.outlineCurvePath(jellies);
-        this.ctx.fill();
-      
-  
-     
-  
-     
+      this.ctx.fillStyle = COLOR_FILL;     
+      this.outlineCurvePath(jellies);
+      this.ctx.fill();   
     };
-  
-  
-  
+     
     function Mouse(canvas) {
       this.pos = new Vec2(0, 0);
       this.down = false;
@@ -329,8 +303,7 @@ function render(newPoints, width, height) {
         return e.preventDefault();
       };
     }
-  
-  
+    
     let animationFrame = window.requestAnimationFrame ||
                          window.webkitRequestAnimationFrame ||
                          window.mozRequestAnimationFrame ||
@@ -346,8 +319,7 @@ function render(newPoints, width, height) {
       this.screen = new Screen(this.buffer);
       this.island = new JellyIsland(points);
       this.mouse = new Mouse(this.canvas);
-      this.tick = JellyDemo.prototype.tick.bind(this);
-  
+      this.tick = JellyDemo.prototype.tick.bind(this);  
     }
   
     JellyDemo.prototype.createBuffer = function(canvas) {
@@ -391,14 +363,11 @@ function render(newPoints, width, height) {
       animationFrame(this.tick);
       this.render();
   
-      if (current-this.lastPrint > 250) {
-     
+      if (current-this.lastPrint > 250) {     
         this.lastPrint = current;
-      }
-  
+      }  
     };
-    
-  
+      
     function main() {
       let demo = new JellyDemo(document.getElementById('screen'), POINTS);
       demo.start();
