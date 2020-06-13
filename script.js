@@ -95,23 +95,25 @@ for (let i = 0; i <= NODES - 1; i++) {
 }
 
 // ----------- Updating points on resizing -----------
-window.addEventListener("resize", function () {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+// window.addEventListener("resize", function () {
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+//   width = window.innerWidth;
+//   height = window.innerHeight;
 
-  newPoints = [];
-  for (let i = 0; i <= NODES - 1; i++) {
-    let distance = ((i * 1) / NODES) * totalLength;
+//   newPoints = [];
+//   for (let i = 0; i <= NODES - 1; i++) {
+//     let distance = ((i * 1) / NODES) * totalLength;
 
-    let point = path.getPointAtLength(distance);
-    if (point.x < 0) {
-      newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
-    } else {
-      newPoints.push([point.x + canvas.width * 0.3, point.y + offsetY * 0.97]);
-    }
-  }
-  render(newPoints, width, height);
-});
+//     let point = path.getPointAtLength(distance);
+//     if (point.x < 0) {
+//       newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
+//     } else {
+//       newPoints.push([point.x + canvas.width * 0.3, point.y + offsetY * 0.97]);
+//     }
+//   }
+//   // render(newPoints, width, height);
+// });
 
 // window.addEventListener("resize", function () {});
 
@@ -487,17 +489,51 @@ function render(newPoints, width, height) {
   main();
 
   window.addEventListener("resize", function () {
-    let buffer = canvas;
-    buffer.width = window.innerWidth;
-    buffer.height = window.innerHeight;
-    let jlyD = new JellyDemo(document.getElementById("screen"), POINTS);
-    let jlyI = new JellyIsland(POINTS);
-    let scr = new Screen(buffer);
-    scr.clear();
-    jlyD.render();
-    jlyD.update();
-    jlyI.wobble();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    main();
+    console.log(animationFrame);
   });
+
+  // window.addEventListener("resize", function () {
+  //   canvas.width = window.innerWidth;
+  //   canvas.height = window.innerHeight;
+  //   width = window.innerWidth;
+  //   height = window.innerHeight;
+
+  //   newPoints = [];
+  //   for (let i = 0; i <= NODES - 1; i++) {
+  //     let distance = ((i * 1) / NODES) * totalLength;
+
+  //     let point = path.getPointAtLength(distance);
+  //     if (point.x < 0) {
+  //       newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
+  //     } else {
+  //       newPoints.push([
+  //         point.x + canvas.width * 0.3,
+  //         point.y + offsetY * 0.97,
+  //       ]);
+  //     }
+  //   }
+
+  //   let buffer = canvas;
+  //   buffer.width = window.innerWidth;
+  //   buffer.height = window.innerHeight;
+  //   let jlyD = new JellyDemo(document.getElementById("screen"), POINTS);
+  //   let jlyI = new JellyIsland(POINTS);
+  //   let scr = new Screen(buffer);
+  //   let mse = new Mouse(buffer);
+  //   scr.clear();
+  //   // mse(buffer);
+  //   jlyD.update();
+  //   jlyI.wobble();
+  //   jlyD.render();
+  //   // console.log(mse);
+
+  //   // render(newPoints, width, height);
+  // });
 }
 
 // ------------------------------------------------------------
