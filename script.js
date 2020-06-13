@@ -32,6 +32,11 @@ window.addEventListener("load", () => {
   canvas.height = window.innerHeight;
 });
 
+window.addEventListener("resize", function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
 // ---------- Declare + Assign coordinate variables  ----------
 
 let newPoints = [];
@@ -107,7 +112,7 @@ function render(newPoints, width, height, resize) {
     return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
   });
 
-  function
+  function Resize() {}
 
   function Vec2(x, y) {
     this.x = x;
@@ -380,6 +385,21 @@ function render(newPoints, width, height, resize) {
     );
   };
 
+  JellyDemo.prototype.resize = function (canvas) {
+    let buffer = canvas;
+    console.log(buffer.width);
+    // this.screen.clear();
+    // this.screen.drawIsland(this.island);
+    // this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // this.canvasCtx.drawImage(
+    //   this.buffer,
+    //   0,
+    //   0,
+    //   this.buffer.width,
+    //   this.buffer.height
+    // );
+  };
+
   JellyDemo.prototype.stop = function () {
     this.running = false;
   };
@@ -410,19 +430,20 @@ function render(newPoints, width, height, resize) {
 
   function main(r) {
     let demo = new JellyDemo(document.getElementById("screen"), POINTS);
-    if (r) {
-      demo.running = false;
-
+    console.log(r);
+    if (r === true) {
+      // console.log(canvas);
+      // demo.createBuffer(canvas);
+      // console.log(buffer);
+      demo.resize(canvas);
+    } else {
+      demo.start();
     }
-    demo.start();
   }
 
   main();
 
   window.addEventListener("resize", function () {
-    SCALE_X = window.innerWidth / 1536;
-    SCALE_Y = window.innerHeight / 754;
-
-    main(resize);
+    console.log(canvas.width);
   });
 }
