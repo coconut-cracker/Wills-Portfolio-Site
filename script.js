@@ -32,10 +32,31 @@ window.addEventListener("load", () => {
   canvas.height = window.innerHeight;
 });
 
-window.addEventListener("resize", function () {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+// // Setup a timer
+// var timeout;
+
+// // Listen for resize events
+// window.addEventListener(
+//   "resize",
+//   function (event) {
+//     // console.log("no debounce");
+
+//     // If timer is null, reset it to 66ms and run your functions.
+//     // Otherwise, wait until timer is cleared
+//     if (!timeout) {
+//       timeout = setTimeout(function () {
+//         // Reset timeout
+//         timeout = null;
+
+//         width = window.innerWidth;
+//         height = window.innerHeight;
+
+//         render(newPoints, width, height);
+//       }, 166);
+//     }
+//   },
+//   false
+// );
 
 // ---------- Declare + Assign coordinate variables  ----------
 
@@ -43,6 +64,7 @@ let newPoints = [];
 let path = document.getElementById("Path_1");
 let offsetArr = [0, 0];
 let offsetX = offsetArr[0];
+
 let offsetY = offsetArr[1];
 
 // if Transform, extract number values from the attribute
@@ -72,6 +94,27 @@ for (let i = 0; i <= NODES - 1; i++) {
   }
 }
 
+// ----------- Updating points on resizing -----------
+window.addEventListener("resize", function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  newPoints = [];
+  for (let i = 0; i <= NODES - 1; i++) {
+    let distance = ((i * 1) / NODES) * totalLength;
+
+    let point = path.getPointAtLength(distance);
+    if (point.x < 0) {
+      newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
+    } else {
+      newPoints.push([point.x + canvas.width * 0.3, point.y + offsetY * 0.97]);
+    }
+  }
+  render(newPoints, width, height);
+});
+
+// window.addEventListener("resize", function () {});
+
 // ---------- Refactoring using OOP ----------
 
 // ---------- Set Blob Options Obj ----------
@@ -83,7 +126,7 @@ for (let i = 0; i <= NODES - 1; i++) {
 
 render(newPoints, width, height);
 
-function render(newPoints, width, height, resize) {
+function render(newPoints, width, height) {
   "use strict";
 
   const COLOR_FILL = "#7de891";
@@ -111,8 +154,6 @@ function render(newPoints, width, height, resize) {
     }
     return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
   });
-
-  function Resize() {}
 
   function Vec2(x, y) {
     this.x = x;
@@ -385,20 +426,20 @@ function render(newPoints, width, height, resize) {
     );
   };
 
-  JellyDemo.prototype.resize = function (canvas) {
-    let buffer = canvas;
-    console.log(buffer.width);
-    // this.screen.clear();
-    // this.screen.drawIsland(this.island);
-    // this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // this.canvasCtx.drawImage(
-    //   this.buffer,
-    //   0,
-    //   0,
-    //   this.buffer.width,
-    //   this.buffer.height
-    // );
-  };
+  // JellyDemo.prototype.resizeBlob = function (canvas) {
+  //   let buffer = canvas;
+  //   console.log(buffer.width);
+  //   this.screen.clear();
+  //   this.screen.drawIsland(this.island);
+  //   this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  //   this.canvasCtx.drawImage(
+  //     this.buffer,
+  //     0,
+  //     0,
+  //     this.buffer.width,
+  //     this.buffer.height
+  //   );
+  // };
 
   JellyDemo.prototype.stop = function () {
     this.running = false;
@@ -414,6 +455,7 @@ function render(newPoints, width, height, resize) {
 
   JellyDemo.prototype.tick = function () {
     if (!this.running) return;
+
     let current = new Date().getTime();
     let needed = (SIMULATION_RATE / 1000) * (current - this.lastTick);
     while (needed-- >= 0) {
@@ -430,20 +472,32 @@ function render(newPoints, width, height, resize) {
 
   function main(r) {
     let demo = new JellyDemo(document.getElementById("screen"), POINTS);
-    console.log(r);
+    // console.log(r);
     if (r === true) {
       // console.log(canvas);
       // demo.createBuffer(canvas);
       // console.log(buffer);
-      demo.resize(canvas);
+      // demo.resize(canvas);
     } else {
       demo.start();
     }
   }
 
+  // console.log(JellyDemo);
   main();
 
   window.addEventListener("resize", function () {
-    console.log(canvas.width);
+    let buffer = canvas;
+    buffer.width = window.innerWidth;
+    buffer.height = window.innerHeight;
+    let jlyD = new JellyDemo(document.getElementById("screen"), POINTS);
+    let jlyI = new JellyIsland(POINTS);
+    let scr = new Screen(buffer);
+    scr.clear();
+    jlyD.render();
+    jlyD.update();
+    jlyI.wobble();
   });
 }
+
+// ------------------------------------------------------------
