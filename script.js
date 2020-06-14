@@ -1,4 +1,6 @@
 /*
+Will's Note: The interactive animations herein have been inspired by the work by Thom Chiovoloni, as seen in this codepen: codepen.io/thomcc/pen/gzbjF
+
 Copyright (c) 2014 Thom Chiovoloni (web: thomcc.io, github: github.com/thomcc)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,21 +25,50 @@ THE SOFTWARE.
 const canvas = document.getElementById("screen");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-let width = window.innerWidth;
-let height = window.innerHeight;
+let width = canvas.width;
+let height = canvas.height;
+let newPoints;
+const SCALE_X = width / 1536;
+const SCALE_Y = height / 754;
+
+let setScale = (width, height) => {};
+
+// --------- Load canvas size ---------
+window.addEventListener("load", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  width = window.innerWidth;
+  height = window.innerHeight;
+});
+
+console.log("scale X:", SCALE_X, "scale y:", SCALE_Y);
+
+// ---------- Refactoring using OOP ----------
+// ---------- Set Blob Options Obj ----------
+
+const options = {
+  COLOR_FILL: "#7de891",
+  SCALE_X,
+  SCALE_Y,
+  ANCHOR_STIFFNESS: 1.5,
+  ANCHOR_DAMP: 0.7,
+  MOUSE_FORCE: 4,
+  MOUSE_RADIUS: 150 * SCALE_X, // Multiplied by scale for different resolution screens
+  SIMULATION_RATE: 15,
+  XOFF: 1.5,
+  YOFF: 1.5,
+  MAX_ACROSS_NEIGHBOR_DIST: 10,
+  RANDOM_OFFSET: false,
+};
 
 // ---------- Declare + Assign coordinate variables  ----------
-
-let newPoints;
-
-// if Transform, extract number values from the attribute
+// if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 let findPoints = () => {
   newPoints = [];
   let path = document.getElementById("Path_1");
   let offsetArr = [0, 0];
   let offsetX = offsetArr[0];
   let offsetY = offsetArr[1];
-
   const transform = path.getAttribute("transform");
 
   if (transform) {
@@ -49,7 +80,7 @@ let findPoints = () => {
 
   // Find Total Length of the path; Set number of nodes according to window height
   let totalLength = path.getTotalLength();
-  let NODES = Math.floor(height / 15.08);
+  let NODES = Math.floor(30 * SCALE_Y);
 
   // Divide path into equal segments (by no. of nodes)
   for (let i = 0; i <= NODES - 1; i++) {
@@ -60,26 +91,18 @@ let findPoints = () => {
     if (point.x < 0) {
       newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
     } else {
-      newPoints.push([point.x * , point.y + offsetY * 0.97]);
+      newPoints.push([point.x * (SCALE_X * 0.75), point.y + offsetY * 0.97]);
     }
   }
-  console.log(height, NODES);
+  console.log(height, SCALE_Y, NODES);
 };
 findPoints();
 console.log(newPoints);
 
-// ---------- Refactoring using OOP ----------
-
-// ---------- Set Blob Options Obj ----------
- let options = {
-   
- }
-
-// --------- Responsive canvas size ---------
-window.addEventListener("load", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+// Is there any real benefit to destructuring the Options here and passing them in to renderBlob()?
+// + it's tidier?
+// -- it's a lot of repeated code..  values not accessble to other key properties, so have to be assigned again beforehand.
+// - it a cannot carry all variables: to include newPoints array in options, requires access to options property already. Doing so means options has no newPoints yet.
 
 // -------- Setup a timer for resize events----------
 var timeout;
@@ -96,10 +119,10 @@ window.addEventListener(
         timeout = null;
         width = window.innerWidth;
         height = window.innerHeight;
-        // canvas.width = window.innerWidth;
-        // canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         findPoints();
-        render(newPoints, width, height);
+        renderBlob(newPoints, options);
       }, 66);
     }
   },
@@ -108,28 +131,25 @@ window.addEventListener(
 
 // ---------- RENDER BLOB ----------
 
-render(newPoints, width, height);
+renderBlob(newPoints, options);
 
-function render(newPoints, width, height) {
+function renderBlob(newPoints, opts) {
   "use strict";
 
-  const COLOR_FILL = "#7de891";
-
-  const SCALE_X = width / 1536;
-  const SCALE_Y = height / 754;
-  const ANCHOR_STIFFNESS = 1.5;
-  const ANCHOR_DAMP = 0.7;
-  const MOUSE_FORCE = 4;
-  const MOUSE_RADIUS = 150 * SCALE_X; // Multiplied by scale for different resolution screens
-
-  const SIMULATION_RATE = 15;
-
-  const XOFF = 1.5;
-  const YOFF = 1.5;
-
-  const MAX_ACROSS_NEIGHBOR_DIST = 10;
-
-  const RANDOM_OFFSET = false;
+  const {
+    COLOR_FILL,
+    SCALE_X,
+    SCALE_Y,
+    ANCHOR_STIFFNESS,
+    ANCHOR_DAMP,
+    MOUSE_FORCE,
+    MOUSE_RADIUS,
+    SIMULATION_RATE,
+    XOFF,
+    YOFF,
+    MAX_ACROSS_NEIGHBOR_DIST,
+    RANDOM_OFFSET,
+  } = opts;
 
   const POINTS = newPoints.map(function (xy) {
     if (RANDOM_OFFSET) {
@@ -338,7 +358,6 @@ function render(newPoints, width, height) {
 
   Screen.prototype.drawIsland = function (island) {
     let jellies = island.points;
-    let jlen = jellies.length;
     this.ctx.fillStyle = COLOR_FILL;
     this.outlineCurvePath(jellies);
     this.ctx.fill();
