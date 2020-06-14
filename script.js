@@ -60,7 +60,7 @@ let findPoints = () => {
     if (point.x < 0) {
       newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
     } else {
-      newPoints.push([point.x, point.y + offsetY * 0.97]);
+      newPoints.push([point.x * , point.y + offsetY * 0.97]);
     }
   }
   console.log(height, NODES);
@@ -71,24 +71,15 @@ console.log(newPoints);
 // ---------- Refactoring using OOP ----------
 
 // ---------- Set Blob Options Obj ----------
-//  let options = {
-//    points: newPoints
-//  }
+ let options = {
+   
+ }
 
 // --------- Responsive canvas size ---------
 window.addEventListener("load", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
-
-// window.addEventListener("resize", function () {
-//   width = window.innerWidth;
-//   height = window.innerHeight;
-//   // canvas.width = window.innerWidth;
-//   // canvas.height = window.innerHeight;
-//   findPoints();
-//   render(newPoints, width, height);
-// });
 
 // -------- Setup a timer for resize events----------
 var timeout;
@@ -123,16 +114,15 @@ function render(newPoints, width, height) {
   "use strict";
 
   const COLOR_FILL = "#7de891";
-  const COLOR_ANCHOR_DOT = "rgba(152, 65, 52, 0.5)";
 
   const SCALE_X = width / 1536;
   const SCALE_Y = height / 754;
   const ANCHOR_STIFFNESS = 1.5;
   const ANCHOR_DAMP = 0.7;
-  const MOUSE_FORCE = 2;
-  const MOUSE_RADIUS = 200 * SCALE_X;
+  const MOUSE_FORCE = 4;
+  const MOUSE_RADIUS = 150 * SCALE_X; // Multiplied by scale for different resolution screens
 
-  const SIMULATION_RATE = 25;
+  const SIMULATION_RATE = 15;
 
   const XOFF = 1.5;
   const YOFF = 1.5;
