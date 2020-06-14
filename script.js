@@ -28,10 +28,13 @@ canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
 let newPoints;
-const SCALE_X = width / 1536;
-const SCALE_Y = height / 754;
+let SCALE_X = width / 1536;
+let SCALE_Y = height / 754;
 
-let setScale = (width, height) => {};
+let setScale = (width, height) => {
+  SCALE_X = width / 1536;
+  SCALE_Y = height / 754;
+};
 
 // --------- Load canvas size ---------
 window.addEventListener("load", () => {
@@ -80,11 +83,11 @@ let findPoints = () => {
 
   // Find Total Length of the path; Set number of nodes according to window height
   let totalLength = path.getTotalLength();
-  let NODES = Math.floor(30 * SCALE_Y);
+  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height
 
   // Divide path into equal segments (by no. of nodes)
-  for (let i = 0; i <= NODES - 1; i++) {
-    let distance = ((i * 1) / NODES) * totalLength;
+  for (let i = 0; i <= nodes - 1; i++) {
+    let distance = ((i * 1) / nodes) * totalLength;
 
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let point = path.getPointAtLength(distance);
@@ -94,7 +97,7 @@ let findPoints = () => {
       newPoints.push([point.x * (SCALE_X * 0.75), point.y + offsetY * 0.97]);
     }
   }
-  console.log(height, SCALE_Y, NODES);
+  console.log(height, SCALE_Y, nodes);
 };
 findPoints();
 console.log(newPoints);
@@ -111,8 +114,7 @@ var timeout;
 window.addEventListener(
   "resize",
   function (event) {
-    // console.log("no debounce");
-    // If timer is null, reset it to 66ms and run your functions.
+    // If timer is null, reset it to 66ms and run functions.
     // Otherwise, wait until timer is cleared
     if (!timeout) {
       timeout = setTimeout(function () {
@@ -121,6 +123,7 @@ window.addEventListener(
         height = window.innerHeight;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        setScale(width, height);
         findPoints();
         renderBlob(newPoints, options);
       }, 66);
@@ -151,6 +154,7 @@ function renderBlob(newPoints, opts) {
     RANDOM_OFFSET,
   } = opts;
 
+  // Apply a random offset to coordinates, depending on preset & dynamic scale
   const POINTS = newPoints.map(function (xy) {
     if (RANDOM_OFFSET) {
       xy[0] += Math.random() - 0.5;
