@@ -47,8 +47,6 @@ window.addEventListener("load", () => {
   height = window.innerHeight;
 });
 
-console.log("scale X:", SCALE_X, "scale y:", SCALE_Y);
-
 // ---------- Refactoring using OOP ----------
 // ---------- Set Blob Options ----------
 
@@ -94,11 +92,10 @@ function findPoints() {
     let point = path.getPointAtLength(distance);
     svgPoints = [...svgPoints, [point.x, point.y]];
   }
-  console.log(typeof svgPoints);
 
   // FOR A SIDEBAR ----- map through array to find max y coord (to ensure it's higher than window.innerHeight)
   const maxValueOfY = Math.max(...svgPoints.map((o) => o[1]), 0);
-  console.log(maxValueOfY);
+
   // Apply a random offset to coordinates, depending on preset & dynamic scale
   const POINTS = svgPoints.map(function (xy) {
     if (RANDOM_OFFSET) {
@@ -111,9 +108,6 @@ function findPoints() {
     if (maxValueOfY < height) {
       xy[1] = xy[1] * 1.5;
     }
-    console.log(SCALE_X, SCALE_Y);
-    console.log(maxValueOfY);
-    console.log(window.innerHeight);
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
 
@@ -130,7 +124,7 @@ console.log(svgPoints);
 // - it a cannot carry all variables: to include svgPoints array in options, requires access to options property already. Doing so means options has no svgPoints yet.
 
 // -------- Setup a timer for resize events----------
-var timeout;
+let timeout;
 
 function resizeListener() {
   // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
@@ -166,27 +160,10 @@ function renderBlob(points, opts) {
     MOUSE_FORCE,
     MOUSE_RADIUS,
     SIMULATION_RATE,
-    XOFF,
-    YOFF,
     MAX_ACROSS_NEIGHBOR_DIST,
-    RANDOM_OFFSET,
   } = opts;
 
   const POINTS = points;
-
-  // // Apply a random offset to coordinates, depending on preset & dynamic scale
-  // const POINTS = svgPoints.map(function (xy) {
-  //   if (RANDOM_OFFSET) {
-  //     xy[0] += Math.random() - 0.5;
-  //     xy[1] += Math.random() - 0.5;
-  //   }
-  //   if (SCALE_X > 2) {
-  //     return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
-  //   }
-  //   console.log(SCALE_X, SCALE_Y);
-  //   console.log(window.innerHeight);
-  //   return [xy[0] + XOFF, xy[1] + YOFF ];
-  // });
 
   function Vec2(x, y) {
     this.x = x;
