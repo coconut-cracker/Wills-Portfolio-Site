@@ -27,9 +27,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
-let newPoints;
+let svgPoints;
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
+let RANDOM_OFFSET = false;
+let XOFF = 1.5;
+let YOFF = 1.5;
 
 let setScale = (width, height) => {
   SCALE_X = width / 1536;
@@ -58,33 +61,30 @@ const options = {
   MOUSE_FORCE: 4,
   MOUSE_RADIUS: 150 * SCALE_X, // Multiplied by scale for different resolution screens
   SIMULATION_RATE: 15,
-  XOFF: 1.5,
-  YOFF: 1.5,
   MAX_ACROSS_NEIGHBOR_DIST: 10,
-  RANDOM_OFFSET: false,
 };
 
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 
-let findPoints = () => {
-  newPoints = [];
+function findPoints() {
+  svgPoints = [];
   let path = document.getElementById("Path_1");
-  let offsetArr = [0, 0];
-  let offsetX = offsetArr[0];
-  let offsetY = offsetArr[1];
+  let transArr = [0, 0];
+  let transX = transArr[0];
+  let transY = transArr[1];
   const transform = path.getAttribute("transform");
 
   if (transform) {
     let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
-    offsetArr = [parseInt(transXY[0]), parseInt(transXY[1])];
+    transArr = [parseInt(transXY[0]), parseInt(transXY[1])];
   } else {
-    offsetArr = [0, 0];
+    transArr = [0, 0];
   }
 
   // Find Total Length of the path; Set number of nodes according to window height
   let totalLength = path.getTotalLength();
-  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height
+  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
 
   // Divide path into equal segments (by no. of nodes)
   for (let i = 0; i <= nodes - 1; i++) {
@@ -92,22 +92,42 @@ let findPoints = () => {
 
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let point = path.getPointAtLength(distance);
-    if (point.x < 0) {
-      newPoints.push([point.x + offsetX * 0.97, point.y + offsetY * 0.97]);
-    } else {
-      newPoints.push([point.x * (SCALE_X * 0.75), point.y + offsetY * 0.97]);
-    }
+    svgPoints = [...svgPoints, [point.x, point.y]];
   }
-  console.log(height, SCALE_Y, nodes);
-};
+  console.log(typeof svgPoints);
 
-findPoints();
-console.log(newPoints);
+  // FOR A SIDEBAR ----- map through array to find max y coord (to ensure it's higher than window.innerHeight)
+  const maxValueOfY = Math.max(...svgPoints.map((o) => o[1]), 0);
+  console.log(maxValueOfY);
+  // Apply a random offset to coordinates, depending on preset & dynamic scale
+  const POINTS = svgPoints.map(function (xy) {
+    if (RANDOM_OFFSET) {
+      xy[0] += Math.random() - 0.5;
+      xy[1] += Math.random() - 0.5;
+    }
+    if (xy[0] < 0) {
+      xy[0] -= 200;
+    }
+    if (maxValueOfY < height) {
+      xy[1] = xy[1] * 1.5;
+    }
+    console.log(SCALE_X, SCALE_Y);
+    console.log(maxValueOfY);
+    console.log(window.innerHeight);
+    return [xy[0] + XOFF, xy[1] + YOFF];
+  });
+
+  console.log(height, SCALE_X, POINTS);
+  renderBlob(POINTS, options);
+}
+
+window.addEventListener("load", findPoints);
+console.log(svgPoints);
 
 // Is there any real benefit to destructuring the Options here and passing them in to renderBlob()?
 // + it's tidier?
 // -- it's a lot of repeated code..  values not accessble to other key properties, so have to be assigned again beforehand.
-// - it a cannot carry all variables: to include newPoints array in options, requires access to options property already. Doing so means options has no newPoints yet.
+// - it a cannot carry all variables: to include svgPoints array in options, requires access to options property already. Doing so means options has no svgPoints yet.
 
 // -------- Setup a timer for resize events----------
 var timeout;
@@ -123,7 +143,6 @@ function resizeListener() {
       canvas.height = window.innerHeight;
       setScale(width, height);
       findPoints();
-      renderBlob(newPoints, options);
     }, 66);
   }
 }
@@ -133,9 +152,9 @@ window.addEventListener("resize", resizeListener, false);
 
 // ---------- RENDER BLOB ----------
 
-renderBlob(newPoints, options);
+// findPoints();
 
-function renderBlob(newPoints, opts) {
+function renderBlob(points, opts) {
   "use strict";
 
   const {
@@ -153,14 +172,21 @@ function renderBlob(newPoints, opts) {
     RANDOM_OFFSET,
   } = opts;
 
-  // Apply a random offset to coordinates, depending on preset & dynamic scale
-  const POINTS = newPoints.map(function (xy) {
-    if (RANDOM_OFFSET) {
-      xy[0] += Math.random() - 0.5;
-      xy[1] += Math.random() - 0.5;
-    }
-    return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
-  });
+  const POINTS = points;
+
+  // // Apply a random offset to coordinates, depending on preset & dynamic scale
+  // const POINTS = svgPoints.map(function (xy) {
+  //   if (RANDOM_OFFSET) {
+  //     xy[0] += Math.random() - 0.5;
+  //     xy[1] += Math.random() - 0.5;
+  //   }
+  //   if (SCALE_X > 2) {
+  //     return [(xy[0] + XOFF) * SCALE_X, (xy[1] + YOFF) * SCALE_Y];
+  //   }
+  //   console.log(SCALE_X, SCALE_Y);
+  //   console.log(window.innerHeight);
+  //   return [xy[0] + XOFF, xy[1] + YOFF ];
+  // });
 
   function Vec2(x, y) {
     this.x = x;
@@ -266,6 +292,8 @@ function renderBlob(newPoints, opts) {
     for (let i = 0, ptslen = pts.length; i < ptslen; i++) {
       this.points.push(new JellyPoint(pts[i][0], pts[i][1]));
     }
+    console.log(pts);
+
     // fixme: finding across neighbors makes this O(n^2)
     for (let i = 0, len = this.points.length; i < len; i++) {
       let jp = this.points[i];
@@ -299,6 +327,7 @@ function renderBlob(newPoints, opts) {
       if (Math.random() < 0.5) continue;
       let dx = amt * (Math.random() - 0.5) * SCALE_X;
       let dy = amt * (Math.random() - 0.5) * SCALE_Y;
+
       this.points[i].pos.translate(dx, dy);
     }
   };
