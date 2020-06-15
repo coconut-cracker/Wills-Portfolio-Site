@@ -47,7 +47,7 @@ window.addEventListener("load", () => {
 console.log("scale X:", SCALE_X, "scale y:", SCALE_Y);
 
 // ---------- Refactoring using OOP ----------
-// ---------- Set Blob Options Obj ----------
+// ---------- Set Blob Options ----------
 
 const options = {
   COLOR_FILL: "#7de891",
@@ -66,6 +66,7 @@ const options = {
 
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
+
 let findPoints = () => {
   newPoints = [];
   let path = document.getElementById("Path_1");
@@ -99,6 +100,7 @@ let findPoints = () => {
   }
   console.log(height, SCALE_Y, nodes);
 };
+
 findPoints();
 console.log(newPoints);
 
@@ -110,27 +112,24 @@ console.log(newPoints);
 // -------- Setup a timer for resize events----------
 var timeout;
 
+function resizeListener() {
+  // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
+  if (!timeout) {
+    timeout = setTimeout(function () {
+      timeout = null;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      setScale(width, height);
+      findPoints();
+      renderBlob(newPoints, options);
+    }, 66);
+  }
+}
+
 // Listen for resize events
-window.addEventListener(
-  "resize",
-  function (event) {
-    // If timer is null, reset it to 66ms and run functions.
-    // Otherwise, wait until timer is cleared
-    if (!timeout) {
-      timeout = setTimeout(function () {
-        timeout = null;
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        setScale(width, height);
-        findPoints();
-        renderBlob(newPoints, options);
-      }, 66);
-    }
-  },
-  false
-);
+window.addEventListener("resize", resizeListener, false);
 
 // ---------- RENDER BLOB ----------
 
