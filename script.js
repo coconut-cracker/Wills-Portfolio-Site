@@ -27,7 +27,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
-// let svgPoints;
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
@@ -39,12 +38,35 @@ let setScale = (width, height) => {
   SCALE_Y = height / 754;
 };
 
+// -------- Setup a timer for resize events----------
+let timeout;
+
+function resizeListener() {
+  // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
+  if (!timeout) {
+    timeout = setTimeout(function () {
+      timeout = null;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      setScale(width, height);
+      initialize(options);
+    }, 66);
+  }
+}
+
+// Listen for resize events
+window.addEventListener("resize", resizeListener, false);
+
 // --------- Load canvas size ---------
 window.addEventListener("load", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   width = window.innerWidth;
   height = window.innerHeight;
+  setScale(width, height);
+  console.log("window.innerWidth:", width, "window.innerHeight:", height);
   initialize(options);
 });
 
@@ -86,8 +108,6 @@ function findPoints(options) {
 
 findPoints.prototype.nodes = function () {
   let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
-  console.log(nodes, this.options.SCALE_X);
-
   return nodes;
 };
 
@@ -107,7 +127,7 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp) {
     let dist = ((i * 1) / n) * tl;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let p = path.getPointAtLength(dist);
-    svgp = [...svgp, [p.x * this.options.SCALE_X, p.y]];
+    svgp = [...svgp, [p.x * SCALE_X, p.y]];
   }
   this.points(svgp);
 };
@@ -127,34 +147,12 @@ findPoints.prototype.points = function (initialPoints) {
     }
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
-  renderBlob(pointsArr, this.options);
+  renderBlob(pointsArr, options);
 };
 
 function initialize(opts) {
-  let start = new findPoints(opts);
+  new findPoints(opts);
 }
-
-// -------- Setup a timer for resize events----------
-let timeout;
-
-function resizeListener() {
-  // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
-  if (!timeout) {
-    timeout = setTimeout(function () {
-      timeout = null;
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      setScale(width, height);
-      console.log(width, height, SCALE_X);
-      initialize(options);
-    }, 66);
-  }
-}
-
-// Listen for resize events
-window.addEventListener("resize", resizeListener, false);
 
 // ------------------- RENDER BLOB --------------------
 
