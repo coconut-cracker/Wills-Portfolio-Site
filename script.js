@@ -45,6 +45,7 @@ window.addEventListener("load", () => {
   canvas.height = window.innerHeight;
   width = window.innerWidth;
   height = window.innerHeight;
+  initialize(options);
 });
 
 // ---------- Refactoring using OOP ----------
@@ -65,7 +66,8 @@ const options = {
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 
-function findPoints() {
+function findPoints(options) {
+  this.options = options;
   this.svgPoints = [];
   this.path = document.getElementById("Path_1");
   this.transProp = this.path.getAttribute("transform");
@@ -74,9 +76,15 @@ function findPoints() {
   this.transY = this.transArr[1];
   this.totalLength = this.path.getTotalLength();
   this.n = this.nodes();
-  this.getPoints(this.n, this.totalLength, this.path, this.svgPoints);
-  this.pointsArr = this.points(this.svgPoints);
+  this.pointsArr = this.getPoints(
+    this.n,
+    this.totalLength,
+    this.path,
+    this.svgPoints
+  );
+  // this.pointsArr = this.points(this.svgPoints);
 }
+
 // svgPoints = [];
 // let path = document.getElementById("Path_1");
 // let transArr = [0, 0];
@@ -108,16 +116,17 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp) {
   for (let i = 0; i <= n - 1; i++) {
     let dist = ((i * 1) / n) * tl;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
-    let point = path.getPointAtLength(dist);
-    console.log(svgp);
+    let p = path.getPointAtLength(dist);
+    svgp = [...svgp, [p.x, p.y]];
   }
+  this.points(svgp);
 };
 
-findPoints.prototype.set = function (p, svgp) {
-  console.log(svgp);
-  let svgPoints = [...svgp, [p.x, p.y]];
-  return svgPoints;
-};
+// findPoints.prototype.set = function (p, svgp) {
+//   console.log(svgp);
+//   let svgPoints = [...svgp, [p.x, p.y]];
+//   return svgPoints;
+// };
 
 findPoints.prototype.points = function (initialPoints) {
   const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
@@ -134,8 +143,9 @@ findPoints.prototype.points = function (initialPoints) {
     }
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
+  renderBlob(pointsArr, this.options);
 
-  return pointsArr;
+  // return pointsArr;
 };
 // Find Total Length of the path; Set number of nodes according to window height
 // let totalLength = path.getTotalLength();
@@ -167,8 +177,11 @@ findPoints.prototype.points = function (initialPoints) {
 // renderBlob(findPoints., options);
 
 // window.addEventListener("load", findPoints);
-let start = new findPoints();
-console.log(start);
+function initialize(opts) {
+  let start = new findPoints(opts);
+  // start;
+}
+// console.log(start);
 
 // Is there any real benefit to destructuring the Options here and passing them in to renderBlob()?
 // + it's tidier?
@@ -188,13 +201,14 @@ function resizeListener() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       setScale(width, height);
-      findPoints();
+      console.log(width, height, SCALE_X);
+      initialize(options);
     }, 66);
   }
 }
 
 // Listen for resize events
-// window.addEventListener("resize", resizeListener, false);
+window.addEventListener("resize", resizeListener, false);
 
 // ---------- RENDER BLOB ----------
 
@@ -322,7 +336,6 @@ function renderBlob(points, opts) {
     for (let i = 0, ptslen = pts.length; i < ptslen; i++) {
       this.points.push(new JellyPoint(pts[i][0], pts[i][1]));
     }
-    console.log(pts);
 
     // fixme: finding across neighbors makes this O(n^2)
     for (let i = 0, len = this.points.length; i < len; i++) {
