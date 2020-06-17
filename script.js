@@ -27,7 +27,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
-// let svgPoints;
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
@@ -46,12 +45,35 @@ let setScale = (width, height) => {
   SCALE_Y = height / 754;
 };
 
+// -------- Setup a timer for resize events----------
+let timeout;
+
+function resizeListener() {
+  // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
+  if (!timeout) {
+    timeout = setTimeout(function () {
+      timeout = null;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      setScale(width, height);
+      initialize(options);
+    }, 66);
+  }
+}
+
+// Listen for resize events
+window.addEventListener("resize", resizeListener, false);
+
 // --------- Load canvas size ---------
 window.addEventListener("load", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   width = window.innerWidth;
   height = window.innerHeight;
+  setScale(width, height);
+  console.log("window.innerWidth:", width, "window.innerHeight:", height);
   initialize(options);
 });
 
@@ -62,7 +84,7 @@ const options = {
   COLOR_FILL: "#7de891",
   SCALE_X,
   SCALE_Y,
-  ANCHOR_STIFFNESS: 1.5,
+  ANCHOR_STIFFNESS: 1,
   ANCHOR_DAMP: 0.7,
   MOUSE_FORCE: 4,
   MOUSE_RADIUS: 150 * SCALE_X, // Multiplied by scale for different resolution screens
@@ -89,24 +111,12 @@ function findPoints(options) {
     this.path,
     this.svgPoints
   );
-  // this.pointsArr = this.points(this.svgPoints);
 }
 
-// svgPoints = [];
-// let path = document.getElementById("Path_1");
-// let transArr = [0, 0];
-// let transX = transArr[0];
-// let transY = transArr[1];
-
 findPoints.prototype.nodes = function () {
-  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = 8 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
-
-// findPoints.prototype.pathLength = function (path) {
-//   let totalLength = path.getTotalLength();
-//   return totalLength
-// }
 
 findPoints.prototype.transform = function (tr) {
   if (tr) {
@@ -124,16 +134,10 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp) {
     let dist = ((i * 1) / n) * tl;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let p = path.getPointAtLength(dist);
-    svgp = [...svgp, [p.x, p.y]];
+    svgp = [...svgp, [p.x * SCALE_X, p.y]];
   }
   this.points(svgp);
 };
-
-// findPoints.prototype.set = function (p, svgp) {
-//   console.log(svgp);
-//   let svgPoints = [...svgp, [p.x, p.y]];
-//   return svgPoints;
-// };
 
 findPoints.prototype.points = function (initialPoints) {
   const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
@@ -150,76 +154,14 @@ findPoints.prototype.points = function (initialPoints) {
     }
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
-  renderBlob(pointsArr, this.options);
-
-  // return pointsArr;
+  renderBlob(pointsArr, options);
 };
-// Find Total Length of the path; Set number of nodes according to window height
-// let totalLength = path.getTotalLength();
-// let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
 
-// Divide path into equal segments (by no. of nodes)
-
-// FOR A SIDEBAR ----- map through array to find max y coord (to ensure it's higher than window.innerHeight)
-// const maxValueOfY = Math.max(...svgPoints.map((o) => o[1]), 0);
-
-// Apply a random offset to coordinates, depending on preset & dynamic scale
-// const POINTS = svgPoints.map(function (xy) {
-//   if (RANDOM_OFFSET) {
-//     xy[0] += Math.random() - 0.5;
-//     xy[1] += Math.random() - 0.5;
-//   }
-//   if (xy[0] < 0) {
-//     xy[0] -= 200;
-//   }
-//   if (maxValueOfY < height) {
-//     xy[1] = xy[1] * 1.5;
-//   }
-//   return [xy[0] + XOFF, xy[1] + YOFF];
-// });
-
-// console.log(height, SCALE_X, POINTS);
-// renderBlob(POINTS, options);
-
-// renderBlob(findPoints., options);
-
-// window.addEventListener("load", findPoints);
 function initialize(opts) {
-  let start = new findPoints(opts);
-  // start;
-}
-// console.log(start);
-
-// Is there any real benefit to destructuring the Options here and passing them in to renderBlob()?
-// + it's tidier?
-// -- it's a lot of repeated code..  values not accessble to other key properties, so have to be assigned again beforehand.
-// - it a cannot carry all variables: to include svgPoints array in options, requires access to options property already. Doing so means options has no svgPoints yet.
-
-// -------- Setup a timer for resize events----------
-let timeout;
-
-function resizeListener() {
-  // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
-  if (!timeout) {
-    timeout = setTimeout(function () {
-      timeout = null;
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      setScale(width, height);
-      console.log(width, height, SCALE_X);
-      initialize(options);
-    }, 66);
-  }
+  new findPoints(opts);
 }
 
-// Listen for resize events
-window.addEventListener("resize", resizeListener, false);
-
-// ---------- RENDER BLOB ----------
-
-// findPoints();
+// ------------------- RENDER BLOB --------------------
 
 function renderBlob(points, opts) {
   "use strict";
