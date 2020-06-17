@@ -34,6 +34,13 @@ let RANDOM_OFFSET = false;
 let XOFF = 1.5;
 let YOFF = 1.5;
 
+console.log({
+  canvasH: canvas.height,
+  canvasW: canvas.width,
+  width,
+  height,
+});
+
 let setScale = (width, height) => {
   SCALE_X = width / 1536;
   SCALE_Y = height / 754;
