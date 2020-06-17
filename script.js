@@ -121,7 +121,7 @@ findPoints.prototype.nodes = function () {
 findPoints.prototype.transform = function (tr) {
   if (tr) {
     let transXY = tr.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
-    let transArr = [parseInt(transXY[0]), parseInt(transXY[1])];
+    let transArr = [transXY[0], transXY[1]];
     return transArr;
   } else {
     let transArr = [0, 0];
