@@ -74,8 +74,8 @@ function findPoints() {
   this.transY = this.transArr[1];
   this.totalLength = this.path.getTotalLength();
   this.n = this.nodes();
-  this.getPoints(this.n, this.totalLength, this.path);
-  this.pointsArr = this.points(svgPoints);
+  this.getPoints(this.n, this.totalLength, this.path, this.svgPoints);
+  this.pointsArr = this.points(this.svgPoints);
 }
 // svgPoints = [];
 // let path = document.getElementById("Path_1");
