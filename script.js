@@ -27,7 +27,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
-let svgPoints;
+// let svgPoints;
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
@@ -52,6 +52,7 @@ window.addEventListener("load", () => {
   canvas.height = window.innerHeight;
   width = window.innerWidth;
   height = window.innerHeight;
+  initialize(options);
 });
 
 // ---------- Refactoring using OOP ----------
@@ -72,39 +73,71 @@ const options = {
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 
-function findPoints() {
-  svgPoints = [];
-  let path = document.getElementById("Path_1");
-  let transArr = [0, 0];
-  let transX = transArr[0];
-  let transY = transArr[1];
-  const transform = path.getAttribute("transform");
+function findPoints(options) {
+  this.options = options;
+  this.svgPoints = [];
+  this.path = document.getElementById("Path_1");
+  this.transProp = this.path.getAttribute("transform");
+  this.transArr = this.transform(this.transProp);
+  this.transX = this.transArr[0];
+  this.transY = this.transArr[1];
+  this.totalLength = this.path.getTotalLength();
+  this.n = this.nodes();
+  this.pointsArr = this.getPoints(
+    this.n,
+    this.totalLength,
+    this.path,
+    this.svgPoints
+  );
+  // this.pointsArr = this.points(this.svgPoints);
+}
 
-  if (transform) {
-    let transXY = transform.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
-    transArr = [parseInt(transXY[0]), parseInt(transXY[1])];
-  } else {
-    transArr = [0, 0];
-  }
+// svgPoints = [];
+// let path = document.getElementById("Path_1");
+// let transArr = [0, 0];
+// let transX = transArr[0];
+// let transY = transArr[1];
 
-  // Find Total Length of the path; Set number of nodes according to window height
-  let totalLength = path.getTotalLength();
+findPoints.prototype.nodes = function () {
   let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  return nodes;
+};
 
-  // Divide path into equal segments (by no. of nodes)
-  for (let i = 0; i <= nodes - 1; i++) {
-    let distance = ((i * 1) / nodes) * totalLength;
+// findPoints.prototype.pathLength = function (path) {
+//   let totalLength = path.getTotalLength();
+//   return totalLength
+// }
 
-    // Create a node at end of each segment and apply XY offsets to each coord; push each to array
-    let point = path.getPointAtLength(distance);
-    svgPoints = [...svgPoints, [point.x, point.y]];
+findPoints.prototype.transform = function (tr) {
+  if (tr) {
+    let transXY = tr.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
+    let transArr = [parseInt(transXY[0]), parseInt(transXY[1])];
+    return transArr;
+  } else {
+    let transArr = [0, 0];
+    return transArr;
   }
+};
 
-  // FOR A SIDEBAR ----- map through array to find max y coord (to ensure it's higher than window.innerHeight)
-  const maxValueOfY = Math.max(...svgPoints.map((o) => o[1]), 0);
+findPoints.prototype.getPoints = function (n, tl, path, svgp) {
+  for (let i = 0; i <= n - 1; i++) {
+    let dist = ((i * 1) / n) * tl;
+    // Create a node at end of each segment and apply XY offsets to each coord; push each to array
+    let p = path.getPointAtLength(dist);
+    svgp = [...svgp, [p.x, p.y]];
+  }
+  this.points(svgp);
+};
 
-  // Apply a random offset to coordinates, depending on preset & dynamic scale
-  const POINTS = svgPoints.map(function (xy) {
+// findPoints.prototype.set = function (p, svgp) {
+//   console.log(svgp);
+//   let svgPoints = [...svgp, [p.x, p.y]];
+//   return svgPoints;
+// };
+
+findPoints.prototype.points = function (initialPoints) {
+  const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
+  let pointsArr = initialPoints.map(function (xy) {
     if (RANDOM_OFFSET) {
       xy[0] += Math.random() - 0.5;
       xy[1] += Math.random() - 0.5;
@@ -117,13 +150,45 @@ function findPoints() {
     }
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
+  renderBlob(pointsArr, this.options);
 
-  console.log(height, SCALE_X, POINTS);
-  renderBlob(POINTS, options);
+  // return pointsArr;
+};
+// Find Total Length of the path; Set number of nodes according to window height
+// let totalLength = path.getTotalLength();
+// let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+
+// Divide path into equal segments (by no. of nodes)
+
+// FOR A SIDEBAR ----- map through array to find max y coord (to ensure it's higher than window.innerHeight)
+// const maxValueOfY = Math.max(...svgPoints.map((o) => o[1]), 0);
+
+// Apply a random offset to coordinates, depending on preset & dynamic scale
+// const POINTS = svgPoints.map(function (xy) {
+//   if (RANDOM_OFFSET) {
+//     xy[0] += Math.random() - 0.5;
+//     xy[1] += Math.random() - 0.5;
+//   }
+//   if (xy[0] < 0) {
+//     xy[0] -= 200;
+//   }
+//   if (maxValueOfY < height) {
+//     xy[1] = xy[1] * 1.5;
+//   }
+//   return [xy[0] + XOFF, xy[1] + YOFF];
+// });
+
+// console.log(height, SCALE_X, POINTS);
+// renderBlob(POINTS, options);
+
+// renderBlob(findPoints., options);
+
+// window.addEventListener("load", findPoints);
+function initialize(opts) {
+  let start = new findPoints(opts);
+  // start;
 }
-
-window.addEventListener("load", findPoints);
-console.log(svgPoints);
+// console.log(start);
 
 // Is there any real benefit to destructuring the Options here and passing them in to renderBlob()?
 // + it's tidier?
@@ -143,7 +208,8 @@ function resizeListener() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       setScale(width, height);
-      findPoints();
+      console.log(width, height, SCALE_X);
+      initialize(options);
     }, 66);
   }
 }
@@ -158,6 +224,7 @@ window.addEventListener("resize", resizeListener, false);
 function renderBlob(points, opts) {
   "use strict";
 
+  //should be this.variables ?
   const {
     COLOR_FILL,
     SCALE_X,
@@ -276,7 +343,6 @@ function renderBlob(points, opts) {
     for (let i = 0, ptslen = pts.length; i < ptslen; i++) {
       this.points.push(new JellyPoint(pts[i][0], pts[i][1]));
     }
-    console.log(pts);
 
     // fixme: finding across neighbors makes this O(n^2)
     for (let i = 0, len = this.points.length; i < len; i++) {
