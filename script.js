@@ -77,7 +77,7 @@ const options = {
   COLOR_FILL: "#7de891",
   SCALE_X,
   SCALE_Y,
-  ANCHOR_STIFFNESS: 1.5,
+  ANCHOR_STIFFNESS: 1,
   ANCHOR_DAMP: 0.7,
   MOUSE_FORCE: 4,
   MOUSE_RADIUS: 150 * SCALE_X, // Multiplied by scale for different resolution screens
@@ -107,7 +107,7 @@ function findPoints(options) {
 }
 
 findPoints.prototype.nodes = function () {
-  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = 8 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
 
