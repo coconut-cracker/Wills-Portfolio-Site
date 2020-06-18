@@ -146,15 +146,23 @@ findPoints.prototype.points = function (initialPoints) {
       xy[0] += Math.random() - 0.5;
       xy[1] += Math.random() - 0.5;
     }
-    if (xy[0] < 0) {
+    if (xy[0] < 50) {
       xy[0] -= 200;
     }
     if (maxValueOfY < height) {
       xy[1] = xy[1] * 1.5;
     }
+    if (maxValueOfY > height) {
+      console.log(maxValueOfY / height);
+      xy[1] = xy[1] / (maxValueOfY / height) + 30;
+
+      // xy[1] = xy[1] * 1.5;
+    }
+
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
   renderBlob(pointsArr, options);
+  console.log(pointsArr);
 };
 
 function initialize(opts) {
