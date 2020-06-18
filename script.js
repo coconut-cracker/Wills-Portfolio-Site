@@ -25,13 +25,14 @@ THE SOFTWARE.
 const canvas = document.getElementById("screen");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+const responsive = false;
 let width = canvas.width;
 let height = canvas.height;
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
-let XOFF = 1.5;
-let YOFF = 1.5;
+let XOFF = 0;
+let YOFF = 0;
 
 console.log({
   canvasH: canvas.height,
@@ -84,10 +85,10 @@ const options = {
   COLOR_FILL: "#7de891",
   SCALE_X,
   SCALE_Y,
-  ANCHOR_STIFFNESS: 1,
-  ANCHOR_DAMP: 0.7,
-  MOUSE_FORCE: 4,
-  MOUSE_RADIUS: 150 * SCALE_X, // Multiplied by scale for different resolution screens
+  ANCHOR_STIFFNESS: 2,
+  ANCHOR_DAMP: 0.8,
+  MOUSE_FORCE: 5,
+  MOUSE_RADIUS: 150, // Multiplied by scale for different resolution screens
   SIMULATION_RATE: 15,
   MAX_ACROSS_NEIGHBOR_DIST: 10,
 };
@@ -114,7 +115,7 @@ function findPoints(options) {
 }
 
 findPoints.prototype.nodes = function () {
-  let nodes = 8 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
 
@@ -134,7 +135,11 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp) {
     let dist = ((i * 1) / n) * tl;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let p = path.getPointAtLength(dist);
-    svgp = [...svgp, [p.x * SCALE_X, p.y]];
+    if (responsive) {
+      svgp = [...svgp, [p.x * SCALE_X, p.y]];
+    } else {
+      svgp = [...svgp, [p.x, p.y]];
+    }
   }
   this.points(svgp);
 };
@@ -242,15 +247,15 @@ function renderBlob(points, opts) {
     let dx = m.pos.x - this.pos.x;
     let dy = m.pos.y - this.pos.y;
     let dist = Math.sqrt(dx * dx + dy * dy);
-    if (!m.down) {
+    if (m.down) {
       if (dist < MOUSE_RADIUS) {
         this.vel.x += dx * MOUSE_FORCE;
         this.vel.y += dy * (MOUSE_FORCE / 10);
       }
-    } else if (m.down) {
+    } else if (!m.down) {
       if (dist < MOUSE_RADIUS) {
         this.vel.x -= dx * MOUSE_FORCE;
-        this.vel.y -= dy * (MOUSE_FORCE / 10);
+        this.vel.y -= dy * (MOUSE_FORCE / 20);
       }
     }
     this.vel.scale(ANCHOR_DAMP);
