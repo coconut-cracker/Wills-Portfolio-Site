@@ -126,9 +126,9 @@ const options = {
   ANCHOR_STIFFNESS: 2,
   ANCHOR_DAMP: 0.6,
   MOUSE_FORCE: 6,
-  MOUSE_RADIUS: 150, // Multiplied by scale for different resolution screens
+  MOUSE_RADIUS: 180, // Multiplied by scale for different resolution screens
   SIMULATION_RATE: 20,
-  MAX_ACROSS_NEIGHBOR_DIST: 30,
+  MAX_ACROSS_NEIGHBOR_DIST: 10,
 };
 
 // ---------- Declare + Assign coordinate variables  ----------

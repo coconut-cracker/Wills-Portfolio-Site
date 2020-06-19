@@ -59,11 +59,12 @@ html {
   /* position: absolute; */
   /* border: red solid 3px; */
 
-  display: flex;
-  flex-direction: column;
-  margin-left: 200px;
-  height: auto;
-  width: auto;
+  /* display: flex;
+  flex-direction: column; */
+  /* margin-left: 200px; */
+  height: 100vh;
+  width: 100vw;
+  /* border: yellow 2px solid; */
 
   justify-items: center;
   align-items: center;
@@ -77,12 +78,13 @@ a {
   /* background-color: red; */
 }
 
-.nav-item {
+.nav-list {
   position: relative;
   justify-self: center;
   align-self: center;
   text-align: right;
-  padding: 4rem 0;
+  list-style: none;
+
   /* border: yellow solid 3px; */
   font-family: var(--body-font);
   display: block;
@@ -94,15 +96,38 @@ a {
   background: none;
 }
 
-.nav-text {
-  z-index: 1;
+#item-1 {
+  position: absolute;
+  top: 10vh;
+  left: 5vw;
+}
+#item-2 {
+  position: absolute;
+  top: 10vh;
+  right: 5vw;
+}
+#item-3 {
+  position: absolute;
+  top: 90vh;
+  right: 5vw;
+  transform: translate(-50%, -50%);
+}
+#item-4 {
+  position: absolute;
+  top: 90vh;
+  left: 5vw;
+  transform: translate(0%, -50%);
 }
 
-.click-box {
+/* .nav-text {
+  z-index: 1;
+} */
+
+/* .click-box {
   position: absolute;
   border: red 2px solid;
   z-index: 3;
-}
+} */
 
 .title {
   position: absolute;
