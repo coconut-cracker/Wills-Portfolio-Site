@@ -80,8 +80,8 @@ let YOFF = 0;
 // });
 
 let setScale = (width, height) => {
-  SCALE_X = width / 1536;
-  SCALE_Y = height / 754;
+  SCALE_X = (width / 1536) * 0.8;
+  SCALE_Y = (height / 754) * 0.8;
 };
 
 // -------- Setup a timer for resize events----------
@@ -124,11 +124,11 @@ const options = {
   SCALE_X,
   SCALE_Y,
   ANCHOR_STIFFNESS: 2,
-  ANCHOR_DAMP: 0.8,
-  MOUSE_FORCE: 5,
+  ANCHOR_DAMP: 0.6,
+  MOUSE_FORCE: 6,
   MOUSE_RADIUS: 150, // Multiplied by scale for different resolution screens
-  SIMULATION_RATE: 15,
-  MAX_ACROSS_NEIGHBOR_DIST: 10,
+  SIMULATION_RATE: 20,
+  MAX_ACROSS_NEIGHBOR_DIST: 30,
 };
 
 // ---------- Declare + Assign coordinate variables  ----------
@@ -148,12 +148,14 @@ function findPoints(options) {
     this.n,
     this.totalLength,
     this.path,
-    this.svgPoints
+    this.svgPoints,
+    this.transArr
   );
+  console.log(this.transArr);
 }
 
 findPoints.prototype.nodes = function () {
-  let nodes = 10 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = 15 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
 
@@ -168,15 +170,15 @@ findPoints.prototype.transform = function (tr) {
   }
 };
 
-findPoints.prototype.getPoints = function (n, tl, path, svgp) {
+findPoints.prototype.getPoints = function (n, tl, path, svgp, ta) {
   for (let i = 0; i <= n - 1; i++) {
     let dist = ((i * 1) / n) * tl;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
     let p = path.getPointAtLength(dist);
     if (responsive) {
-      svgp = [...svgp, [p.x * SCALE_X, p.y]];
+      svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];
     } else {
-      svgp = [...svgp, [p.x, p.y]];
+      svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];
     }
   }
   this.points(svgp);
@@ -184,28 +186,51 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp) {
 
 findPoints.prototype.points = function (initialPoints) {
   const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
-  let pointsArr = initialPoints.map(function (xy) {
-    if (RANDOM_OFFSET) {
-      xy[0] += Math.random() - 0.5;
-      xy[1] += Math.random() - 0.5;
-    }
-    if (xy[0] < 50) {
-      xy[0] -= 200;
-    }
-    if (maxValueOfY < height) {
-      xy[1] = xy[1] * 1.5;
-    }
-    if (maxValueOfY > height) {
-      // console.log(maxValueOfY / height);
-      xy[1] = xy[1] / (maxValueOfY / height) + 30;
+  const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
+  const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
+  const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
 
-      // xy[1] = xy[1] * 1.5;
-    }
+  let blobHeight = maxValueOfY - minValueOfY;
+  let blobWidth = maxValueOfX - minValueOfX;
+
+  let offsetY = (height - blobHeight) / 2;
+  let offsetX = (width - blobWidth) / 2;
+  console.log(offsetY);
+  console.log(blobHeight);
+  console.log(blobWidth);
+  console.log(width);
+  console.log(minValueOfX);
+
+  let pointsArr = initialPoints.map(function (xy) {
+    xy[0] += Math.random() - 0.5 + offsetX;
+    xy[1] += Math.random() - 0.5 + offsetY;
+
+    // if (xy[0] < 50) {
+    //   xy[0] -= 200;
+    // }
+    // if (maxValueOfY < height) {
+    //   xy[1] = xy[1] * 1.5;
+    // }
+    // if (maxValueOfY > height) {
+    //   // console.log(maxValueOfY / height);
+    //   xy[1] = xy[1] / (maxValueOfY / height) + 30;
+
+    // xy[1] = xy[1] * 1.5;
+    // }
 
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
   renderBlob(pointsArr, options);
   // console.log(pointsArr);
+  // let blobHeight = maxValueOfY - minValueOfY;
+  // let blobWidth = maxValueOfX - minValueOfX;
+
+  // let offsetY = (height - blobHeight) / 2;
+  // console.log(offsetY);
+  // console.log(blobHeight);
+  // console.log(blobWidth);
+  // console.log(width);
+  // console.log(minValueOfX);
 };
 
 function initialize(opts) {
@@ -251,8 +276,8 @@ function renderBlob(points, opts) {
     return this.set(this.x * v, this.y * v);
   };
   Vec2.prototype.distance = function (o) {
-    let dx = this.x - o.x * 3,
-      dy = this.y - o.y / 1000; //*3, /1000
+    let dx = this.x - o.x * 2,
+      dy = this.y - o.y * 2; //*3, /1000
     return Math.sqrt(dx * dx + dy * dy);
   };
 
@@ -285,26 +310,26 @@ function renderBlob(points, opts) {
     let dx = m.pos.x - this.pos.x;
     let dy = m.pos.y - this.pos.y;
     let dist = Math.sqrt(dx * dx + dy * dy);
-    if (m.down) {
+    if (!m.down) {
       if (dist < MOUSE_RADIUS) {
         this.vel.x += dx * MOUSE_FORCE;
-        this.vel.y += dy * (MOUSE_FORCE / 10);
+        this.vel.y += dy * MOUSE_FORCE;
       }
-    } else if (!m.down) {
+    } else if (m.down) {
       if (dist < MOUSE_RADIUS) {
         this.vel.x -= dx * MOUSE_FORCE;
-        this.vel.y -= dy * (MOUSE_FORCE / 20);
+        this.vel.y -= dy * MOUSE_FORCE;
       }
     }
     this.vel.scale(ANCHOR_DAMP);
     let offx =
       this.anchor.x > 0
         ? (this.anchor.x - this.pos.x) * ANCHOR_STIFFNESS
-        : (this.anchor.x - this.pos.x) * (ANCHOR_STIFFNESS * 10);
+        : (this.anchor.x - this.pos.x) * ANCHOR_STIFFNESS;
     let offy =
       this.anchor.y > 0
         ? (this.anchor.y - this.pos.y) * ANCHOR_STIFFNESS
-        : (this.anchor.y - this.pos.y) * (ANCHOR_STIFFNESS * 10);
+        : (this.anchor.y - this.pos.y) * ANCHOR_STIFFNESS;
 
     this.vel.translate(offx, offy);
     let time = t * t * 0.5;

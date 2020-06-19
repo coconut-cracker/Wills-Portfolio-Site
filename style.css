@@ -36,13 +36,17 @@ html {
 #screen {
   /* border: red 3px; */
   position: absolute;
-  top: 0;
-  left: 0;
+  padding: 0;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   min-height: 100vh;
-  min-width: 1vw;
+  min-width: 100vw;
   max-height: 100vh;
   max-width: 100vw;
   z-index: 1;
+  /* background-color: #3b3b3b; */
   /* display: none; */
 }
 
@@ -102,6 +106,7 @@ a {
 
 .title {
   position: absolute;
+  background: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -115,9 +120,11 @@ a {
 
 svg {
   position: absolute;
-  top: 0%;
-  right: 0%;
-  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: red 3px solid;
+  /* display: none; */
 }
 
 .hidden {
