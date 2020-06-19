@@ -18,8 +18,19 @@
   --body-font-color: #515151;
 }
 
+body {
+  line-height: 1.5;
+  /* background: #f4f4f4; */
+  overflow: hidden;
+  background-color: #333;
+  color: #f4f4f4;
+  /* padding: 30px; */
+  font-family: "Helvetica Neue", "Verdana", sans-serif;
+}
+
 html {
   font-family: var(--body-font);
+  height: 100%;
 }
 
 #screen {
@@ -31,17 +42,18 @@ html {
   min-width: 1vw;
   max-height: 100vh;
   max-width: 100vw;
-  z-index: 2;
+  z-index: 0;
   /* display: none; */
 }
 
 #sidebar {
   position: relative;
+  z-index: 1;
 }
 
 .nav-menu {
   /* position: absolute; */
-  border: red solid 3px;
+  /* border: red solid 3px; */
 
   display: flex;
   flex-direction: column;
@@ -53,16 +65,26 @@ html {
   align-items: center;
 }
 
+a {
+  text-decoration: none;
+  color: #f4f4f4;
+  cursor: pointer;
+  z-index: 4;
+  background-color: red;
+}
+
 h1,
 .nav-item {
   justify-self: center;
   align-self: center;
   text-align: right;
   padding: 4rem 0;
-  border: yellow solid 3px;
+  /* border: yellow solid 3px; */
 
   font-family: var(--body-font);
   display: block;
+  cursor: pointer;
+  z-index: 1;
 
   font-size: 30px;
   /* z-index: 0; */
@@ -77,31 +99,9 @@ svg {
   display: none;
 }
 
-body {
-  line-height: 1.5;
-  /* background: #f4f4f4; */
-  overflow: hidden;
-  background-color: #333;
-  color: #f4f4f4;
-  /* padding: 30px; */
-  font-family: "Helvetica Neue", "Verdana", sans-serif;
-}
-
-html {
-  height: 100%;
-}
-
 .hidden {
   display: none !important;
   visibility: hidden !important;
-}
-
-body {
-}
-
-a {
-  text-decoration: none;
-  color: #999;
 }
 
 #content {

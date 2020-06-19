@@ -1,3 +1,36 @@
+let links = Array.from(document.querySelectorAll(".nav-item"));
+let navLinks = [];
+
+for (let i = 0; i < links.length; i++) {
+  Object.assign(navLinks);
+  let text = links[i].firstElementChild.innerHTML;
+  let URI = links[i].firstElementChild.pathname;
+  let obj = { text, URI };
+  navLinks.push(obj);
+  links[i].addEventListener("click", mouseOver(i));
+
+  // console.log(navLinks);
+
+  // console.log(links[i].firstElementChild.innerHTML);
+  // console.log(links[i].firstElementChild);
+  // navLinks.push([links[i]]);
+}
+
+console.log(navLinks);
+
+// for (let i = 0; i < navLinks.length; i++) {
+//   console.log(navLinks[i]);
+//   navLinks[i].addEventListener("click", mouseOver());
+// }
+
+function mouseOver(i) {
+  return function () {
+    console.log("hello", i);
+  };
+}
+
+// ------------------------------------------------------------------------------------------------------
+
 /*
 Will's Note: The interactive animations herein have been inspired by the work by Thom Chiovoloni, as seen in this codepen: codepen.io/thomcc/pen/gzbjF
 
@@ -82,7 +115,7 @@ window.addEventListener("load", () => {
 // ---------- Set Blob Options ----------
 
 const options = {
-  COLOR_FILL: "#7de891",
+  COLOR_FILL: "#3b3b3b", //"#7de891",
   SCALE_X,
   SCALE_Y,
   ANCHOR_STIFFNESS: 2,
