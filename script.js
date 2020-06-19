@@ -178,28 +178,40 @@ findPoints.prototype.getPoints = function (n, tl, path, svgp, ta) {
     if (responsive) {
       svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];
     } else {
-      svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];
+      svgp = [...svgp, [p.x, p.y]];
+      // svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];   ---- interferes with Average calc
     }
   }
   this.points(svgp);
 };
 
 findPoints.prototype.points = function (initialPoints) {
+  // find average of points (x, y)
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < initialPoints.length; i++) {
+    x += initialPoints[i][0];
+    y += initialPoints[i][1];
+    console.log("Points X", initialPoints[i][0]);
+  }
+  let meanBlobWidth = (x / initialPoints.length) * 2;
+  let meanBlobHeight = (y / initialPoints.length) * 2;
+
   const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
   const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
   const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
   const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
 
-  let blobHeight = maxValueOfY - minValueOfY;
-  let blobWidth = maxValueOfX - minValueOfX;
+  let maxBlobHeight = maxValueOfY - minValueOfY;
+  let maxBlobWidth = maxValueOfX - minValueOfX;
 
-  let offsetY = (height - blobHeight) / 2;
-  let offsetX = (width - blobWidth) / 2;
-  console.log(offsetY);
-  console.log(blobHeight);
-  console.log(blobWidth);
-  console.log(width);
-  console.log(minValueOfX);
+  // let offsetY = (height - maxBlobHeight) / 2;
+  // let offsetX = (width - maxBlobWidth) / 2;
+  let offsetY = (height - meanBlobHeight) / 2;
+  let offsetX = (width - meanBlobWidth) / 2;
+
+  console.log("ave width;", meanBlobWidth, "max width", maxBlobWidth);
+  console.log("ave Height;", meanBlobHeight, "max Height", maxBlobHeight);
 
   let pointsArr = initialPoints.map(function (xy) {
     xy[0] += Math.random() - 0.5 + offsetX;
@@ -222,13 +234,13 @@ findPoints.prototype.points = function (initialPoints) {
   });
   renderBlob(pointsArr, options);
   // console.log(pointsArr);
-  // let blobHeight = maxValueOfY - minValueOfY;
-  // let blobWidth = maxValueOfX - minValueOfX;
+  // let maxBlobHeight = maxValueOfY - minValueOfY;
+  // let maxBlobWidth = maxValueOfX - minValueOfX;
 
-  // let offsetY = (height - blobHeight) / 2;
+  // let offsetY = (height - maxBlobHeight) / 2;
   // console.log(offsetY);
-  // console.log(blobHeight);
-  // console.log(blobWidth);
+  // console.log(maxBlobHeight);
+  // console.log(maxBlobWidth);
   // console.log(width);
   // console.log(minValueOfX);
 };
