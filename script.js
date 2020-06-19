@@ -1,31 +1,33 @@
-let links = Array.from(document.querySelectorAll(".nav-item"));
+let links = Array.from(document.querySelectorAll(".nav-text"));
+let clickBoxes = Array.from(document.querySelectorAll(".click-box"));
 let navLinks = [];
+
+console.log(links);
 
 for (let i = 0; i < links.length; i++) {
   Object.assign(navLinks);
-  let text = links[i].firstElementChild.innerHTML;
-  let URI = links[i].firstElementChild.pathname;
-  let obj = { text, URI };
-  navLinks.push(obj);
-  links[i].addEventListener("click", mouseOver(i));
+  console.log(links[i].baseURI);
+  let dim = links[i].getBoundingClientRect();
+  console.log(dim);
 
-  // console.log(navLinks);
+  for (let [key, value] of Object.entries(dim)) {
+    console.log(`${key}: ${value}`);
+  }
 
-  // console.log(links[i].firstElementChild.innerHTML);
-  // console.log(links[i].firstElementChild);
-  // navLinks.push([links[i]]);
+  clickBoxes[i].style.height = `${dim.height}px`;
+  clickBoxes[i].style.height = `${dim.height}px`;
+  clickBoxes[i].style.transform = `translateY(-${dim.height}px)`;
+  // clickBoxes[i].style.zIndex = 6;
+  console.log(clickBoxes[i].style);
 }
 
-console.log(navLinks);
-
-// for (let i = 0; i < navLinks.length; i++) {
-//   console.log(navLinks[i]);
-//   navLinks[i].addEventListener("click", mouseOver());
-// }
+// console.log(navLinks);
 
 function mouseOver(i) {
   return function () {
-    console.log("hello", i);
+    console.log(navLinks[i].URI);
+    //
+    // window.location.href = navLinks[i].URI;
   };
 }
 
@@ -67,12 +69,12 @@ let RANDOM_OFFSET = false;
 let XOFF = 0;
 let YOFF = 0;
 
-console.log({
-  canvasH: canvas.height,
-  canvasW: canvas.width,
-  width,
-  height,
-});
+// console.log({
+//   canvasH: canvas.height,
+//   canvasW: canvas.width,
+//   width,
+//   height,
+// });
 
 let setScale = (width, height) => {
   SCALE_X = width / 1536;
@@ -107,7 +109,7 @@ window.addEventListener("load", () => {
   width = window.innerWidth;
   height = window.innerHeight;
   setScale(width, height);
-  console.log("window.innerWidth:", width, "window.innerHeight:", height);
+  // console.log("window.innerWidth:", width, "window.innerHeight:", height);
   initialize(options);
 });
 
@@ -191,7 +193,7 @@ findPoints.prototype.points = function (initialPoints) {
       xy[1] = xy[1] * 1.5;
     }
     if (maxValueOfY > height) {
-      console.log(maxValueOfY / height);
+      // console.log(maxValueOfY / height);
       xy[1] = xy[1] / (maxValueOfY / height) + 30;
 
       // xy[1] = xy[1] * 1.5;
@@ -200,7 +202,7 @@ findPoints.prototype.points = function (initialPoints) {
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
   renderBlob(pointsArr, options);
-  console.log(pointsArr);
+  // console.log(pointsArr);
 };
 
 function initialize(opts) {
