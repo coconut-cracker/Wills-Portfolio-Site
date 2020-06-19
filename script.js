@@ -4,9 +4,12 @@ let navLinks = [];
 
 console.log(links);
 
+// ---------- Get each menu item information from elements and use it to style click boxes and transport to relevant page/section  ----------
 for (let i = 0; i < links.length; i++) {
   Object.assign(navLinks);
   console.log(links[i].baseURI);
+
+  //extract style info
   let dim = links[i].getBoundingClientRect();
   console.log(dim);
 
@@ -15,7 +18,7 @@ for (let i = 0; i < links.length; i++) {
   }
 
   clickBoxes[i].style.height = `${dim.height}px`;
-  clickBoxes[i].style.height = `${dim.height}px`;
+  clickBoxes[i].style.width = `${dim.width}px`;
   clickBoxes[i].style.transform = `translateY(-${dim.height}px)`;
   // clickBoxes[i].style.zIndex = 6;
   console.log(clickBoxes[i].style);

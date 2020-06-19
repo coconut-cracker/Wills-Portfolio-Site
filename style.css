@@ -21,6 +21,7 @@
 body {
   line-height: 1.5;
   /* background: #f4f4f4; */
+
   overflow: hidden;
   background-color: #333;
   color: #f4f4f4;
@@ -29,7 +30,6 @@ body {
 }
 
 html {
-  font-family: var(--body-font);
   height: 100%;
 }
 
@@ -69,11 +69,10 @@ a {
   text-decoration: none;
   color: #f4f4f4;
   cursor: pointer;
-  /* z-index: 4; */
+  z-index: 4;
   /* background-color: red; */
 }
 
-h1,
 .nav-item {
   position: relative;
   justify-self: center;
@@ -81,22 +80,37 @@ h1,
   text-align: right;
   padding: 4rem 0;
   /* border: yellow solid 3px; */
-
   font-family: var(--body-font);
   display: block;
   cursor: pointer;
   z-index: 1;
-
   font-size: 30px;
   /* z-index: 0; */
   color: #f4f4f4;
   background: none;
 }
 
+.nav-text {
+  z-index: 1;
+}
+
 .click-box {
   position: absolute;
   border: red 2px solid;
-  /* z-index: 56; */
+  z-index: 3;
+}
+
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--body-font);
+  font-size: 90px;
+  font-weight: normal;
+  z-index: 10;
+  color: #fff;
+  /* border: salmon 2px solid; */
 }
 
 svg {
