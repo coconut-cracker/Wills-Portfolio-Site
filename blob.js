@@ -28,24 +28,17 @@ canvas.height = window.innerHeight;
 const responsive = false;
 let width = canvas.width;
 let height = canvas.height;
+
 let SCALE_X = width / 1536;
 let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
 let XOFF = 0;
 let YOFF = 0;
 
-// console.log({
-//   canvasH: canvas.height,
-//   canvasW: canvas.width,
-//   width,
-//   height,
-// });
-
 let setScale = (width, height) => {
   SCALE_X = (width / 1536) * 0.8;
   SCALE_Y = (height / 754) * 0.8;
 };
-
 // -------- Setup a timer for resize events----------
 let timeout;
 
@@ -74,8 +67,16 @@ window.addEventListener("load", () => {
   width = window.innerWidth;
   height = window.innerHeight;
   setScale(width, height);
-  // console.log("window.innerWidth:", width, "window.innerHeight:", height);
-  initialize(options);
+  let svgList = Array.from(document.getElementsByTagName("path"));
+  let path;
+
+  // initialize(options);
+
+  svgList.map((p) => {
+    path = p;
+    console.log("iterated path:", path);
+    new findPoints(options, path);
+  });
 });
 
 // ---------- Refactoring using OOP ----------
@@ -96,10 +97,10 @@ const options = {
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 
-function findPoints(options) {
+function findPoints(options, path) {
   this.options = options;
   this.svgPoints = [];
-  this.path = document.getElementById("Path_1");
+  this.path = path;
   this.transProp = this.path.getAttribute("transform");
   this.transArr = this.transform(this.transProp);
   this.transX = this.transArr[0];
@@ -113,7 +114,7 @@ function findPoints(options) {
     this.svgPoints,
     this.transArr
   );
-  console.log(this.transArr);
+  console.log(this.path);
 }
 
 findPoints.prototype.nodes = function () {
@@ -154,58 +155,34 @@ findPoints.prototype.points = function (initialPoints) {
   for (let i = 0; i < initialPoints.length; i++) {
     x += initialPoints[i][0];
     y += initialPoints[i][1];
-    console.log("Points X", initialPoints[i][0]);
   }
   let meanBlobWidth = (x / initialPoints.length) * 2;
   let meanBlobHeight = (y / initialPoints.length) * 2;
 
-  const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
-  const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
-  const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
-  const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
+  // const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
+  // const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
+  // const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
+  // const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
 
-  let maxBlobHeight = maxValueOfY - minValueOfY;
-  let maxBlobWidth = maxValueOfX - minValueOfX;
+  // let maxBlobHeight = maxValueOfY - minValueOfY;
+  // let maxBlobWidth = maxValueOfX - minValueOfX;
 
-  // let offsetY = (height - maxBlobHeight) / 2;
-  // let offsetX = (width - maxBlobWidth) / 2;
   let offsetY = (height - meanBlobHeight) / 2;
   let offsetX = (width - meanBlobWidth) / 2;
 
-  console.log("ave width;", meanBlobWidth, "max width", maxBlobWidth);
-  console.log("ave Height;", meanBlobHeight, "max Height", maxBlobHeight);
+  // console.log("ave width;", meanBlobWidth, "max width", maxBlobWidth);
+  // console.log("ave Height;", meanBlobHeight, "max Height", maxBlobHeight);
 
   let pointsArr = initialPoints.map(function (xy) {
     xy[0] += Math.random() - 0.5 + offsetX;
     xy[1] += Math.random() - 0.5 + offsetY;
 
-    // if (xy[0] < 50) {
-    //   xy[0] -= 200;
-    // }
-    // if (maxValueOfY < height) {
-    //   xy[1] = xy[1] * 1.5;
-    // }
-    // if (maxValueOfY > height) {
-    //   // console.log(maxValueOfY / height);
-    //   xy[1] = xy[1] / (maxValueOfY / height) + 30;
-
-    // xy[1] = xy[1] * 1.5;
-    // }
-
     return [xy[0] + XOFF, xy[1] + YOFF];
   });
   renderBlob(pointsArr, options);
-  // console.log(pointsArr);
-  // let maxBlobHeight = maxValueOfY - minValueOfY;
-  // let maxBlobWidth = maxValueOfX - minValueOfX;
-
-  // let offsetY = (height - maxBlobHeight) / 2;
-  // console.log(offsetY);
-  // console.log(maxBlobHeight);
-  // console.log(maxBlobWidth);
-  // console.log(width);
-  // console.log(minValueOfX);
 };
+
+// ------------------- INITIALISE ALL --------------------
 
 function initialize(opts) {
   new findPoints(opts);

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 
 /*Global styles*/
 *,
@@ -11,7 +12,7 @@
 
 :root {
   --main-font: "Source Sans Pro", sans-serif;
-  --secondary-font: "Herr Von Muellerhoff", cursive;
+  --secondary-font: "Quicksand", sans-serif;
   --body-font: "Pacifico", cursive;
   --main-font-color-dark: #252525;
   --secondary-font-color: #c59d5f;
@@ -23,7 +24,13 @@ body {
   /* background: #f4f4f4; */
 
   overflow: hidden;
-  background-color: #333;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    329deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(28, 28, 28, 1) 50%,
+    rgba(54, 54, 54, 1) 100%
+  );
   color: #f4f4f4;
 
   /* padding: 30px; */
@@ -67,35 +74,51 @@ nav {
   padding: 10px;
   cursor: pointer;
   z-index: 4;
-  transition: transform 0.9s ease-in-out;
+  scale: 1;
+  transition: all 0.5s ease-in;
 }
 
 .nav-text:hover {
-  transform: scale(1.2);
-  color: rgb(0, 203, 230);
+  color: #fec85f;
 }
 
 nav#nav-1 {
   position: absolute;
   top: 10vh;
   left: 5vw;
+  transition: all 0.3s ease-in;
 }
+
+nav#nav-1:hover {
+  transform: translate(-3%, -5%) rotate(-2deg);
+}
+
 nav#nav-2 {
   position: absolute;
   top: 10vh;
   right: 5vw;
+  transition: all 0.3s ease-in;
+}
+nav#nav-2:hover {
+  transform: translate(3%, -5%) rotate(2deg);
 }
 nav#nav-3 {
   position: absolute;
-  top: 90vh;
+  bottom: 10vh;
   right: 5vw;
-  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in;
+}
+nav#nav-3:hover {
+  transform: translate(3%, 5%) rotate(2deg);
 }
 nav#nav-4 {
   position: absolute;
-  top: 90vh;
+  bottom: 10vh;
   left: 5vw;
-  transform: translate(0%, -50%);
+  transition: all 0.3s ease-in;
+}
+nav#nav-4:hover {
+  transform: translate(-3%, 5%) rotate(-2deg);
 }
 
 a {
