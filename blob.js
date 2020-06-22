@@ -75,7 +75,7 @@ window.addEventListener("load", () => {
   svgList.map((p) => {
     path = p;
     console.log("iterated path:", path);
-    new findPoints(options, path);
+    new findPoints(options);
   });
 });
 
@@ -100,7 +100,7 @@ const options = {
 function findPoints(options, path) {
   this.options = options;
   this.svgPoints = [];
-  this.path = path;
+  this.path = document.getElementById("Path_1");
   this.transProp = this.path.getAttribute("transform");
   this.transArr = this.transform(this.transProp);
   this.transX = this.transArr[0];

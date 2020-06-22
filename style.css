@@ -187,3 +187,22 @@ svg {
 .option > input[type="checkbox"] {
   display: none;
 }
+
+/* --- PAGE TRANSITION ANIMATION --- */
+.first-svg {
+  opacity: 0;
+}
+.second-svg {
+  opacity: 0;
+}
+.third-svg {
+  opacity: 0;
+}
+
+#transition-SVG {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
