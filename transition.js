@@ -4,6 +4,8 @@ let btn2 = document.querySelector("nav#nav-2");
 let btn3 = document.querySelector("nav#nav-3");
 let btn4 = document.querySelector("nav#nav-4");
 
+console.log(btn3);
+
 console.log(btn2.classList.contains("act-1"));
 
 // Action 1 --- +a curtain
@@ -22,8 +24,10 @@ console.log(btn2.classList.contains("act-1"));
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Home loaded");
 
-  // Action 1: +a curtain
+  // PAGE: HOME
+
   if ((page.className = "home")) {
+    // ACTION 1: +a curtain
     btn2.addEventListener("click", () => {
       if (btn2.classList.contains("act-1")) {
         console.log("Page 1 to Page 2");
@@ -98,8 +102,245 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       }
     });
-  }
+  } // END OF ACTION 1
 
+  // ACTION 2: +a+b curtain
+  btn3.addEventListener("click", () => {
+    if (btn3.classList.contains("act-2")) {
+      console.log("Page 1 to Page 3");
+
+      page.className = "how";
+      btn1.className = "nav act-7";
+      btn2.className = "nav act-8";
+      btn3.className = "nav";
+      btn4.className = "nav act-9";
+
+      document.querySelector(".first-svg").style.display = "block";
+      document.querySelector(".second-svg").style.display = "block";
+
+      let morphing = anime
+        .timeline({})
+        .add({
+          targets: ".concealed-1, .concealed-2",
+          opacity: 0,
+        })
+        .add(
+          {
+            targets: "#screen",
+            opacity: [1, 0],
+            duration: 1000,
+            easing: "easeInQuad",
+          },
+          "-=1000"
+        )
+        .add(
+          {
+            targets: ".nav",
+            zIndex: 10,
+            opacity: [1, 0],
+            complete: () => {
+              document.querySelector("#screen").style.display = "none";
+            },
+
+            duration: 1500,
+          },
+          "-=1000"
+        )
+        .add(
+          {
+            targets: "#first",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-600, 0],
+            easing: "easeInOutSine",
+            opacity: 1,
+            duration: 3000,
+          },
+          "-=2500"
+        )
+        .add(
+          {
+            targets: ".first-svg",
+            opacity: 1,
+          },
+          "-=3000"
+        )
+        .add(
+          {
+            targets: "#second",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-700, 0],
+            easing: "easeInQuad",
+            opacity: 1,
+            duration: 3000,
+          },
+          "-=3000"
+        )
+        .add(
+          {
+            targets: ".second-svg",
+            opacity: 1,
+          },
+          "-=2800"
+        )
+        .add({
+          targets: ".nav",
+          opacity: [0, 1],
+          duration: 1500,
+        });
+    }
+  }); // END OF ACTION 2
+
+  // ACTION 3: +a+b+c curtain
+  btn4.addEventListener("click", () => {
+    if (btn4.classList.contains("act-3")) {
+      console.log("Page 1 to Page 4");
+
+      page.className = "contact";
+      btn1.className = "nav act-10";
+      btn2.className = "nav act-11";
+      btn3.className = "nav act-12";
+      btn4.className = "nav";
+
+      document.querySelector(".first-svg").style.display = "block";
+      document.querySelector(".second-svg").style.display = "block";
+      document.querySelector(".third-svg").style.display = "block";
+
+      let morphing = anime
+        .timeline({})
+        .add({
+          targets: ".concealed-1, .concealed-2",
+          opacity: 0,
+        })
+        .add(
+          {
+            targets: "#screen",
+            opacity: [1, 0],
+            duration: 1000,
+            easing: "easeInQuad",
+          },
+          "-=1000"
+        )
+        .add(
+          {
+            targets: ".nav",
+            zIndex: 10,
+            opacity: [1, 0],
+            complete: () => {
+              document.querySelector("#screen").style.display = "none";
+            },
+
+            duration: 1500,
+          },
+          "-=1000"
+        )
+        .add(
+          {
+            targets: "#first",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-600, 0],
+            easing: "easeInOutSine",
+            opacity: 1,
+            duration: 3000,
+          },
+          "-=2500"
+        )
+        .add(
+          {
+            targets: ".first-svg",
+            opacity: 1,
+          },
+          "-=3000"
+        )
+        .add(
+          {
+            targets: "#second",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-700, 0],
+            easing: "easeInQuad",
+            opacity: 1,
+            duration: 3000,
+          },
+          "-=3000"
+        )
+        .add(
+          {
+            targets: ".second-svg",
+            opacity: 1,
+          },
+          "-=2800"
+        )
+        .add(
+          {
+            targets: "#third",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-700, 0],
+            easing: "easeInQuad",
+            opacity: 1,
+            duration: 3000,
+          },
+          "-=2800"
+        )
+        .add(
+          {
+            targets: ".third-svg",
+            opacity: 1,
+          },
+          "-=2800"
+        )
+        .add({
+          targets: ".nav",
+          opacity: [0, 1],
+          duration: 1500,
+        });
+    }
+  }); // END OF ACTION 3
+
+  // PAGE: WHAT
   // ACTION 4: -a curtain
 
   if ((page.className = "what")) {
@@ -164,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .add({});
       }
     });
-  }
+  } // END OF ACTION 4
 
   // ACTION 5: +b curtain
   if ((page.className = "what")) {
