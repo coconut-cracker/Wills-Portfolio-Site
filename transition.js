@@ -369,15 +369,6 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .add(
             {
-              targets: "#screen",
-              opacity: [0, 1],
-              duration: 1500,
-              easing: "easeInQuad",
-            },
-            "-=1000"
-          )
-          .add(
-            {
               // ------ Reverse 1st SVG transition
               targets: "#first",
               d: [
@@ -398,6 +389,15 @@ document.addEventListener("DOMContentLoaded", () => {
               complete: (anim) => {
                 document.querySelector(".first-svg").style.display = "none";
               },
+            },
+            "-=1000"
+          )
+          .add(
+            {
+              targets: "#screen",
+              opacity: [0, 1],
+              duration: 1500,
+              easing: "easeInQuad",
             },
             "-=1000"
           )
@@ -586,6 +586,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btn4.className = "nav act-3";
 
         document.querySelector("#screen").style.display = "block";
+        document.querySelector(".second-svg").style.display = "block";
+        document.querySelector(".first-svg").style.display = "block";
 
         let morph0 = anime
           .timeline({})
@@ -596,15 +598,6 @@ document.addEventListener("DOMContentLoaded", () => {
             easing: "easeOutQuad",
             duration: 1000,
           })
-          .add(
-            {
-              targets: "#screen",
-              opacity: [0, 1],
-              duration: 1500,
-              easing: "easeInQuad",
-            },
-            "-=1000"
-          )
           // ------------- Reverse 2ns SVG (b)
           .add(
             {
@@ -651,6 +644,15 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=1800"
           )
+          .add(
+            {
+              targets: "#screen",
+              opacity: [0, 1],
+              duration: 1500,
+              easing: "easeInQuad",
+            },
+            "-=1000"
+          )
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -670,6 +672,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btn2.className = "nav";
         btn3.className = "nav act-5";
         btn4.className = "nav act-6";
+
+        document.querySelector(".second-svg").style.display = "block";
 
         let morph0 = anime
           .timeline({})
@@ -893,6 +897,146 @@ document.addEventListener("DOMContentLoaded", () => {
               easing: "easeInQuad",
             },
             "-=1000"
+          )
+          .add({
+            targets: ".nav",
+            opacity: [0, 1],
+            duration: 1500,
+          })
+          .add({});
+      }
+    }); // END OF ACTION 10
+
+    // ACTION 11: -b-c curtains
+    btn2.addEventListener("click", () => {
+      if (btn2.classList.contains("act-11")) {
+        console.log("Page 4 to Page 2");
+
+        page.className = "what";
+        btn1.className = "nav act-4";
+        btn2.className = "nav";
+        btn3.className = "nav act-5";
+        btn4.className = "nav act-6";
+
+        document.querySelector(".first-svg").style.display = "block";
+        document.querySelector(".second-svg").style.display = "block";
+        document.querySelector(".third-svg").style.display = "block";
+
+        let morph0 = anime
+          .timeline({})
+          .add({
+            targets: ".nav",
+            // zIndex: 10,
+            opacity: [1, 0],
+            easing: "easeOutQuad",
+            duration: 1000,
+          })
+
+          // ------------- Reverse 3rd SVG (c)
+          .add(
+            {
+              targets: "#third",
+              d: [
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+                },
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+                },
+              ],
+              translateY: [0, -600],
+              easing: "easeInOutQuad",
+              opacity: 1,
+              duration: 1800,
+            },
+            "-=1800"
+          )
+
+          // ------------- Reverse 2nd SVG (b)
+          .add(
+            {
+              targets: "#second",
+              d: [
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+                },
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+                },
+              ],
+              translateY: [0, -600],
+              easing: "easeInOutQuad",
+              opacity: 1,
+              complete: (anim) => {
+                document.querySelector(".second-svg").style.display = "none";
+                document.querySelector(".third-svg").style.display = "none";
+              },
+              duration: 1800,
+            },
+            "-=1600"
+          )
+          .add({
+            targets: ".nav",
+            opacity: [0, 1],
+            duration: 1500,
+          })
+          .add({});
+      }
+    }); // END OF ACTION 11
+
+    // ACTION 12: -c curtain
+    btn3.addEventListener("click", () => {
+      if (btn3.classList.contains("act-12")) {
+        console.log("Page 4 to Page 3");
+
+        page.className = "what";
+        btn1.className = "nav act-7";
+        btn2.className = "nav act-8";
+        btn3.className = "nav";
+        btn4.className = "nav act-9";
+
+        document.querySelector(".first-svg").style.display = "block";
+        document.querySelector(".second-svg").style.display = "block";
+        document.querySelector(".third-svg").style.display = "block";
+
+        let morph0 = anime
+          .timeline({})
+          .add({
+            targets: ".nav",
+            // zIndex: 10,
+            opacity: [1, 0],
+            easing: "easeOutQuad",
+            duration: 1000,
+          })
+
+          // ------------- Reverse 3rd SVG (c)
+          .add(
+            {
+              targets: "#third",
+              d: [
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+                },
+                {
+                  value:
+                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+                },
+              ],
+              translateY: [0, -600],
+              easing: "easeInOutQuad",
+              opacity: 1,
+              complete: (anim) => {
+                document.querySelector(".first-svg").style.display = "none";
+                document.querySelector(".third-svg").style.display = "none";
+              },
+              duration: 1800,
+            },
+            "-=1800"
           )
           .add({
             targets: ".nav",
