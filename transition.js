@@ -1045,7 +1045,7 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .add({});
       }
-    }); // END OF ACTION 12
+    }); // END OF ACTION
   }
 
   // --- End of DOMLoaded ---
