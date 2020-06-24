@@ -5,31 +5,40 @@ document.addEventListener("DOMContentLoaded", () => {
     var morphing = anime
       .timeline({})
       .add({
-        targets: ".circle, .rand_circle",
-        width: 0,
-        height: 0,
+        targets: ".concealed-1, concealed-2",
         opacity: 0,
         easing: "easeInOutQuad",
-        duration: 2000,
+        duration: 1000,
       })
-      .add(
-        {
-          targets: ".title, #btn",
-          opacity: 0,
-          easing: "easeInOutQuad",
-          duration: 2000,
-        },
-        "-=2000"
-      )
-      .add({
-        targets: "#home, #screen",
-        opacity: [1, 0],
-        duration: 1500,
-        complete: (anim) => {
-          document.querySelector("#screen").style.display = "none";
-          document.querySelector("#home").style.display = "none";
-        },
-      })
+
+      // .add(
+      //   {
+      //     targets: "#home",
+      //     opacity: 0,
+
+      //     easing: "easeInOutQuad",
+      //     duration: 2000,
+      //   },
+      //   "-=1000"
+      // )
+      // .add(
+      //   {
+      //     targets: "#screen",
+      //     opacity: [1, 0],
+      //     easing: "easeInQuad",
+      //     duration: 2000,
+      //   },
+      //   "-=1000"
+      // )
+      // .add({
+      //   targets: ".third-svg",
+      //   duration: 1500,
+      //   complete: (anim) => {
+      //     // document.querySelector("#screen").style.display = "none";
+      //     // document.querySelector("#home").style.display = "none";
+      //     // document.querySelector(".second_page").style.display = "flex";
+      //   },
+      // })
       .add(
         {
           targets: "#first",
@@ -48,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
           opacity: 1,
           duration: 3000,
         },
-        "-=2000"
+        "-=2500"
       )
       .add(
         {
@@ -73,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           translateY: [-700, 0],
           easing: "easeInQuad",
           opacity: 1,
-          duration: 3000,
+          duration: 3025,
         },
         "-=2800"
       )
@@ -100,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
           translateY: [-700, 0],
           easing: "easeInQuad",
           opacity: 1,
-          duration: 3000,
+          duration: 3050,
         },
         "-=2800"
       )
@@ -109,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
           targets: ".third-svg",
           opacity: 1,
           complete: (anim) => {
-            document.querySelector("#screen").style.zIndex = "none";
+            document.querySelector("#screen").style.display = "none";
             document.querySelector("#home").style.display = "none";
           },
         },
