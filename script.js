@@ -2,6 +2,8 @@ let links = Array.from(document.querySelectorAll(".nav-text"));
 let clickBoxes = Array.from(document.querySelectorAll(".click-box"));
 let navLinks = [];
 
+console.log(history.state);
+
 console.log(links);
 
 // ---------- Get each menu item information from elements and use it to style click boxes and transport to relevant page/section  ----------
