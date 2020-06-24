@@ -74,7 +74,7 @@ window.addEventListener("load", () => {
 
   svgList.map((p) => {
     path = p;
-    console.log("iterated path:", path);
+    // console.log("iterated path:", path);
     new findPoints(options);
   });
 });
@@ -114,7 +114,7 @@ function findPoints(options, path) {
     this.svgPoints,
     this.transArr
   );
-  console.log(this.path);
+  // console.log(this.path);
 }
 
 findPoints.prototype.nodes = function () {
