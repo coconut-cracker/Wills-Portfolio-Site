@@ -814,10 +814,9 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             targets: ".nav",
-            // zIndex: 10,
             opacity: [1, 0],
             easing: "easeOutQuad",
-            duration: 1000,
+            duration: 800,
           })
 
           // ------------- Reverse 3rd SVG (c)
@@ -838,8 +837,8 @@ document.addEventListener("DOMContentLoaded", () => {
               easing: "easeInOutQuad",
               opacity: 1,
               duration: 1800,
-            },
-            "-=1800"
+            }
+            // "-=1800"
           )
 
           // ------------- Reverse 2nd SVG (b)
