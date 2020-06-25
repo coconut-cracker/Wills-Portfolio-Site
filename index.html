@@ -7,25 +7,189 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- Main Page -->
+
+    <!-- *JS-styles Click Boxes are no longer necessary here* -->
+    <section id="home" class="home">
+      <nav id="nav-1" class="nav act-0">
+        <a href="#" class="nav-text">Who</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-2" class="nav act-1">
+        <a href="#" class="nav-text">What</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-3" class="nav act-2">
+        <a href="#" class="nav-text">How</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-4" class="nav act-3">
+        <a href="#" class="nav-text">Contact</a>
+        <div class="click-box"></div>
+      </nav>
+
+      <header class="container">
+        <div id="showcase">
+          <h3 class="center concealed-1">
+            Click to repel
+          </h3>
+          <h1 class="center title">
+            Hello World!
+          </h1>
+          <h3 class="center concealed-2">
+            View Source Code
+          </h3>
+          <div class="card first-card">
+            <div class="card-content">
+              <h3>Hello</h3>
+            </div>
+          </div>
+          <div class="card second-card">
+            <div class="card-content">
+              <h3>Hello</h3>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <!-- WHAT Section -->
+    <section id="what">
+      <div class="liquid">
+        <div class="first-svg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            preserveAspectRatio="none"
+            id="transition-svg"
+            viewBox="0 0 1920 1080"
+          >
+            <defs>
+              <linearGradient id="linear-gradient">
+                <stop offset="0" stop-color="#5400D1" />
+                <stop offset="1" stop-color="#5FFAFE" />
+              </linearGradient>
+            </defs>
+            <filter id="f4">
+              <feOffset result="offOut" in="SourceGraphic" dx="0" dy="20" />
+              <feColorMatrix
+                result="matrixOut"
+                in="offOut"
+                type="matrix"
+                values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"
+              />
+              <feGaussianBlur
+                result="blurOut"
+                in="matrixOut"
+                stdDeviation="30"
+              />
+              <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+            </filter>
+            <path
+              id="first"
+              d="M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z"
+              fill="url(#linear-gradient)"
+              filter="url(#f4)"
+            />
+          </svg>
+        </div>
+        <div class="second-svg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            preserveAspectRatio="none"
+            id="transition-svg"
+            viewBox="0 0 1920 1080"
+          >
+            <defs>
+              <linearGradient id="linear-gradient2">
+                <stop offset="0" stop-color="#00297C" />
+                <stop offset="1" stop-color="#84E3F6" />
+              </linearGradient>
+            </defs>
+            <path
+              id="second"
+              d="M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z"
+              fill="url(#linear-gradient2)"
+              filter="url(#f4)"
+            />
+          </svg>
+        </div>
+        <div class="third-svg">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            preserveAspectRatio="none"
+            id="transition-svg"
+            viewBox="0 0 1920 1080"
+          >
+            <defs>
+              <linearGradient id="linear-gradient3">
+                <stop offset="0" stop-color="#5D67E3" />
+                <stop offset="1" stop-color="#C5C3CB" />
+              </linearGradient>
+            </defs>
+            <path
+              id="third"
+              d="M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z"
+              fill="url(#linear-gradient3)"
+              filter="url(#f4)"
+            />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="second_page">
+      <nav id="nav-1" class="nav">
+        <a href="#" class="nav-text">Who</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-2" class="nav">
+        <a href="#" class="nav-text">What</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-3" class="nav">
+        <a href="#" class="nav-text">How</a>
+        <div class="click-box"></div>
+      </nav>
+      <nav id="nav-4" class="nav">
+        <a href="#" class="nav-text">Contact</a>
+        <div class="click-box"></div>
+      </nav>
+
+      <header>
+        <div class="main">
+          <h1 class="center title">
+            Second Page
+          </h1>
+        </div>
+      </header>
+    </section> -->
+
     <canvas id="screen">
       HTML5 Canvas support required.
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="556.551"
-        height="1426.045"
-        viewBox="0 0 556.551 1426.045"
+        width="1014.035"
+        height="404.644"
+        viewBox="0 0 1014.035 404.644"
       >
         <path
           id="Path_1"
-          data-name="Path 1"
-          d="M280,0V1078.806l-24.621,111.35H-275.551V-147.66L280-234.8Z"
-          transform="translate(276.051 235.388)"
-          fill="none"
-          stroke="#707070"
-          stroke-width="1"
+          data-name="Path 41"
+          d="M97.043-8.684,345.788,5.174l316.648-9.7,210.637,9.7c57.226,0,129.4,35.62,129.4,92.846L983.76,279.556c0,57.226-32.156,110.169-89.382,110.169L651.869,373.788,339.725,395.96,105.531,379.331c-57.226,0-117.1-35.62-117.1-92.846L0,103.617C0,46.391,39.817-8.684,97.043-8.684Z"
+          transform="translate(11.567 8.684)"
+          fill="#3b3b3b"
         />
       </svg>
     </canvas>
+
+    <script src="anime.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js?r=182"></script>
     <script src="script.js"></script>
+    <script src="blob.js"></script>
+    <script src="transition.js"></script>
   </body>
 </html>
