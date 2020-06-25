@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .add(
             {
-              targets: "#screen",
+              targets: "#screen, .title",
               opacity: [1, 0],
               duration: 1000,
               easing: "easeInQuad",
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .add(
           {
-            targets: "#screen",
+            targets: "#screen, .title",
             opacity: [1, 0],
             duration: 1000,
             easing: "easeInQuad",
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .add(
           {
-            targets: "#screen",
+            targets: "#screen, .title",
             opacity: [1, 0],
             duration: 1000,
             easing: "easeInQuad",
@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
           )
           .add(
             {
-              targets: "#screen",
+              targets: "#screen, .title",
               opacity: [0, 1],
               duration: 1500,
               easing: "easeInQuad",
@@ -406,7 +406,10 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: [0, 1],
             duration: 1500,
           })
-          .add({});
+          .add({
+            targets: ".concealed-1, .concealed-2",
+            opacity: 1,
+          });
       }
     }); // END OF ACTION 4
 
@@ -646,7 +649,7 @@ document.addEventListener("DOMContentLoaded", () => {
           )
           .add(
             {
-              targets: "#screen",
+              targets: "#screen, .title",
               opacity: [0, 1],
               duration: 1500,
               easing: "easeInQuad",
@@ -658,7 +661,10 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: [0, 1],
             duration: 1500,
           })
-          .add({});
+          .add({
+            targets: ".concealed-1, .concealed-2",
+            opacity: 1,
+          });
       }
     }); // END OF ACTION 7
 
@@ -890,7 +896,7 @@ document.addEventListener("DOMContentLoaded", () => {
           )
           .add(
             {
-              targets: "#screen",
+              targets: "#screen, .title",
               opacity: [0, 1],
               duration: 1500,
               easing: "easeInQuad",
@@ -902,7 +908,10 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: [0, 1],
             duration: 1500,
           })
-          .add({});
+          .add({
+            targets: ".concealed-1, .concealed-2",
+            opacity: 1,
+          });
       }
     }); // END OF ACTION 10
 
