@@ -25,6 +25,7 @@ THE SOFTWARE.
 const canvas = document.getElementById("screen");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
 const responsive = false;
 let width = canvas.width;
 let height = canvas.height;
@@ -34,6 +35,8 @@ let SCALE_Y = height / 754;
 let RANDOM_OFFSET = false;
 let XOFF = 0;
 let YOFF = 0;
+let BLOB_COLOR_1 = "#7C7C7C";
+let BLOB_COLOR_2 = "#303030";
 
 let setScale = (width, height) => {
   SCALE_X = (width / 1536) * 0.8;
@@ -159,13 +162,21 @@ findPoints.prototype.points = function (initialPoints) {
   let meanBlobWidth = (x / initialPoints.length) * 2;
   let meanBlobHeight = (y / initialPoints.length) * 2;
 
-  // const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
-  // const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
-  // const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
-  // const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
+  const maxValueOfY = Math.max(...initialPoints.map((o) => o[1]), 0);
+  const minValueOfY = Math.min(...initialPoints.map((o) => o[1]), 0);
+  const maxValueOfX = Math.max(...initialPoints.map((o) => o[0]), 0);
+  const minValueOfX = Math.min(...initialPoints.map((o) => o[0]), 0);
 
-  // let maxBlobHeight = maxValueOfY - minValueOfY;
-  // let maxBlobWidth = maxValueOfX - minValueOfX;
+  let maxBlobHeight = maxValueOfY - minValueOfY;
+  let maxBlobWidth = maxValueOfX - minValueOfX;
+
+  let ctx = canvas.getContext("2d");
+  let grd = ctx.createLinearGradient(0, 0, maxBlobWidth, maxBlobHeight);
+  grd.addColorStop(0, BLOB_COLOR_1);
+  grd.addColorStop(1, BLOB_COLOR_2);
+
+  options.COLOR_FILL = grd;
+  console.log(options.COLOR_FILL);
 
   let offsetY = (height - meanBlobHeight) / 2;
   let offsetX = (width - meanBlobWidth) / 2;
