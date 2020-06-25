@@ -184,6 +184,20 @@ a {
   /* top: 50%; */
 }
 
+.first-card {
+  background-color: #7088d6;
+  opacity: 0.7;
+  transform: translateY(-700px);
+  /* display: none; */
+}
+.second-card {
+  background-color: #45426b;
+  opacity: 0.35;
+  transform: translateY(-700px);
+
+  /* display: none; */
+}
+
 .card {
   display: flex;
   height: 450px;
@@ -194,17 +208,8 @@ a {
   padding: 30px;
   font-family: var(--body-font);
   justify-content: center;
-  /* display: none; */
-}
-
-.first-card {
-  background-color: #7088d6;
-  opacity: 0.7;
-  /* display: none; */
-}
-.second-card {
-  background-color: #45426b;
-  opacity: 0.35;
+  z-index: 9;
+  /* opacity: 0; */
   /* display: none; */
 }
 

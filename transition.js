@@ -95,6 +95,24 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3000"
           )
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=300"
+          )
+          .add(
+            {
+              targets: ".second-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -361,12 +379,30 @@ document.addEventListener("DOMContentLoaded", () => {
         let morph0 = anime
           .timeline({})
           .add({
-            targets: ".nav",
-            // zIndex: 10,
-            opacity: [1, 0],
-            easing: "easeOutQuad",
-            duration: 1000,
+            targets: ".second-card",
+            translateY: [0, -700],
+            duration: 1100,
+            // easing: "easeInOutBack",
           })
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [0, -700],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
+          .add(
+            {
+              targets: ".nav",
+              // zIndex: 10,
+              opacity: [1, 0],
+              easing: "easeOutQuad",
+              duration: 1000,
+            },
+            "-=1800"
+          )
           .add(
             {
               // ------ Reverse 1st SVG transition
