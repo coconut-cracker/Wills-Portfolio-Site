@@ -30,18 +30,25 @@ const responsive = false;
 let width = canvas.width;
 let height = canvas.height;
 
-let SCALE_X = width / 1536;
-let SCALE_Y = height / 754;
-let RANDOM_OFFSET = false;
-let XOFF = 0;
-let YOFF = 0;
-let BLOB_COLOR_1 = "#7C7C7C";
-let BLOB_COLOR_2 = "#303030";
+const DEFAULT_HEIGHT = 754;
+const DEFAULT_WIDTH = 1536;
+const SCALE_COEFFICIENT = 0.8;
+const RANDOM_OFFSET = false;
+const XOFF = 0;
+const YOFF = 0;
+const BLOB_COLOR_1 = "#7C7C7C";
+const BLOB_COLOR_2 = "#303030";
 
-let setScale = (width, height) => {
-  SCALE_X = (width / 1536) * 0.8;
-  SCALE_Y = (height / 754) * 0.8;
+const setScale = (width, height) => {
+  const SCALE_X = (width / DEFAULT_WIDTH) * SCALE_COEFFICIENT;
+  const SCALE_Y = (height / DEFAULT_HEIGHT) * SCALE_COEFFICIENT;
+  return { SCALE_X, SCALE_Y };
 };
+
+const { SCALE_X, SCALE_Y } = setScale(width, height);
+
+console.log(SCALE_Y);
+
 // -------- Setup a timer for resize events----------
 let timeout;
 
@@ -75,6 +82,7 @@ window.addEventListener("load", () => {
 
   // initialize(options);
 
+  console.log(svgList);
   svgList.map((p) => {
     path = p;
     // console.log("iterated path:", path);
@@ -89,11 +97,11 @@ const options = {
   COLOR_FILL: "#3b3b3b", //"#7de891",
   SCALE_X,
   SCALE_Y,
-  ANCHOR_STIFFNESS: 2,
-  ANCHOR_DAMP: 0.6,
-  MOUSE_FORCE: 6,
-  MOUSE_RADIUS: 180, // Multiplied by scale for different resolution screens
-  SIMULATION_RATE: 20,
+  ANCHOR_STIFFNESS: 1.8,
+  ANCHOR_DAMP: 0.7,
+  MOUSE_FORCE: 4,
+  MOUSE_RADIUS: 120, // Multiplied by scale for different resolution screens
+  SIMULATION_RATE: 15,
   MAX_ACROSS_NEIGHBOR_DIST: 10,
 };
 
@@ -121,11 +129,13 @@ function findPoints(options, path) {
 }
 
 findPoints.prototype.nodes = function () {
-  let nodes = 15 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = 25 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
 
 findPoints.prototype.transform = function (tr) {
+  // if (tr == null) return transArr [0,0]
+
   if (tr) {
     let transXY = tr.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
     let transArr = [transXY[0], transXY[1]];
