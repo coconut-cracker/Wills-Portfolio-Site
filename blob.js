@@ -29,6 +29,8 @@ canvas.height = window.innerHeight;
 const responsive = false;
 let width = canvas.width;
 let height = canvas.height;
+let timeout;
+let transformValuesArray = [0, 0];
 
 const DEFAULT_HEIGHT = 754;
 const DEFAULT_WIDTH = 1536;
@@ -50,7 +52,6 @@ const { SCALE_X, SCALE_Y } = setScale(width, height);
 console.log(SCALE_Y);
 
 // -------- Setup a timer for resize events----------
-let timeout;
 
 function resizeListener() {
   // If timer is null, reset it to 66ms and run functions. Otherwise, wait until timer is cleared
@@ -108,24 +109,22 @@ const options = {
 // ---------- Declare + Assign coordinate variables  ----------
 // if 'transform' attribute in SVG, extract number values and assign as xy offsets to be reapplied on points coords.
 
-function findPoints(options, path) {
+function findPoints(options) {
   this.options = options;
   this.svgPoints = [];
   this.path = document.getElementById("Path_1");
   this.transProp = this.path.getAttribute("transform");
-  this.transArr = this.transform(this.transProp);
-  this.transX = this.transArr[0];
-  this.transY = this.transArr[1];
+  this.transformValuesArray = this.transform(this.transProp);
+  this.transX = this.transformValuesArray[0];
+  this.transY = this.transformValuesArray[1];
   this.totalLength = this.path.getTotalLength();
-  this.n = this.nodes();
   this.pointsArr = this.getPoints(
-    this.n,
+    this.nodes(),
     this.totalLength,
     this.path,
     this.svgPoints,
-    this.transArr
+    this.transformValuesArray
   );
-  // console.log(this.path);
 }
 
 findPoints.prototype.nodes = function () {
@@ -134,28 +133,30 @@ findPoints.prototype.nodes = function () {
 };
 
 findPoints.prototype.transform = function (tr) {
-  // if (tr == null) return transArr [0,0]
-
-  if (tr) {
-    let transXY = tr.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
-    let transArr = [transXY[0], transXY[1]];
-    return transArr;
-  } else {
-    let transArr = [0, 0];
-    return transArr;
-  }
+  if (tr == null) return transformValuesArray;
+  let transXY = tr.match(/[-]{0,1}[\d]*[.]{0,1}[\d]+/g);
+  let transformValuesArray = [transXY[0], transXY[1]];
+  return transformValuesArray;
 };
 
-findPoints.prototype.getPoints = function (n, tl, path, svgp, ta) {
-  for (let i = 0; i <= n - 1; i++) {
-    let dist = ((i * 1) / n) * tl;
+findPoints.prototype.getPoints = function (
+  nodes,
+  totalLength,
+  path,
+  svgp,
+  transformArray
+) {
+  if (nodes == null || totalLength == null || path == null)
+    return console.log("There's been an error (findPoints.getPoints())");
+
+  for (let i = 0; i <= nodes - 1; i++) {
+    const dist = ((i * 1) / nodes) * totalLength;
     // Create a node at end of each segment and apply XY offsets to each coord; push each to array
-    let p = path.getPointAtLength(dist);
+    const p = path.getPointAtLength(dist);
     if (responsive) {
-      svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];
+      svgp = [...svgp, [p.x - transformArray[0], p.y - transformArray[1]]];
     } else {
       svgp = [...svgp, [p.x, p.y]];
-      // svgp = [...svgp, [p.x - ta[0], p.y - ta[1]]];   ---- interferes with Average calc
     }
   }
   this.points(svgp);

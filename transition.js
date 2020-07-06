@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3000"
           )
+          // Cards Out!
           .add(
             {
               targets: ".first-card",
@@ -264,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
             complete: () => {
               document.querySelector("#screen").style.display = "none";
             },
-
             duration: 1500,
           },
           "-=1000"
@@ -354,11 +354,33 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           "-=2800"
         )
-        .add({
-          targets: ".nav",
-          opacity: [0, 1],
-          duration: 1500,
-        });
+        // Cards Out!
+        .add(
+          {
+            targets: ".first-card",
+            translateY: [-700, 0],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          },
+          "-=300"
+        )
+        .add(
+          {
+            targets: ".second-card",
+            translateY: [-700, 0],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          },
+          "-=800"
+        )
+        .add(
+          {
+            targets: ".nav",
+            opacity: [0, 1],
+            duration: 1500,
+          },
+          "-=900"
+        );
     }
   }); // END OF ACTION 3
 
@@ -378,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#screen").style.display = "block";
         let morph0 = anime
           .timeline({})
+          // Cards Away!
           .add({
             targets: ".second-card",
             translateY: [0, -700],
@@ -465,6 +488,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morphing = anime
           .timeline({})
+          // Cards Away!
+          .add({
+            targets: ".second-card",
+            translateY: [0, -700],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          })
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [0, -700],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
           .add(
             {
               targets: ".nav",
@@ -475,8 +514,8 @@ document.addEventListener("DOMContentLoaded", () => {
               },
 
               duration: 1500,
-            }
-            // "-=1000"
+            },
+            "-=1200"
           )
           .add(
             {
@@ -504,6 +543,25 @@ document.addEventListener("DOMContentLoaded", () => {
               opacity: 1,
             },
             "-=3200"
+          )
+          // Cards Out!
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=300"
+          )
+          .add(
+            {
+              targets: ".second-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
           )
           .add({
             targets: ".nav",
