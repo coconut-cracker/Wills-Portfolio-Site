@@ -4,6 +4,27 @@ let btn2 = document.querySelector("nav#nav-2");
 let btn3 = document.querySelector("nav#nav-3");
 let btn4 = document.querySelector("nav#nav-4");
 
+function cardsOut() {
+  anime
+    .timeline({ loop: false })
+    // Cards Out!
+    .add({
+      targets: ".first-card",
+      translateY: [-700, 0],
+      duration: 1100,
+      // easing: "easeInOutBack",
+    })
+    .add(
+      {
+        targets: ".second-card",
+        translateY: [-700, 0],
+        duration: 1100,
+        // easing: "easeInOutBack",
+      },
+      "-=800"
+    );
+}
+
 console.log(btn3);
 
 console.log(btn2.classList.contains("act-1"));
@@ -95,25 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3000"
           )
-          // Cards Out!
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
+          // Show Cards
+          .add({
+            begin: () => {
+              cardsOut();
             },
-            "-=300"
-          )
-          .add(
-            {
-              targets: ".second-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
+          })
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -219,25 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           "-=2800"
         )
-        // Cards Out!
-        .add(
-          {
-            targets: ".first-card",
-            translateY: [-700, 0],
-            duration: 1100,
-            // easing: "easeInOutBack",
+        // Show Cards
+        .add({
+          begin: () => {
+            cardsOut();
           },
-          "-=100"
-        )
-        .add(
-          {
-            targets: ".second-card",
-            translateY: [-700, 0],
-            duration: 1100,
-            // easing: "easeInOutBack",
-          },
-          "-=800"
-        )
+        })
         .add({
           targets: ".nav",
           opacity: [0, 1],
@@ -373,25 +368,12 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           "-=2800"
         )
-        // Cards Out!
-        .add(
-          {
-            targets: ".first-card",
-            translateY: [-700, 0],
-            duration: 1100,
-            // easing: "easeInOutBack",
+        // Show Cards
+        .add({
+          begin: () => {
+            cardsOut();
           },
-          "-=300"
-        )
-        .add(
-          {
-            targets: ".second-card",
-            translateY: [-700, 0],
-            duration: 1100,
-            // easing: "easeInOutBack",
-          },
-          "-=800"
-        )
+        })
         .add(
           {
             targets: ".nav",
@@ -506,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".second-svg").style.display = "block";
 
         let morphing = anime
-          .timeline({})
+          .timeline({ loop: false })
           // Cards Away!
           .add({
             targets: ".second-card",
@@ -563,25 +545,31 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3200"
           )
-          // Cards Out!
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
+          // Show Cards
+          .add({
+            begin: () => {
+              cardsOut();
             },
-            "-=300"
-          )
-          .add(
-            {
-              targets: ".second-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
+          })
+          // // Cards Out!
+          // .add(
+          //   {
+          //     targets: ".first-card",
+          //     translateY: [-700, 0],
+          //     duration: 1100,
+          //     // easing: "easeInOutBack",
+          //   },
+          //   "-=300"
+          // )
+          // .add(
+          //   {
+          //     targets: ".second-card",
+          //     translateY: [-700, 0],
+          //     duration: 1100,
+          //     // easing: "easeInOutBack",
+          //   },
+          //   "-=800"
+          // )
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -865,25 +853,12 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=1000"
           )
-          // Cards Out!
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
+          // Show Cards
+          .add({
+            begin: () => {
+              cardsOut();
             },
-            "-=300"
-          )
-          .add(
-            {
-              targets: ".second-card",
-              translateY: [-700, 0],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
+          })
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -1209,7 +1184,7 @@ document.addEventListener("DOMContentLoaded", () => {
               easing: "easeInOutQuad",
               opacity: 1,
               complete: (anim) => {
-                document.querySelector(".first-svg").style.display = "none";
+                // document.querySelector(".first-svg").style.display = "none";
                 document.querySelector(".third-svg").style.display = "none";
               },
               duration: 1800,
