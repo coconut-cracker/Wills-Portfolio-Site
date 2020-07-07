@@ -193,12 +193,15 @@ a {
   background-color: #7088d6;
   opacity: 0.7;
   transform: translateY(-700px);
+  z-index: 4;
+
   /* display: none; */
 }
 .second-card {
   background-color: #45426b;
   opacity: 0.35;
   transform: translateY(-700px);
+  z-index: 4;
 
   /* display: none; */
 }
@@ -213,7 +216,6 @@ a {
   padding: 30px;
   font-family: var(--body-font);
   justify-content: center;
-  z-index: 9;
   /* opacity: 0; */
   /* display: none; */
 }
@@ -250,14 +252,17 @@ svg {
 .first-svg {
   opacity: 0;
   display: none;
+  z-index: 3;
 }
 .second-svg {
-  opacity: 0;
+  opacity: 1;
   display: none;
+  z-index: 5;
 }
 .third-svg {
   opacity: 0;
   display: none;
+  z-index: 7;
 }
 
 #transition-SVG {

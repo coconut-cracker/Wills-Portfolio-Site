@@ -4,10 +4,13 @@ let btn2 = document.querySelector("nav#nav-2");
 let btn3 = document.querySelector("nav#nav-3");
 let btn4 = document.querySelector("nav#nav-4");
 
-function cardsOut() {
+function showCards(z) {
   anime
     .timeline({ loop: false })
-    // Cards Out!
+    .add({
+      targets: ".first-card, .second-card",
+      zIndex: z,
+    })
     .add({
       targets: ".first-card",
       translateY: [-700, 0],
@@ -23,6 +26,39 @@ function cardsOut() {
       },
       "-=800"
     );
+}
+
+function hideCards(z) {
+  anime
+    .timeline({ loop: false })
+    .add({
+      targets: ".first-card, .second-card",
+      zIndex: z,
+    })
+    .add({
+      targets: ".second-card",
+      translateY: [0, -700],
+      duration: 1100,
+      // easing: "easeInOutBack",
+    })
+    .add(
+      {
+        targets: ".first-card",
+        translateY: [0, -700],
+        duration: 1100,
+        // easing: "easeInOutBack",
+      },
+      "-=800"
+    );
+}
+
+function navFadeOut() {
+  anime({
+    targets: ".nav",
+    opacity: [1, 0],
+    easing: "easeOutQuad",
+    duration: 800,
+  });
 }
 
 console.log(btn3);
@@ -119,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Show Cards
           .add({
             begin: () => {
-              cardsOut();
+              showCards();
             },
           })
           .add({
@@ -230,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Show Cards
         .add({
           begin: () => {
-            cardsOut();
+            showCards();
           },
         })
         .add({
@@ -371,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Show Cards
         .add({
           begin: () => {
-            cardsOut();
+            showCards();
           },
         })
         .add(
@@ -401,32 +437,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#screen").style.display = "block";
         let morph0 = anime
           .timeline({})
-          // Cards Away!
           .add({
-            targets: ".second-card",
-            translateY: [0, -700],
-            duration: 1100,
-            // easing: "easeInOutBack",
+            begin: () => {
+              hideCards();
+              navFadeOut();
+            },
           })
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [0, -700],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
-          .add(
-            {
-              targets: ".nav",
-              // zIndex: 10,
-              opacity: [1, 0],
-              easing: "easeOutQuad",
-              duration: 1000,
-            },
-            "-=1800"
-          )
+
           .add(
             {
               // ------ Reverse 1st SVG transition
@@ -450,7 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.querySelector(".first-svg").style.display = "none";
               },
             },
-            "-=1000"
+            "-=000"
           )
           .add(
             {
@@ -489,22 +506,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morphing = anime
           .timeline({ loop: false })
-          // Cards Away!
+          // .add({
+          //   begin: () => {
+          //     hideCards();
+          //   },
+          // })
           .add({
-            targets: ".second-card",
-            translateY: [0, -700],
-            duration: 1100,
-            // easing: "easeInOutBack",
+            targets: ".first-card",
+            // zIndex: 6,
           })
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [0, -700],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
           .add(
             {
               targets: ".nav",
@@ -515,8 +525,8 @@ document.addEventListener("DOMContentLoaded", () => {
               },
 
               duration: 1500,
-            },
-            "-=1200"
+            }
+            // "-=600"
           )
           .add(
             {
@@ -546,11 +556,14 @@ document.addEventListener("DOMContentLoaded", () => {
             "-=3200"
           )
           // Show Cards
-          .add({
-            begin: () => {
-              cardsOut();
+          .add(
+            {
+              begin: () => {
+                showCards(6);
+              },
             },
-          })
+            "-=0"
+          )
           // // Cards Out!
           // .add(
           //   {
@@ -695,22 +708,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morph0 = anime
           .timeline({})
-          // Cards Away!
           .add({
-            targets: ".second-card",
-            translateY: [0, -700],
-            duration: 1100,
-            // easing: "easeInOutBack",
-          })
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [0, -700],
-              duration: 1100,
-              // easing: "easeInOutBack",
+            begin: () => {
+              hideCards();
             },
-            "-=800"
-          )
+          })
           .add(
             {
               targets: ".nav",
@@ -719,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
               easing: "easeOutQuad",
               duration: 1000,
             },
-            "-=900"
+            "-=600"
           )
           // ------------- Reverse 2ns SVG (b)
           .add(
@@ -740,7 +742,7 @@ document.addEventListener("DOMContentLoaded", () => {
               opacity: 1,
               duration: 1800,
             },
-            "-=2000"
+            "-=1300"
           )
           .add(
             {
@@ -765,7 +767,7 @@ document.addEventListener("DOMContentLoaded", () => {
               opacity: 1,
               duration: 2000,
             },
-            "-=1800"
+            "-=1600"
           )
           .add(
             {
@@ -803,32 +805,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morph0 = anime
           .timeline({})
-          // Cards Away!
           .add({
-            targets: ".second-card",
-            translateY: [0, -700],
-            duration: 1100,
-            // easing: "easeInOutBack",
+            begin: () => {
+              navFadeOut();
+              // hideCards(4);
+            },
           })
-          .add(
-            {
-              targets: ".first-card",
-              translateY: [0, -700],
-              duration: 1100,
-              // easing: "easeInOutBack",
-            },
-            "-=800"
-          )
-          .add(
-            {
-              targets: ".nav",
-              // zIndex: 10,
-              opacity: [1, 0],
-              easing: "easeOutQuad",
-              duration: 1000,
-            },
-            "-=1500"
-          )
+
           // ------------- Reverse 2ns SVG (b)
           .add(
             {
@@ -851,14 +834,14 @@ document.addEventListener("DOMContentLoaded", () => {
               },
               duration: 1800,
             },
-            "-=1000"
+            "-=800"
           )
-          // Show Cards
-          .add({
-            begin: () => {
-              cardsOut();
-            },
-          })
+          // // Show Cards
+          // .add({
+          //   begin: () => {
+          //     showCards();
+          //   },
+          // })
           .add({
             targets: ".nav",
             opacity: [0, 1],
@@ -886,22 +869,15 @@ document.addEventListener("DOMContentLoaded", () => {
         let morphing = anime
           .timeline({})
           .add({
-            targets: ".concealed-1, .concealed-2",
-            opacity: 0,
-          })
-          .add(
-            {
-              targets: ".nav",
-              zIndex: 10,
-              opacity: [1, 0],
-              complete: () => {
-                document.querySelector("#screen").style.display = "none";
-              },
-
-              duration: 1500,
+            targets: ".nav",
+            zIndex: 10,
+            opacity: [1, 0],
+            complete: () => {
+              document.querySelector("#screen").style.display = "none";
             },
-            "-=1000"
-          )
+
+            duration: 1500,
+          })
 
           .add(
             {

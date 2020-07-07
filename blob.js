@@ -101,8 +101,8 @@ const options = {
   ANCHOR_STIFFNESS: 1.8,
   ANCHOR_DAMP: 0.7,
   MOUSE_FORCE: 4,
-  MOUSE_RADIUS: 120, // Multiplied by scale for different resolution screens
-  SIMULATION_RATE: 15,
+  MOUSE_RADIUS: 150, // Multiplied by scale for different resolution screens
+  SIMULATION_RATE: 19,
   MAX_ACROSS_NEIGHBOR_DIST: 10,
 };
 
