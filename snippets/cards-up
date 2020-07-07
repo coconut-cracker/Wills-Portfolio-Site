@@ -1,0 +1,16 @@
+// Cards Away!
+          .add({
+            targets: ".second-card",
+            translateY: [0, -700],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          })
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [0, -700],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )

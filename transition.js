@@ -219,6 +219,25 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           "-=2800"
         )
+        // Cards Out!
+        .add(
+          {
+            targets: ".first-card",
+            translateY: [-700, 0],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          },
+          "-=100"
+        )
+        .add(
+          {
+            targets: ".second-card",
+            translateY: [-700, 0],
+            duration: 1100,
+            // easing: "easeInOutBack",
+          },
+          "-=800"
+        )
         .add({
           targets: ".nav",
           opacity: [0, 1],
@@ -688,13 +707,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morph0 = anime
           .timeline({})
+          // Cards Away!
           .add({
-            targets: ".nav",
-            // zIndex: 10,
-            opacity: [1, 0],
-            easing: "easeOutQuad",
-            duration: 1000,
+            targets: ".second-card",
+            translateY: [0, -700],
+            duration: 1100,
+            // easing: "easeInOutBack",
           })
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [0, -700],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
+          .add(
+            {
+              targets: ".nav",
+              // zIndex: 10,
+              opacity: [1, 0],
+              easing: "easeOutQuad",
+              duration: 1000,
+            },
+            "-=900"
+          )
           // ------------- Reverse 2ns SVG (b)
           .add(
             {
@@ -777,13 +815,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morph0 = anime
           .timeline({})
+          // Cards Away!
           .add({
-            targets: ".nav",
-            // zIndex: 10,
-            opacity: [1, 0],
-            easing: "easeOutQuad",
-            duration: 1000,
+            targets: ".second-card",
+            translateY: [0, -700],
+            duration: 1100,
+            // easing: "easeInOutBack",
           })
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [0, -700],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
+          .add(
+            {
+              targets: ".nav",
+              // zIndex: 10,
+              opacity: [1, 0],
+              easing: "easeOutQuad",
+              duration: 1000,
+            },
+            "-=1500"
+          )
           // ------------- Reverse 2ns SVG (b)
           .add(
             {
@@ -807,6 +864,25 @@ document.addEventListener("DOMContentLoaded", () => {
               duration: 1800,
             },
             "-=1000"
+          )
+          // Cards Out!
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=300"
+          )
+          .add(
+            {
+              targets: ".second-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
           )
           .add({
             targets: ".nav",

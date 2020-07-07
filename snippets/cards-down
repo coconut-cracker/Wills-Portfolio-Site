@@ -1,0 +1,19 @@
+ // Cards Out!
+          .add(
+            {
+              targets: ".first-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=300"
+          )
+          .add(
+            {
+              targets: ".second-card",
+              translateY: [-700, 0],
+              duration: 1100,
+              // easing: "easeInOutBack",
+            },
+            "-=800"
+          )
