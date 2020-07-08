@@ -52,13 +52,32 @@ function hideCards(z) {
     );
 }
 
-function navFadeOut() {
-  anime({
+function navFadeOut(z) {
+  anime.timeline({ loop: false }).add({
     targets: ".nav",
-    opacity: [1, 0],
-    easing: "easeOutQuad",
-    duration: 800,
+    zIndex: z,
   });
+  // .add({
+  //   targets: ".nav",
+  //   opacity: [1, 0],
+  //   easing: "easeOutQuad",
+  //   duration: 1000,
+  // });
+}
+
+function navFadeIn(z) {
+  anime
+    .timeline({ loop: false })
+    .add({
+      targets: ".nav",
+      zIndex: z,
+    })
+    .add({
+      targets: ".nav",
+      opacity: [0, 1],
+      easing: "easeOutQuad",
+      duration: 1000,
+    });
 }
 
 console.log(btn3);
@@ -91,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         page.className = "what";
         btn1.className = "nav act-4";
-        btn2.className = "nav";
+        btn2.className = "nav act-0";
         btn3.className = "nav act-5";
         btn4.className = "nav act-6";
 
@@ -101,30 +120,30 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             targets: ".concealed-1, .concealed-2",
-            opacity: 0,
+            opacity: [1, 0],
+            begin: () => {
+              navFadeOut(2);
+            },
           })
-          .add(
-            {
-              targets: "#screen, .title",
-              opacity: [1, 0],
-              duration: 1000,
-              easing: "easeInQuad",
+          .add({
+            targets: "#screen, .title",
+            // opacity: [1, 0],
+            duration: 1000,
+            easing: "easeInQuad",
+            complete: () => {
+              document.querySelector("#screen").style.display = "none";
             },
-            "-=1000"
-          )
-          .add(
-            {
-              targets: ".nav",
-              zIndex: 10,
-              opacity: [1, 0],
-              complete: () => {
-                document.querySelector("#screen").style.display = "none";
-              },
+          })
+          // .add(
+          //   {
+          //     targets: ".nav",
+          //     zIndex: 10,
+          //     opacity: [1, 0],
 
-              duration: 1500,
-            },
-            "-=1000"
-          )
+          //     duration: 1500,
+          //   },
+          //   "-=1000"
+          // )
           .add(
             {
               targets: "#first",
@@ -143,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
               opacity: 1,
               duration: 3000,
             },
-            "-=2500"
+            "-=2000"
           )
           .add(
             {
@@ -152,16 +171,18 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3000"
           )
+          // .add({
+          //   targets: ".title",
+          //   duration: 1000,
+          //   easing: "easeInQuad",
+          //   translateZ: -30,
+          // })
           // Show Cards
           .add({
             begin: () => {
               showCards();
+              navFadeIn(4);
             },
-          })
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
           });
       }
     });
@@ -175,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       page.className = "how";
       btn1.className = "nav act-7";
       btn2.className = "nav act-8";
-      btn3.className = "nav";
+      btn3.className = "nav act-0";
       btn4.className = "nav act-9";
 
       document.querySelector(".first-svg").style.display = "block";
@@ -286,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn1.className = "nav act-10";
       btn2.className = "nav act-11";
       btn3.className = "nav act-12";
-      btn4.className = "nav";
+      btn4.className = "nav  act-0";
 
       document.querySelector(".first-svg").style.display = "block";
       document.querySelector(".second-svg").style.display = "block";
@@ -429,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (btn1.classList.contains("act-4")) {
         console.log("Page 2 to Page 1");
         page.className = "home";
-        btn1.className = "nav";
+        btn1.className = "nav act-0";
         btn2.className = "nav act-1";
         btn3.className = "nav act-2";
         btn4.className = "nav act-3";
@@ -479,13 +500,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "-=1000"
           )
           .add({
-            targets: ".nav",
+            targets: ".nav, .concealed-1, .concealed-2",
             opacity: [0, 1],
             duration: 1500,
-          })
-          .add({
-            targets: ".concealed-1, .concealed-2",
-            opacity: 1,
           });
       }
     }); // END OF ACTION 4
@@ -498,7 +515,7 @@ document.addEventListener("DOMContentLoaded", () => {
         page.className = "how";
         btn1.className = "nav act-7";
         btn2.className = "nav act-8";
-        btn3.className = "nav";
+        btn3.className = "nav act-0";
         btn4.className = "nav act-9";
 
         document.querySelector(".first-svg").style.display = "block";
@@ -600,7 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn1.className = "nav act-10";
         btn2.className = "nav act-11";
         btn3.className = "nav act-12";
-        btn4.className = "nav";
+        btn4.className = "nav act-0";
 
         document.querySelector(".first-svg").style.display = "block";
         document.querySelector(".second-svg").style.display = "block";
@@ -697,7 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (btn1.classList.contains("act-7")) {
         console.log("Page 2 to Page 1");
         page.className = "home";
-        btn1.className = "nav";
+        btn1.className = "nav act-0";
         btn2.className = "nav act-1";
         btn3.className = "nav act-2";
         btn4.className = "nav act-3";
@@ -797,7 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         page.className = "what";
         btn1.className = "nav act-4";
-        btn2.className = "nav";
+        btn2.className = "nav act-0";
         btn3.className = "nav act-5";
         btn4.className = "nav act-6";
 
@@ -860,7 +877,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn1.className = "nav act-10";
         btn2.className = "nav act-11";
         btn3.className = "nav act-12";
-        btn4.className = "nav";
+        btn4.className = "nav act-0";
 
         document.querySelector(".first-svg").style.display = "block";
         document.querySelector(".second-svg").style.display = "block";
@@ -927,7 +944,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (btn1.classList.contains("act-10")) {
         console.log("Page 4 to Page 1");
         page.className = "home";
-        btn1.className = "nav";
+        btn1.className = "nav  act-0";
         btn2.className = "nav act-1";
         btn3.className = "nav act-2";
         btn4.className = "nav act-3";
@@ -1043,7 +1060,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         page.className = "what";
         btn1.className = "nav act-4";
-        btn2.className = "nav";
+        btn2.className = "nav act-0";
         btn3.className = "nav act-5";
         btn4.className = "nav act-6";
 
@@ -1125,7 +1142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         page.className = "what";
         btn1.className = "nav act-7";
         btn2.className = "nav act-8";
-        btn3.className = "nav";
+        btn3.className = "nav act-0";
         btn4.className = "nav act-9";
 
         document.querySelector(".first-svg").style.display = "block";
