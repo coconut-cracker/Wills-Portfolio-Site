@@ -40,6 +40,7 @@ const XOFF = 0;
 const YOFF = 0;
 const BLOB_COLOR_1 = "#7C7C7C";
 const BLOB_COLOR_2 = "#303030";
+const MIN_NODE_COUNT = 10;
 
 const setScale = (width, height) => {
   const SCALE_X = (width / DEFAULT_WIDTH) * SCALE_COEFFICIENT;
@@ -98,12 +99,12 @@ const options = {
   COLOR_FILL: "#3b3b3b", //"#7de891",
   SCALE_X,
   SCALE_Y,
-  ANCHOR_STIFFNESS: 1.8,
-  ANCHOR_DAMP: 0.7,
-  MOUSE_FORCE: 4,
-  MOUSE_RADIUS: 150, // Multiplied by scale for different resolution screens
+  ANCHOR_STIFFNESS: 1,
+  ANCHOR_DAMP: 0.5,
+  MOUSE_FORCE: 6,
+  MOUSE_RADIUS: 120, // Multiplied by scale for different resolution screens
   SIMULATION_RATE: 19,
-  MAX_ACROSS_NEIGHBOR_DIST: 10,
+  MAX_ACROSS_NEIGHBOR_DIST: 1,
 };
 
 // ---------- Declare + Assign coordinate variables  ----------
@@ -128,7 +129,7 @@ function findPoints(options) {
 }
 
 findPoints.prototype.nodes = function () {
-  let nodes = 25 + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
+  let nodes = MIN_NODE_COUNT + Math.floor(30 * SCALE_Y); // no. of nodes scalable with window height, with a hard min of 10
   return nodes;
 };
 
