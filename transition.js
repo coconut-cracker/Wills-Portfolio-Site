@@ -39,7 +39,6 @@ function hideCards(z) {
       targets: ".second-card",
       translateY: [0, -700],
       duration: 1100,
-      // easing: "easeInOutBack",
     })
     .add(
       {
@@ -80,6 +79,15 @@ function navFadeIn(z) {
     });
 }
 
+function moveTitle() {
+  anime({
+    targets: "#title",
+    translateY: -200,
+    duration: 2200,
+  });
+}
+
+console.log(anime.easings);
 console.log(btn3);
 
 console.log(btn2.classList.contains("act-1"));
@@ -115,9 +123,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btn4.className = "nav act-6";
 
         document.querySelector(".first-svg").style.display = "block";
+        anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
 
         let morphing = anime
-          .timeline({})
+          .timeline({ loop: false })
           .add({
             targets: ".concealed-1, .concealed-2",
             opacity: [1, 0],
@@ -125,25 +134,17 @@ document.addEventListener("DOMContentLoaded", () => {
               navFadeOut(2);
             },
           })
-          .add({
-            targets: "#screen, .title",
-            // opacity: [1, 0],
-            duration: 1000,
-            easing: "easeInQuad",
-            complete: () => {
-              document.querySelector("#screen").style.display = "none";
-            },
-          })
-          // .add(
-          //   {
-          //     targets: ".nav",
-          //     zIndex: 10,
-          //     opacity: [1, 0],
 
-          //     duration: 1500,
-          //   },
-          //   "-=1000"
-          // )
+          .add(
+            {
+              targets: ".nav",
+              zIndex: 10,
+              opacity: [1, 0],
+
+              duration: 1500,
+            },
+            "-=1000"
+          )
           .add(
             {
               targets: "#first",
@@ -171,15 +172,19 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3000"
           )
-          // .add({
-          //   targets: ".title",
-          //   duration: 1000,
-          //   easing: "easeInQuad",
-          //   translateZ: -30,
-          // })
+          .add(
+            {
+              targets: "#title",
+              begin: () => {
+                moveTitle();
+              },
+            },
+            "-=400"
+          )
+
           // Show Cards
           .add({
-            begin: () => {
+            complete: () => {
               showCards();
               navFadeIn(4);
             },
@@ -208,28 +213,18 @@ document.addEventListener("DOMContentLoaded", () => {
           targets: ".concealed-1, .concealed-2",
           opacity: 0,
         })
-        .add(
-          {
-            targets: "#screen, .title",
-            opacity: [1, 0],
-            duration: 1000,
-            easing: "easeInQuad",
-          },
-          "-=1000"
-        )
-        .add(
-          {
-            targets: ".nav",
-            zIndex: 10,
-            opacity: [1, 0],
-            complete: () => {
-              document.querySelector("#screen").style.display = "none";
-            },
+        // .add({
+        //   targets: "#screen, .title",
+        //   opacity: [1, 0],
+        //   duration: 1000,
+        //   easing: "easeInQuad",
+        // })
+        // .add({
+        //   targets: ".nav",
+        //   opacity: [1, 0],
 
-            duration: 1500,
-          },
-          "-=1000"
-        )
+        //   duration: 1500,
+        // })
         .add(
           {
             targets: "#first",
@@ -247,6 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
             easing: "easeInOutSine",
             opacity: 1,
             duration: 3000,
+            complete: () => {
+              document.querySelector("#screen").style.display = "none";
+            },
           },
           "-=2500"
         )
