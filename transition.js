@@ -89,10 +89,12 @@ function navFadeIn(z) {
     .add({
       targets: ".nav",
       zIndex: z,
+      translateY: -80,
     })
     .add({
       targets: ".nav",
       opacity: [0, 1],
+      translateY: 0,
 
       easing: "easeOutQuad",
       duration: 500,
@@ -754,8 +756,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut();
-              // hideCards(4);
+              navFadeOut(6, 700);
             },
           })
 
@@ -782,19 +783,13 @@ document.addEventListener("DOMContentLoaded", () => {
               duration: 1800,
             },
             "-=800"
-          )
-          // // Show Cards
-          // .add({
-          //   begin: () => {
-          //     showCards();
-          //   },
-          // })
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          })
-          .add({});
+          );
+        // // Show Cards
+        // .add({
+        //   begin: () => {
+        //     showCards();
+        //   },
+        // })
       }
     }); // END OF ACTION 8
 
