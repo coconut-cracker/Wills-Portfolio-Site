@@ -6,6 +6,8 @@ console.log(history.state);
 
 console.log(links);
 
+const sourceCodeLink = document.querySelector(".concealed-2");
+
 // ---------- Get each menu item information from elements and use it to style click boxes and transport to relevant page/section  ----------
 for (let i = 0; i < links.length; i++) {
   Object.assign(navLinks);
