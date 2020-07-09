@@ -197,7 +197,7 @@ a {
 .concealed-1 {
   position: absolute;
   padding: auto;
-  top: 15%;
+  top: -5%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto;
@@ -209,10 +209,25 @@ a {
   position: absolute;
   width: auto;
   height: auto;
-  top: 85%;
+  top: 102%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 20px;
+  z-index: 1;
+}
+
+.concealed-2:before {
+  /* position: absolute; */
+  content: "";
+  z-index: 100;
+
+  border: 2px greenyellow solid;
+  height: auto;
+  width: auto;
+}
+
+.concealed-2:hover:after {
+  opacity: 1;
 }
 
 .h3-text {
