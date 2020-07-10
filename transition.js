@@ -51,12 +51,14 @@ function hideCards(z) {
     );
 }
 
-function navFadeOut(z, delay) {
+function navFadeOut(z0, delay, z1) {
+  // anime.set(" .nav", { zIndex: z });
+
   anime
     .timeline({ loop: false })
     .add({
       targets: ".nav",
-      zIndex: z,
+      zIndex: z0,
     })
     .add({
       targets: ".nav",
@@ -79,7 +81,7 @@ function navFadeOut(z, delay) {
     })
     .add({
       targets: ".nav",
-      // opacity: 1,
+      zIndex: z1,
     });
 }
 
@@ -420,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(4, 500);
+              navFadeOut(4, 500, 2);
             },
           })
 
@@ -545,7 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
               opacity: 1,
               duration: 3000,
             },
-            "-=3000"
+            "-=000"
           )
           .add(
             {
@@ -581,11 +583,19 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=2800"
           )
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          });
+          .add(
+            {
+              begin: () => {
+                navFadeIn(8);
+              },
+            },
+            "-=800"
+          );
+        // .add({
+        //   targets: ".nav",
+        //   opacity: [0, 1],
+        //   duration: 1500,
+        // });
       }
     }); // END OF ACTION 6
   } // END OF PAGE WHAT
@@ -596,7 +606,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if ((page.className = "how")) {
     btn1.addEventListener("click", () => {
       if (btn1.classList.contains("act-7")) {
-        console.log("Page 2 to Page 1");
+        console.log("Page 3 to Page 1");
         page.className = "home";
         btn1.className = "nav act-0";
         btn2.className = "nav act-1";
@@ -611,7 +621,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(6, 900);
+              navFadeOut(6, 1300, 2);
             },
           })
 
@@ -663,15 +673,6 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=1600"
           );
-        // .add(
-        //   {
-        //     begin: () => {
-        //       navFadeIn(2);
-        //       // moveTitleDown();
-        //     },
-        //   },
-        //   "-=800"
-        // );
       }
     }); // END OF ACTION 7
 
@@ -692,7 +693,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(6, 500);
+              navFadeOut(6, 500, 4);
             },
           })
 
@@ -812,7 +813,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(8, 1300);
+              navFadeOut(8, 1300, 2);
             },
           })
 
@@ -907,34 +908,29 @@ document.addEventListener("DOMContentLoaded", () => {
         let morph0 = anime
           .timeline({})
           .add({
-            targets: ".nav",
-            // zIndex: 10,
-            opacity: [1, 0],
-            easing: "easeOutQuad",
-            duration: 1000,
+            begin: () => {
+              navFadeOut(8, 900, 4);
+            },
           })
 
           // ------------- Reverse 3rd SVG (c)
-          .add(
-            {
-              targets: "#third",
-              d: [
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
-                },
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
-                },
-              ],
-              translateY: [0, -600],
-              easing: "easeInOutQuad",
-              opacity: 1,
-              duration: 1800,
-            },
-            "-=1800"
-          )
+          .add({
+            targets: "#third",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [0, -600],
+            easing: "easeInOutQuad",
+            opacity: 1,
+            duration: 1800,
+          })
 
           // ------------- Reverse 2nd SVG (b)
           .add(
@@ -960,13 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
               duration: 1800,
             },
             "-=1600"
-          )
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          })
-          .add({});
+          );
       }
     }); // END OF ACTION 11
 
@@ -988,44 +978,32 @@ document.addEventListener("DOMContentLoaded", () => {
         let morph0 = anime
           .timeline({})
           .add({
-            targets: ".nav",
-            // zIndex: 10,
-            opacity: [1, 0],
-            easing: "easeOutQuad",
-            duration: 1000,
+            begin: () => {
+              navFadeOut(8, 600, 6);
+            },
           })
 
           // ------------- Reverse 3rd SVG (c)
-          .add(
-            {
-              targets: "#third",
-              d: [
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
-                },
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
-                },
-              ],
-              translateY: [0, -600],
-              easing: "easeInOutQuad",
-              opacity: 1,
-              complete: (anim) => {
-                // document.querySelector(".first-svg").style.display = "none";
-                document.querySelector(".third-svg").style.display = "none";
-              },
-              duration: 1800,
-            },
-            "-=1800"
-          )
           .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          })
-          .add({});
+            targets: "#third",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [0, -600],
+            easing: "easeInOutQuad",
+            opacity: 1,
+            complete: (anim) => {
+              document.querySelector(".third-svg").style.display = "none";
+            },
+            duration: 1800,
+          });
       }
     }); // END OF ACTION 12
   }
