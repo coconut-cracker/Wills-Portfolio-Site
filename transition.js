@@ -13,18 +13,18 @@ function showCards(z) {
     })
     .add({
       targets: ".first-card",
-      translateY: [-700, 0],
-      duration: 1100,
+      translateX: [1000, 0],
+      duration: 1400,
       // easing: "easeInOutBack",
     })
     .add(
       {
         targets: ".second-card",
-        translateY: [-700, 0],
-        duration: 1100,
+        translateX: [1000, 0],
+        duration: 1400,
         // easing: "easeInOutBack",
       },
-      "-=800"
+      "-=1000"
     );
 }
 
@@ -84,6 +84,8 @@ function navFadeOut(z, delay) {
 }
 
 function navFadeIn(z) {
+  anime.set(" .nav", { opacity: "0" });
+
   anime
     .timeline({ loop: false })
     .add({
@@ -97,7 +99,7 @@ function navFadeIn(z) {
       translateY: 0,
 
       easing: "easeOutQuad",
-      duration: 500,
+      duration: 200,
     });
 }
 
@@ -105,7 +107,7 @@ function moveTitleUp() {
   anime({
     targets: "#title",
     translateY: -200,
-    duration: 2200,
+    duration: 2000,
   });
 }
 function moveTitleDown() {
@@ -471,48 +473,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morphing = anime
           .timeline({ loop: false })
-          // .add({
-          //   begin: () => {
-          //     hideCards();
-          //   },
-          // })
           .add({
-            targets: ".first-card",
-            // zIndex: 6,
-          })
-          .add(
-            {
-              targets: ".nav",
-              zIndex: 10,
-              opacity: [1, 0],
-              complete: () => {
-                document.querySelector("#screen").style.display = "none";
+            targets: "#second",
+            d: [
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
               },
+              {
+                value:
+                  "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+              },
+            ],
+            translateY: [-700, 0],
+            easing: "easeInQuad",
+            opacity: 1,
+            duration: 3000,
+          })
 
-              duration: 1500,
-            }
-            // "-=600"
-          )
-          .add(
-            {
-              targets: "#second",
-              d: [
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
-                },
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
-                },
-              ],
-              translateY: [-700, 0],
-              easing: "easeInQuad",
-              opacity: 1,
-              duration: 3000,
-            },
-            "-=3000"
-          )
           .add(
             {
               targets: ".second-svg",
@@ -520,39 +498,14 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=3200"
           )
-          // Show Cards
           .add(
             {
               begin: () => {
-                showCards(6);
+                navFadeIn(6);
               },
             },
-            "-=0"
-          )
-          // // Cards Out!
-          // .add(
-          //   {
-          //     targets: ".first-card",
-          //     translateY: [-700, 0],
-          //     duration: 1100,
-          //     // easing: "easeInOutBack",
-          //   },
-          //   "-=300"
-          // )
-          // .add(
-          //   {
-          //     targets: ".second-card",
-          //     translateY: [-700, 0],
-          //     duration: 1100,
-          //     // easing: "easeInOutBack",
-          //   },
-          //   "-=800"
-          // )
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          });
+            "-=800"
+          );
       }
     }); // END OF ACTION 5
 
@@ -573,23 +526,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morphing = anime
           .timeline({})
-          .add({
-            targets: ".concealed-1, .concealed-2",
-            opacity: 0,
-          })
-          .add(
-            {
-              targets: ".nav",
-              zIndex: 10,
-              opacity: [1, 0],
-              complete: () => {
-                document.querySelector("#screen").style.display = "none";
-              },
-
-              duration: 1500,
-            },
-            "-=1000"
-          )
 
           .add(
             {
@@ -675,7 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(6, 800);
+              navFadeOut(6, 900);
             },
           })
 
@@ -726,16 +662,16 @@ document.addEventListener("DOMContentLoaded", () => {
               duration: 2000,
             },
             "-=1600"
-          )
-          .add(
-            {
-              begin: () => {
-                navFadeIn(2);
-                // moveTitleDown();
-              },
-            },
-            "-=800"
           );
+        // .add(
+        //   {
+        //     begin: () => {
+        //       navFadeIn(2);
+        //       // moveTitleDown();
+        //     },
+        //   },
+        //   "-=800"
+        // );
       }
     }); // END OF ACTION 7
 
@@ -756,7 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .timeline({})
           .add({
             begin: () => {
-              navFadeOut(6, 700);
+              navFadeOut(6, 500);
             },
           })
 
@@ -782,7 +718,7 @@ document.addEventListener("DOMContentLoaded", () => {
               },
               duration: 1800,
             },
-            "-=800"
+            "-=00"
           );
         // // Show Cards
         // .add({
@@ -810,17 +746,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let morphing = anime
           .timeline({})
-          .add({
-            targets: ".nav",
-            zIndex: 10,
-            opacity: [1, 0],
-            complete: () => {
-              document.querySelector("#screen").style.display = "none";
-            },
-
-            duration: 1500,
-          })
-
           .add(
             {
               targets: "#third",
@@ -843,7 +768,7 @@ document.addEventListener("DOMContentLoaded", () => {
               },
               duration: 3000,
             },
-            "-=2800"
+            "-=00"
           )
           .add(
             {
@@ -852,11 +777,15 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "-=2800"
           )
-          .add({
-            targets: ".nav",
-            opacity: [0, 1],
-            duration: 1500,
-          });
+          .add(
+            {
+              begin: () => {
+                // showCards(6);
+                navFadeIn(8);
+              },
+            },
+            "-=800"
+          );
       }
     }); // END OF ACTION 9
   }
