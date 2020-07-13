@@ -1,3 +1,138 @@
+function Animations() {
+  this.page = document.querySelector("#home");
+  this.btn1 = document.querySelector("nav#nav-1");
+  this.btn2 = document.querySelector("nav#nav-2");
+  this.btn3 = document.querySelector("nav#nav-3");
+  this.btn4 = document.querySelector("nav#nav-4");
+
+  Animations.prototype.showCards = (z) => {
+    anime
+      .timeline({ loop: false })
+      .add({
+        targets: ".first-card, .second-card",
+        zIndex: z,
+      })
+      .add({
+        targets: ".first-card",
+        translateX: [1000, 0],
+        duration: 1400,
+      })
+      .add(
+        {
+          targets: ".second-card",
+          translateX: [1000, 0],
+          duration: 1400,
+        },
+        "-=1000"
+      );
+  };
+
+  Animations.prototype.hideCards = (z) => {
+    anime
+      .timeline({ loop: false })
+      .add({
+        targets: ".first-card, .second-card",
+        zIndex: z,
+      })
+      .add({
+        targets: ".second-card",
+        translateY: [0, -700],
+        duration: 1100,
+      })
+      .add(
+        {
+          targets: ".first-card",
+          translateY: [0, -700],
+          duration: 1100,
+        },
+        "-=800"
+      );
+  };
+
+  Animations.prototype.navFadeIn = (z) => {
+    anime.set(" .nav", { opacity: "0" });
+    anime
+      .timeline({ loop: false })
+      .add({
+        targets: ".nav",
+        zIndex: z,
+        translateY: -80,
+      })
+      .add({
+        targets: ".nav",
+        opacity: [0, 1],
+        translateY: 0,
+        easing: "easeOutQuad",
+        duration: 200,
+      });
+  };
+
+  Animations.prototype.navFadeOut = (z0, delay, z1) => {
+    anime
+      .timeline({ loop: false })
+      .add({
+        targets: ".nav",
+        zIndex: z0,
+      })
+      .add({
+        targets: ".nav",
+        opacity: 0,
+        translateY: -40,
+        easing: "easeOutQuad",
+        duration: 500,
+      })
+      .add({
+        targets: ".nav",
+        translateY: 0,
+        opacity: 1,
+        duration: 500,
+        easing: "easeInOutQuad",
+        delay: delay,
+      })
+      .add({
+        targets: ".nav",
+        zIndex: z1,
+      });
+  };
+
+  Animations.prototype.moveTitleUp = () => {
+    anime({
+      targets: "#title",
+      translateY: -200,
+      duration: 2000,
+    });
+  };
+
+  Animations.prototype.moveTitleDown = () => {
+    anime({
+      targets: "#title",
+      translateY: "-50%",
+      duration: 2200,
+    });
+  };
+
+  Animations.prototype.hideHomescreenSubtext = () => {
+    anime({
+      targets: ".concealed-1, .concealed-2",
+      opacity: [1, 0],
+    });
+  };
+  Animations.prototype.showHomescreenSubtext = () => {
+    anime({
+      targets: ".concealed-1, .concealed-2",
+      opacity: [0, 1],
+    });
+  };
+  Animations.prototype.svgOpacity = (target) => {
+    anime({
+      targets: target,
+      opacity: 1,
+    });
+  };
+}
+
+const animObj = new Animations();
+
 const page = document.querySelector("#home");
 let btn1 = document.querySelector("nav#nav-1");
 let btn2 = document.querySelector("nav#nav-2");
@@ -141,6 +276,8 @@ console.log(btn3);
 // How: 6
 // Contact: 8
 
+const first = ".first-svg";
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Home loaded");
 
@@ -166,8 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let morphing = anime
           .timeline({ loop: false })
           .add({
-            targets: ".concealed-1, .concealed-2",
-            opacity: [1, 0],
+            begin: () => {
+              animObj.hideHomescreenSubtext();
+            },
           })
           .add(
             {
@@ -186,22 +324,17 @@ document.addEventListener("DOMContentLoaded", () => {
               easing: "easeInOutSine",
               opacity: 1,
               duration: 3000,
+              begin: () => {
+                animObj.svgOpacity(first);
+              },
             },
             "-=2000"
           )
           .add(
             {
-              targets: ".first-svg",
-              opacity: 1,
-            },
-            "-=3000"
-          )
-          .add(
-            {
-              targets: "#title",
               begin: () => {
-                moveTitleUp();
-                navFadeIn(4);
+                animObj.moveTitleUp();
+                animObj.navFadeIn(4);
               },
             },
             "-=400"
