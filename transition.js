@@ -43,7 +43,7 @@ function Animations() {
       );
   };
 
-  Animations.prototype.navFadeIn = (z) => {
+  Animations.prototype.navFadeIn = (z, delay) => {
     anime.set(" .nav", { opacity: "0" });
     anime
       .timeline({ loop: false })
@@ -61,7 +61,7 @@ function Animations() {
       });
   };
 
-  Animations.prototype.navFadeOut = (z0, delay, z1) => {
+  Animations.prototype.navFadeOut = (z0, z1) => {
     anime
       .timeline({ loop: false })
       .add({
@@ -72,17 +72,17 @@ function Animations() {
         targets: ".nav",
         opacity: 0,
         translateY: -40,
-        easing: "easeOutQuad",
-        duration: 500,
-      })
-      .add({
-        targets: ".nav",
-        translateY: 0,
-        opacity: 1,
-        duration: 500,
         easing: "easeInOutQuad",
-        delay: delay,
+        duration: 300,
       })
+      // .add({
+      //   targets: ".nav",
+      //   translateY: 0,
+      //   opacity: 1,
+      //   duration: 500,
+      //   easing: "easeInOutQuad",
+      //   // delay: delay,
+      // })
       .add({
         targets: ".nav",
         zIndex: z1,
@@ -95,6 +95,7 @@ function Animations() {
     anime({
       targets: "#title",
       top: ["50%", "10%"],
+      scale: 0.8,
       duration: 2000,
     });
   };
@@ -103,6 +104,7 @@ function Animations() {
     anime({
       targets: "#title",
       top: "50%",
+      scale: 1,
       duration: 2200,
     });
   };
@@ -145,11 +147,7 @@ function TriggerActions() {
 
     let morphing = anime
       .timeline({ loop: false })
-      .add({
-        begin: () => {
-          animObj.hideHomescreenSubtext();
-        },
-      })
+
       .add({
         targets: "#first",
         d: [
@@ -165,16 +163,24 @@ function TriggerActions() {
         translateY: [-500, 0],
         easing: "easeInOutQuad",
         opacity: 1,
-        duration: 2500,
+        duration: 2200,
         begin: () => {
           animObj.svgOpacity(first);
+          animObj.hideHomescreenSubtext();
         },
       })
       .add(
         {
           begin: () => {
-            animObj.moveTitleUp();
             animObj.navFadeIn(4);
+          },
+        },
+        "-=1500"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleUp();
           },
         },
         "-=400"
@@ -361,11 +367,6 @@ function TriggerActions() {
     let morph0 = anime
       .timeline({})
       .add({
-        begin: () => {
-          animObj.navFadeOut(4, 500, 2);
-        },
-      })
-      .add({
         // ------ Reverse 1st SVG transition
         targets: "#first",
         d: [
@@ -382,12 +383,30 @@ function TriggerActions() {
         easing: "easeInOutQuad",
         opacity: 1,
         duration: 1800,
+        begin: () => {
+          animObj.navFadeOut(4, 2);
+        },
         complete: (anim) => {
           document.querySelector(".first-svg").style.display = "none";
-          animObj.moveTitleDown();
           animObj.showHomescreenSubtext();
         },
-      });
+      })
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(2);
+          },
+        },
+        "-=1500"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleDown();
+          },
+        },
+        "-=200"
+      );
   };
 
   TriggerActions.prototype.actionFive = () => {
