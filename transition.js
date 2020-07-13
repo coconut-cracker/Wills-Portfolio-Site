@@ -131,7 +131,63 @@ function Animations() {
   };
 }
 
+function TriggerActions() {
+  TriggerActions.prototype.actionOne = () => {
+    console.log("Home to What page (1 -> 2)");
+
+    // anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
+    page.className = "what";
+    btn1.className = "nav act-4";
+    btn2.className = "nav act-0";
+    btn3.className = "nav act-5";
+    btn4.className = "nav act-6";
+
+    document.querySelector(".first-svg").style.display = "block";
+
+    let morphing = anime
+      .timeline({ loop: false })
+      .add({
+        begin: () => {
+          animObj.hideHomescreenSubtext();
+        },
+      })
+      .add(
+        {
+          targets: "#first",
+          d: [
+            {
+              value:
+                "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
+            },
+            {
+              value:
+                "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+            },
+          ],
+          translateY: [-600, 0],
+          easing: "easeInOutSine",
+          opacity: 1,
+          duration: 3000,
+          begin: () => {
+            animObj.svgOpacity(first);
+          },
+        },
+        "-=2000"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleUp();
+            animObj.navFadeIn(4);
+          },
+        },
+        "-=400"
+      );
+  };
+}
+
 const animObj = new Animations();
+const actionsObj = new TriggerActions();
 
 const page = document.querySelector("#home");
 let btn1 = document.querySelector("nav#nav-1");
@@ -288,58 +344,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ACTION 1: +a curtain
     btn2.addEventListener("click", () => {
-      if (btn2.classList.contains("act-1")) {
-        // actionOne();
-        console.log("Page 1 to Page 2");
+      const whichNav = btn2.classList[1];
+      console.log(whichNav);
 
-        page.className = "what";
-        btn1.className = "nav act-4";
-        btn2.className = "nav act-0";
-        btn3.className = "nav act-5";
-        btn4.className = "nav act-6";
-
-        document.querySelector(".first-svg").style.display = "block";
-
-        let morphing = anime
-          .timeline({ loop: false })
-          .add({
-            begin: () => {
-              animObj.hideHomescreenSubtext();
-            },
-          })
-          .add(
-            {
-              targets: "#first",
-              d: [
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
-                },
-                {
-                  value:
-                    "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
-                },
-              ],
-              translateY: [-600, 0],
-              easing: "easeInOutSine",
-              opacity: 1,
-              duration: 3000,
-              begin: () => {
-                animObj.svgOpacity(first);
-              },
-            },
-            "-=2000"
-          )
-          .add(
-            {
-              begin: () => {
-                animObj.moveTitleUp();
-                animObj.navFadeIn(4);
-              },
-            },
-            "-=400"
-          );
+      switch (whichNav) {
+        case "act-1":
+          console.log("Page 1 to Page 2");
+          actionsObj.actionOne();
+          break;
+        default:
+          return;
       }
+
+      // if (btn2.classList.contains("act-1")) {
+      //   console.log("Page 1 to Page 2");
+      //   actionsObj.actionOne();
+      // }
     });
     // END OF ACTION 1
 
