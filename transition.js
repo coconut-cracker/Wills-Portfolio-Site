@@ -194,6 +194,7 @@ let btn1 = document.querySelector("nav#nav-1");
 let btn2 = document.querySelector("nav#nav-2");
 let btn3 = document.querySelector("nav#nav-3");
 let btn4 = document.querySelector("nav#nav-4");
+let navs = document.querySelector(".nav");
 
 function showCards(z) {
   anime
@@ -343,8 +344,8 @@ document.addEventListener("DOMContentLoaded", () => {
     anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
 
     // ACTION 1: +a curtain
-    btn2.addEventListener("click", () => {
-      const whichNav = btn2.classList[1];
+    navs.addEventListener("click", (e) => {
+      const whichNav = e.target.parentElement.classList[1];
       console.log(whichNav);
 
       switch (whichNav) {
