@@ -58,6 +58,7 @@ function Animations() {
         translateY: 0,
         easing: "easeOutQuad",
         duration: 200,
+        // delay: delay,
       });
   };
 
@@ -89,14 +90,14 @@ function Animations() {
       });
   };
 
-  Animations.prototype.moveTitleUp = () => {
+  Animations.prototype.moveTitleUp = (r) => {
     anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
 
     anime({
       targets: "#title",
       top: ["50%", "10%"],
       scale: 0.8,
-      duration: 2000,
+      duration: 2000 * r,
     });
   };
 
@@ -163,7 +164,7 @@ function TriggerActions() {
         translateY: [-500, 0],
         easing: "easeInOutQuad",
         opacity: 1,
-        duration: 2200,
+        duration: 2000,
         begin: () => {
           animObj.svgOpacity(first);
           animObj.hideHomescreenSubtext();
@@ -171,19 +172,19 @@ function TriggerActions() {
       })
       .add(
         {
-          begin: () => {
+          complete: () => {
             animObj.navFadeIn(4);
           },
         },
-        "-=1500"
+        "-=2100"
       )
       .add(
         {
           begin: () => {
-            animObj.moveTitleUp();
+            animObj.moveTitleUp(1);
           },
         },
-        "-=400"
+        "-=500"
       );
   };
 
@@ -200,11 +201,7 @@ function TriggerActions() {
     document.querySelector(".second-svg").style.display = "block";
 
     let morphing = anime
-      .timeline({
-        begin: () => {
-          animObj.svgOpacity(first);
-        },
-      })
+      .timeline({})
       .add({
         targets: "#first",
         d: [
@@ -220,12 +217,14 @@ function TriggerActions() {
         translateY: [-600, 0],
         easing: "easeInOutQuad",
         opacity: 1,
-        duration: 2500,
+        duration: 2000,
+        begin: () => {
+          animObj.svgOpacity(first);
+        },
         complete: () => {
           document.querySelector("#screen").style.display = "none";
         },
       })
-
       .add(
         {
           targets: "#second",
@@ -239,23 +238,32 @@ function TriggerActions() {
                 "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
             },
           ],
-          translateY: [-700, 0],
+          translateY: [-600, 0],
           easing: "easeInQuad",
           opacity: 1,
-          duration: 2500,
+          duration: 2000,
           begin: () => {
             animObj.svgOpacity(".second-svg");
           },
         },
-        "-=2500"
+        "-=1950"
       )
-      // Show Cards
-      .add({
-        begin: () => {
-          animObj.navFadeIn(6);
-          animObj.moveTitleUp();
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(6);
+          },
         },
-      });
+        "-=1000"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleUp(1.2);
+          },
+        },
+        "-=200"
+      );
   };
 
   TriggerActions.prototype.actionThree = () => {
@@ -272,7 +280,13 @@ function TriggerActions() {
     document.querySelector(".third-svg").style.display = "block";
 
     let morphing = anime
-      .timeline({})
+      .timeline({
+        begin: () => {
+          animObj.svgOpacity(first);
+          animObj.svgOpacity(second);
+          animObj.svgOpacity(third);
+        },
+      })
       .add({
         targets: "#first",
         d: [
@@ -288,10 +302,7 @@ function TriggerActions() {
         translateY: [-600, 0],
         easing: "easeInOutSine",
         opacity: 1,
-        duration: 3000,
-        begin: () => {
-          animObj.svgOpacity(first);
-        },
+        duration: 2200,
       })
       .add(
         {
@@ -306,15 +317,13 @@ function TriggerActions() {
                 "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
             },
           ],
-          translateY: [-700, 0],
+          translateY: [-600, 0],
           easing: "easeInQuad",
           opacity: 1,
-          duration: 3000,
-          begin: () => {
-            animObj.svgOpacity(second);
-          },
+          duration: 2000,
+          begin: () => {},
         },
-        "-=3000"
+        "-=2000"
       )
       .add(
         {
@@ -329,29 +338,33 @@ function TriggerActions() {
                 "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
             },
           ],
-          translateY: [-700, 0],
+          translateY: [-600, 0],
           easing: "easeInQuad",
           opacity: 1,
-          begin: () => {
-            animObj.svgOpacity(third);
-          },
+          begin: () => {},
           complete: (anim) => {
             document.querySelector(".first-svg").style.display = "none";
             document.querySelector(".second-svg").style.display = "none";
           },
-          duration: 3000,
+          duration: 2000,
         },
-        "-=2800"
+        "-=1800"
       )
       .add(
         {
-          targets: ".title",
-          complete: () => {
-            animObj.moveTitleUp();
+          begin: () => {
             animObj.navFadeIn(8);
           },
         },
         "-=900"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleUp(1.1);
+          },
+        },
+        "+=100"
       );
   };
 
@@ -535,11 +548,7 @@ function TriggerActions() {
 
     let morph0 = anime
       .timeline({})
-      .add({
-        begin: () => {
-          animObj.navFadeOut(6, 1300, 2);
-        },
-      })
+
       // ------------- Reverse 2ns SVG (b)
       .add({
         targets: "#second",
@@ -557,6 +566,9 @@ function TriggerActions() {
         easing: "easeInOutQuad",
         opacity: 1,
         duration: 1800,
+        begin: () => {
+          animObj.navFadeOut(6, 2);
+        },
       })
       .add(
         {
@@ -577,12 +589,27 @@ function TriggerActions() {
           complete: (anim) => {
             document.querySelector(".first-svg").style.display = "none";
             document.querySelector(".second-svg").style.display = "none";
-            animObj.moveTitleDown();
           },
           opacity: 1,
-          duration: 2000,
+          duration: 1800,
         },
         "-=1600"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(6);
+          },
+        },
+        "-=1600"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleDown();
+          },
+        },
+        "-=400"
       );
   };
 
@@ -690,12 +717,12 @@ function TriggerActions() {
     document.querySelector(".third-svg").style.display = "block";
 
     let morph0 = anime
-      .timeline({})
-      .add({
+      .timeline({
         begin: () => {
-          animObj.navFadeOut(8, 1300, 2);
+          animObj.navFadeOut(8, 2);
         },
       })
+
       // ------------- Reverse 3rd SVG (c)
       .add({
         targets: "#third",
@@ -761,6 +788,22 @@ function TriggerActions() {
           duration: 2000,
         },
         "-=1500"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(2);
+          },
+        },
+        "-=1500"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.moveTitleDown();
+          },
+        },
+        "-=200"
       );
   };
 
