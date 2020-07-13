@@ -90,9 +90,11 @@ function Animations() {
   };
 
   Animations.prototype.moveTitleUp = () => {
+    anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
+
     anime({
       targets: "#title",
-      translateY: -200,
+      top: ["50%", "10%"],
       duration: 2000,
     });
   };
@@ -100,7 +102,7 @@ function Animations() {
   Animations.prototype.moveTitleDown = () => {
     anime({
       targets: "#title",
-      translateY: "-50%",
+      top: "50%",
       duration: 2200,
     });
   };
@@ -148,29 +150,26 @@ function TriggerActions() {
           animObj.hideHomescreenSubtext();
         },
       })
-      .add(
-        {
-          targets: "#first",
-          d: [
-            {
-              value:
-                "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
-            },
-            {
-              value:
-                "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
-            },
-          ],
-          translateY: [-600, 0],
-          easing: "easeInOutSine",
-          opacity: 1,
-          duration: 3000,
-          begin: () => {
-            animObj.svgOpacity(first);
+      .add({
+        targets: "#first",
+        d: [
+          {
+            value:
+              "M-233.536,0,2045.179-3.714s-284.143,391.857-614.714,390-410.429-221-742.857-209.857S243.75,460.572-9.75,455-233.536,0-233.536,0Z",
           },
+          {
+            value:
+              "M-233.536,0,2045.179-3.714s-187.571,2331.643-518.143,2329.786-516.286-1226.643-848.714-1215.5S311.536,2454.215,58.036,2448.644-233.536,0-233.536,0Z",
+          },
+        ],
+        translateY: [-500, 0],
+        easing: "easeInOutQuad",
+        opacity: 1,
+        duration: 2500,
+        begin: () => {
+          animObj.svgOpacity(first);
         },
-        "-=2000"
-      )
+      })
       .add(
         {
           begin: () => {
@@ -195,7 +194,11 @@ function TriggerActions() {
     document.querySelector(".second-svg").style.display = "block";
 
     let morphing = anime
-      .timeline({})
+      .timeline({
+        begin: () => {
+          animObj.svgOpacity(first);
+        },
+      })
       .add({
         targets: "#first",
         d: [
@@ -209,12 +212,9 @@ function TriggerActions() {
           },
         ],
         translateY: [-600, 0],
-        easing: "easeInOutSine",
+        easing: "easeInOutQuad",
         opacity: 1,
-        duration: 3000,
-        begin: () => {
-          animObj.svgOpacity(first);
-        },
+        duration: 2500,
         complete: () => {
           document.querySelector("#screen").style.display = "none";
         },
@@ -236,12 +236,12 @@ function TriggerActions() {
           translateY: [-700, 0],
           easing: "easeInQuad",
           opacity: 1,
-          duration: 3000,
+          duration: 2500,
           begin: () => {
             animObj.svgOpacity(".second-svg");
           },
         },
-        "-=3000"
+        "-=2500"
       )
       // Show Cards
       .add({
@@ -894,71 +894,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ACTION TRIGGERS
 
-  if ((page.className = "home")) {
-    anime.set(" #title", { translateY: "-50%", translateX: "-50%" });
+  // ACTION 1: +a curtain
+  navs.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const whichNav = e.target.parentElement.classList[1];
+      console.log(whichNav);
 
-    // ACTION 1: +a curtain
-    navs.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const whichNav = e.target.parentElement.classList[1];
-        console.log(whichNav);
+      switch (whichNav) {
+        case "act-1":
+          console.log("Action 1 Triggured");
+          actionsObj.actionOne();
+          break;
+        case "act-2":
+          console.log("Action 2 Triggured");
+          actionsObj.actionTwo();
+          break;
+        case "act-3":
+          console.log("Action 3 Triggured");
+          actionsObj.actionThree();
+          break;
+        case "act-4":
+          console.log("Action 4 Triggured");
+          actionsObj.actionFour();
+          break;
+        case "act-5":
+          console.log("Action 5 Triggured");
+          actionsObj.actionFive();
+          break;
+        case "act-6":
+          console.log("Action 6 Triggured");
+          actionsObj.actionSix();
+          break;
+        case "act-7":
+          console.log("Action 7 Triggured");
+          actionsObj.actionSeven();
+          break;
+        case "act-8":
+          console.log("Action 8 Triggured");
+          actionsObj.actionEight();
+          break;
+        case "act-9":
+          console.log("Action 9 Triggured");
+          actionsObj.actionNine();
+          break;
+        case "act-10":
+          console.log("Action 10 Triggured");
+          actionsObj.actionTen();
+          break;
+        case "act-11":
+          console.log("Action 11 Triggured");
+          actionsObj.actionEleven();
+          break;
+        case "act-12":
+          console.log("Action 12 Triggured");
+          actionsObj.actionTwelve();
+          break;
 
-        switch (whichNav) {
-          case "act-1":
-            console.log("Action 1 Triggured");
-            actionsObj.actionOne();
-            break;
-          case "act-2":
-            console.log("Action 2 Triggured");
-            actionsObj.actionTwo();
-            break;
-          case "act-3":
-            console.log("Action 3 Triggured");
-            actionsObj.actionThree();
-            break;
-          case "act-4":
-            console.log("Action 4 Triggured");
-            actionsObj.actionFour();
-            break;
-          case "act-5":
-            console.log("Action 5 Triggured");
-            actionsObj.actionFive();
-            break;
-          case "act-6":
-            console.log("Action 6 Triggured");
-            actionsObj.actionSix();
-            break;
-          case "act-7":
-            console.log("Action 7 Triggured");
-            actionsObj.actionSeven();
-            break;
-          case "act-8":
-            console.log("Action 8 Triggured");
-            actionsObj.actionEight();
-            break;
-          case "act-9":
-            console.log("Action 9 Triggured");
-            actionsObj.actionNine();
-            break;
-          case "act-10":
-            console.log("Action 10 Triggured");
-            actionsObj.actionTen();
-            break;
-          case "act-11":
-            console.log("Action 11 Triggured");
-            actionsObj.actionEleven();
-            break;
-          case "act-12":
-            console.log("Action 12 Triggured");
-            actionsObj.actionTwelve();
-            break;
-
-          default:
-            return;
-        }
-      });
+        default:
+          return;
+      }
     });
+  });
 
-    // --- End of DOMLoaded ---
-  }
+  // --- End of DOMLoaded ---
 });
