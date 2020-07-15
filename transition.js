@@ -167,7 +167,7 @@ function TriggerActions() {
         duration: 2000,
         begin: () => {
           animObj.svgOpacity(first);
-          animObj.hideHomescreenSubtext();
+          // animObj.hideHomescreenSubtext();
         },
       })
       .add(
@@ -221,9 +221,6 @@ function TriggerActions() {
         begin: () => {
           animObj.svgOpacity(first);
         },
-        complete: () => {
-          document.querySelector("#screen").style.display = "none";
-        },
       })
       .add(
         {
@@ -261,6 +258,9 @@ function TriggerActions() {
           begin: () => {
             animObj.moveTitleUp(1.2);
           },
+          // complete: () => {
+          //   document.querySelector("#screen").style.display = "none";
+          // },
         },
         "-=200"
       );
@@ -401,7 +401,7 @@ function TriggerActions() {
         },
         complete: (anim) => {
           document.querySelector(".first-svg").style.display = "none";
-          animObj.showHomescreenSubtext();
+          // animObj.showHomescreenSubtext();
         },
       })
       .add(
@@ -626,11 +626,7 @@ function TriggerActions() {
 
     let morph0 = anime
       .timeline({})
-      .add({
-        begin: () => {
-          animObj.navFadeOut(6, 500, 4);
-        },
-      })
+      .add({})
       // ------------- Reverse 2nd SVG (b)
       .add({
         targets: "#second",
@@ -647,11 +643,22 @@ function TriggerActions() {
         translateY: [0, -600],
         easing: "easeInOutQuad",
         opacity: 1,
+        begin: () => {
+          animObj.navFadeOut(6, 4);
+        },
         complete: (anim) => {
           document.querySelector(".second-svg").style.display = "none";
         },
-        duration: 1800,
-      });
+        duration: 1500,
+      })
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(4);
+          },
+        },
+        "-=1200"
+      );
   };
 
   TriggerActions.prototype.actionNine = () => {
@@ -843,7 +850,7 @@ function TriggerActions() {
         translateY: [0, -600],
         easing: "easeInOutQuad",
         opacity: 1,
-        duration: 1800,
+        duration: 1500,
       })
       // ------------- Reverse 2nd SVG (b)
       .add(
@@ -866,9 +873,17 @@ function TriggerActions() {
             document.querySelector(".second-svg").style.display = "none";
             document.querySelector(".third-svg").style.display = "none";
           },
-          duration: 1800,
+          duration: 1500,
         },
         "-=1600"
+      )
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(4);
+          },
+        },
+        "-=1200"
       );
   };
 
@@ -889,7 +904,7 @@ function TriggerActions() {
       .timeline({})
       .add({
         begin: () => {
-          animObj.navFadeOut(8, 600, 6);
+          animObj.navFadeOut(8, 6);
         },
       })
       // ------------- Reverse 3rd SVG (c)
@@ -911,8 +926,16 @@ function TriggerActions() {
         complete: (anim) => {
           document.querySelector(".third-svg").style.display = "none";
         },
-        duration: 1800,
-      });
+        duration: 1500,
+      })
+      .add(
+        {
+          begin: () => {
+            animObj.navFadeIn(6);
+          },
+        },
+        "-=1200"
+      );
   };
 }
 
