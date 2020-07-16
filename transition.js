@@ -9,12 +9,14 @@ function Animations() {
       .add({
         targets: ".first-card",
         translateX: [1000, 0],
+        opacity: 1,
         duration: 1400,
       })
       .add(
         {
           targets: ".second-card",
           translateX: [1000, 0],
+          opacity: 1,
           duration: 1400,
         },
         "-=1000"
@@ -53,7 +55,7 @@ function Animations() {
         translateY: -80,
       })
       .add({
-        targets: ".nav",
+        targets: ".nav ",
         opacity: [0, 1],
         translateY: 0,
         easing: "easeOutQuad",
@@ -66,11 +68,11 @@ function Animations() {
     anime
       .timeline({ loop: false })
       .add({
-        targets: ".nav",
+        targets: ".nav, .card",
         zIndex: z0,
       })
       .add({
-        targets: ".nav",
+        targets: ".card, .nav ",
         opacity: 0,
         translateY: -40,
         easing: "easeInOutQuad",
@@ -174,6 +176,7 @@ function TriggerActions() {
         {
           complete: () => {
             animObj.navFadeIn(4);
+            animObj.showCards(4);
           },
         },
         "-=2100"
