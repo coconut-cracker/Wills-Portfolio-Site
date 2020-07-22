@@ -269,7 +269,7 @@ a {
   margin: 50px;
   padding: 30px;
   font-family: var(--body-font);
-  /* opacity: 0; */
+  opacity: 0;
   /* display: none; */
 }
 
