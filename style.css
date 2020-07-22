@@ -50,18 +50,19 @@ html {
 
 nav {
   font-family: var(--body-font);
-  display: block;
+  display: inline-block;
   /* padding: 10px; */
   /* border: aqua 1px solid; */
   justify-items: center;
   align-items: center;
   font-size: 30px;
   z-index: 2;
-  scale: 1;
-  transition: all 0.3s ease-in;
+  transform: translate(0);
+  transition: all 0.5s ease-in;
 }
 
 .nav-text {
+  display: inline-block;
   color: #f4f4f4;
   padding: 10px;
   cursor: pointer;
@@ -70,7 +71,7 @@ nav {
   /* border: none; */
   border: transparent;
   border-radius: 19px;
-  transition: all 0.1s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 nav#nav-1 {
@@ -80,25 +81,60 @@ nav#nav-1 {
 }
 
 nav.act-0 .nav-text {
-  color: aqua;
+  transition-delay: 1.5s;
+  color: #ffd700;
 }
 
-nav.act-1:hover,
-nav.act-2:hover,
-nav.act-3:hover,
-nav.act-5:hover,
-nav.act-6:hover,
-nav.act-9:hover {
-  transform: translateY(8%) scale(1.05);
+nav.act-4,
+nav.act-7,
+nav.act-8,
+nav.act-10,
+nav.act-11,
+nav.act-12 {
+  transform: translateY(0);
+  transition: all 0.5s ease-in;
 }
 
-nav.act-4:hover,
-nav.act-7:hover,
-nav.act-8:hover,
-nav.act-10:hover,
-nav.act-11:hover,
-nav.act-12:hover {
-  transform: translateY(-8%) scale(0.95);
+nav.act-1:hover .nav-text {
+  color: #1e90ff;
+  opacity: 0.9;
+  transform: translateY(10%) scale(1.05);
+}
+
+nav.act-2:hover .nav-text,
+nav.act-5:hover .nav-text {
+  color: #ff0000;
+  opacity: 0.9;
+  transform: translateY(10%) scale(1.05);
+}
+
+nav.act-3:hover .nav-text,
+nav.act-6:hover .nav-text,
+nav.act-9:hover .nav-text {
+  color: #32cd32;
+  opacity: 0.9;
+  transform: translateY(10%) scale(1.05);
+}
+
+nav.act-4:hover .nav-text,
+nav.act-7:hover .nav-text,
+nav.act-10:hover .nav-text {
+  transform: translateY(-10%) scale(0.95);
+  opacity: 1;
+  color: #fff;
+}
+
+nav.act-8:hover .nav-text,
+nav.act-11:hover .nav-text {
+  color: #1e90ff;
+  transform: translateY(-10%) scale(0.95);
+  opacity: 0.9;
+}
+
+nav.act-12:hover .nav-text {
+  color: #ff0000;
+  transform: translateY(-10%) scale(0.95);
+  opacity: 0.9;
 }
 
 nav#nav-2 {
@@ -224,6 +260,20 @@ a {
   font-size: 20px;
 }
 
+.concealed-2::after {
+  position: relative;
+  display: block;
+  content: "";
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 20px;
+  border: 2px solid white;
+  border-radius: 25px;
+  opacity: 0.9;
+}
+
 #concealed-1-box,
 #concealed-2-box {
   /* border: 2px greenyellow solid; */
@@ -270,7 +320,7 @@ a {
   padding: 30px;
   font-family: var(--body-font);
   opacity: 0;
-  /* display: none; */
+  display: none;
 }
 
 .card-content {
