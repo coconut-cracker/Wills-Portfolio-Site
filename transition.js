@@ -7,15 +7,17 @@ function Animations() {
     if (!cardObj.shown) {
       console.log(cardObj.shown);
       console.log("shown = false");
-      card.forEach((e) => {
-        e.style.display = "block";
-      });
 
       anime
         .timeline({ loop: false })
         .add({
           targets: ".first-card, .second-card",
           zIndex: z,
+          complete: () => {
+            card.forEach((e) => {
+              e.style.display = "block";
+            });
+          },
         })
         .add({
           targets: ".first-card",
@@ -36,6 +38,10 @@ function Animations() {
       cardObj.shown = true;
       console.log(cardObj.shown);
     } else {
+      card.forEach((e) => {
+        e.style.display = "none";
+        console.log("Card set to display none");
+      });
       return;
     }
   };
@@ -49,6 +55,12 @@ function Animations() {
         translateY: -40,
         easing: "easeInOutQuad",
         duration: 300,
+        complete: () => {
+          card.forEach((e) => {
+            e.style.display = "none";
+            console.log("Card set to display none");
+          });
+        },
       });
 
       cardObj.shown = false;
