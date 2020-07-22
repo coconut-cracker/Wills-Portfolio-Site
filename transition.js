@@ -683,6 +683,7 @@ TriggerActions.prototype.actionEight = () => {
       {
         begin: () => {
           animObj.navFadeIn(4);
+          animObj.showCards(4);
         },
       },
       "-=1200"
@@ -745,6 +746,12 @@ TriggerActions.prototype.actionTen = () => {
   btn2.className = "nav act-1";
   btn3.className = "nav act-2";
   btn4.className = "nav act-3";
+
+  console.log(card);
+  card.forEach((e) => {
+    e.style.display = "none";
+  });
+  cardObj.shown = false;
 
   document.querySelector("#screen").style.display = "block";
   document.querySelector(".first-svg").style.display = "block";
@@ -909,9 +916,10 @@ TriggerActions.prototype.actionEleven = () => {
       {
         begin: () => {
           animObj.navFadeIn(4);
+          animObj.showCards(4);
         },
       },
-      "-=1200"
+      "-=1000"
     );
 };
 
