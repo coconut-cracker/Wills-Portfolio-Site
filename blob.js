@@ -38,8 +38,10 @@ const SCALE_COEFFICIENT = 0.8;
 const RANDOM_OFFSET = false;
 const XOFF = 0;
 const YOFF = 0;
-const BLOB_COLOR_1 = "#7C7C7C";
-const BLOB_COLOR_2 = "#303030";
+const BLOB_COLOR_1 = "#FF4500";
+// const BLOB_COLOR_1 = "#7C7C7C";
+const BLOB_COLOR_2 = "#FFD700";
+// const BLOB_COLOR_2 = "#303030";
 const MIN_NODE_COUNT = 10;
 
 const setScale = (width, height) => {
