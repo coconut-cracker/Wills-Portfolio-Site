@@ -38,10 +38,6 @@ function Animations() {
       cardObj.shown = true;
       console.log(cardObj.shown);
     } else {
-      card.forEach((e) => {
-        e.style.display = "none";
-        console.log("Card set to display none");
-      });
       return;
     }
   };
@@ -58,7 +54,7 @@ function Animations() {
         complete: () => {
           card.forEach((e) => {
             e.style.display = "none";
-            console.log("Card set to display none");
+            console.log("HideCards called: Card set to display none");
           });
         },
       });
@@ -76,7 +72,7 @@ function Animations() {
       .timeline({ loop: false })
       .add({
         targets: ".nav",
-        zIndex: z,
+        zIndex: z + 1,
         translateY: -80,
       })
       .add({
