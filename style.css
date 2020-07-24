@@ -41,6 +41,21 @@ html {
   height: 100%;
 }
 
+.btn {
+  padding: 10px 30px;
+  margin: auto;
+  font-size: 1.2rem;
+  font-family: "Quicksand", sans-serif;
+  border: none;
+  border-radius: 25px;
+  background-color: transparent;
+  transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+  background-color: rgb(49, 151, 253);
+}
+
 .click-box {
   display: none;
   position: absolute;
