@@ -17,6 +17,9 @@
   --main-font-color-dark: #252525;
   --secondary-font-color: #c59d5f;
   --body-font-color: #515151;
+  --first-svg-color: #1e90ff;
+  --second-svg-color: #ff0000;
+  --third-svg-color: #32cd32;
 }
 
 body {
@@ -111,14 +114,14 @@ nav.act-12 {
 }
 
 nav.act-1:hover .nav-text {
-  color: #1e90ff;
+  color: var(--first-svg-color);
   opacity: 0.9;
   transform: translateY(10%) scale(1.05);
 }
 
 nav.act-2:hover .nav-text,
 nav.act-5:hover .nav-text {
-  color: #ff0000;
+  color: var(--second-svg-color);
   opacity: 0.9;
   transform: translateY(10%) scale(1.05);
 }
@@ -126,7 +129,7 @@ nav.act-5:hover .nav-text {
 nav.act-3:hover .nav-text,
 nav.act-6:hover .nav-text,
 nav.act-9:hover .nav-text {
-  color: #32cd32;
+  color: var(--third-svg-color);
   opacity: 0.9;
   transform: translateY(10%) scale(1.05);
 }
@@ -141,13 +144,13 @@ nav.act-10:hover .nav-text {
 
 nav.act-8:hover .nav-text,
 nav.act-11:hover .nav-text {
-  color: #1e90ff;
+  color: var(--first-svg-color);
   transform: translateY(-10%) scale(0.95);
   opacity: 0.9;
 }
 
 nav.act-12:hover .nav-text {
-  color: #ff0000;
+  color: var(--second-svg-color);
   transform: translateY(-10%) scale(0.95);
   opacity: 0.9;
 }
