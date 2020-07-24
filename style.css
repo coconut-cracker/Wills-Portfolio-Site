@@ -246,7 +246,7 @@ a {
   transform: translate(-50%, -50%);
   width: auto;
   height: auto;
-  font-size: 20px;
+  font-size: 18px;
   /* border: orange 2px solid; */
 }
 .concealed-2,
@@ -258,6 +258,20 @@ a {
   left: 50%;
   transform: translateX(-50%);
   font-size: 20px;
+}
+
+.concealed-1::before {
+  position: absolute;
+  display: block;
+  content: "";
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 20px;
+  border: 2px solid white;
+  border-radius: 25px;
+  opacity: 0.9;
 }
 
 .concealed-2::after {
