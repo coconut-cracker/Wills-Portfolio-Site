@@ -69,11 +69,20 @@ function Animations() {
               },
             })
             .add({
-              targets: ".tech",
+              targets: ".tech-card-1",
               translateX: [1000, 0],
               opacity: 1,
               duration: 1400,
-            });
+            })
+            .add(
+              {
+                targets: ".tech-card-2",
+                translateX: [1000, 0],
+                opacity: 1,
+                duration: 1400,
+              },
+              "-=1000"
+            );
           // .add(
           //   {
           //     targets: ".tech",
