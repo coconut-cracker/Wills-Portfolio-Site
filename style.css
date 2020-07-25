@@ -344,9 +344,19 @@ a {
   transform: translateY(-700px);
   z-index: 4;
 }
-/* .tech-card-1,
+
+.tech-card-1,
 .tech-card-2 {
-} */
+  position: relative;
+  display: inline-block;
+  /* flex-direction: row; */
+  /* margin: auto; */
+  width: 80%;
+  margin: 0 50px;
+  border-radius: 3px;
+  border: pink 1px solid;
+}
+
 .card {
   position: relative;
 
@@ -364,11 +374,11 @@ a {
 
 /* FIX THIS -- Put in a card container for less repeated code. How will that affect z-index and overlapping? */
 .tech {
-  position: relative;
+  position: absolute;
   transform: translateX(500%);
 
   height: 60%;
-  width: 400px;
+  width: 70%;
   border-radius: 3px;
   /* border: pink 1px solid; */
   margin: 50px;

@@ -60,16 +60,17 @@ function Animations() {
             .add({
               targets: ".tech",
               zIndex: z,
+              translateX: 1000,
               translateY: 0,
               complete: () => {
                 tech.forEach((e) => {
-                  e.style.display = "block";
+                  e.style.display = "flex";
                 });
                 console.log(tech);
               },
             })
             .add({
-              targets: ".tech-card-1",
+              targets: ".tech, .tech-card-1",
               translateX: [1000, 0],
               opacity: 1,
               duration: 1400,
