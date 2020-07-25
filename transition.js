@@ -20,6 +20,7 @@ function Animations() {
             .add({
               targets: ".first-card, .second-card",
               zIndex: z,
+              translateY: 0,
               complete: () => {
                 cards.forEach((e) => {
                   e.style.display = "block";
@@ -28,6 +29,7 @@ function Animations() {
             })
             .add({
               targets: ".first-card",
+
               translateX: [1000, 0],
               opacity: 1,
               duration: 1400,
@@ -58,6 +60,7 @@ function Animations() {
             .add({
               targets: ".tech",
               zIndex: z,
+              translateY: 0,
               complete: () => {
                 tech.forEach((e) => {
                   e.style.display = "block";
@@ -67,8 +70,7 @@ function Animations() {
             })
             .add({
               targets: ".tech",
-
-              // translateX: -500,
+              translateX: [1000, 0],
               opacity: 1,
               duration: 1400,
             });
@@ -93,27 +95,58 @@ function Animations() {
     }
   };
 
-  Animations.prototype.hideCards = () => {
-    if (cardObj.shown) {
-      console.log(cardObj.shown);
-      anime.timeline({ loop: false }).add({
-        targets: ".card ",
-        opacity: 0,
-        translateY: -40,
-        easing: "easeInOutQuad",
-        duration: 300,
-        complete: () => {
-          cards.forEach((e) => {
-            e.style.display = "none";
-            console.log("HideCards called: Card set to display none");
+  Animations.prototype.hideCards = (item) => {
+    switch (item) {
+      case "projectCards":
+        if (cardObj.shown) {
+          console.log(cardObj.shown);
+          anime.timeline({ loop: false }).add({
+            targets: ".card ",
+            opacity: 0,
+            translateY: -40,
+            easing: "easeInOutQuad",
+            duration: 300,
+            complete: () => {
+              cards.forEach((e) => {
+                e.style.display = "none";
+                console.log(
+                  "HideCards called: Project Card set to display none"
+                );
+              });
+            },
           });
-        },
-      });
 
-      cardObj.shown = false;
-      console.log(cardObj.shown);
-    } else {
-      return;
+          cardObj.shown = false;
+          console.log(cardObj.shown);
+        } else {
+          return;
+        }
+        break;
+      case "techCards":
+        if (techCardObj.shown) {
+          console.log(techCardObj.shown);
+          anime.timeline({ loop: false }).add({
+            targets: ".tech ",
+            opacity: 0,
+            translateY: -40,
+            easing: "easeInOutQuad",
+            duration: 300,
+            complete: () => {
+              tech.forEach((e) => {
+                e.style.display = "none";
+                console.log("HideCards called:  Tech Card set to display none");
+              });
+            },
+          });
+
+          techCardObj.shown = false;
+          console.log(cardObj.shown);
+        } else {
+          return;
+        }
+        break;
+      default:
+        return;
     }
   };
 
@@ -481,7 +514,7 @@ TriggerActions.prototype.actionFour = () => {
       opacity: 1,
       duration: 1800,
       begin: () => {
-        animObj.hideCards(2);
+        animObj.hideCards("projectCards");
         animObj.navFadeOut(4, 2);
       },
       complete: (anim) => {
@@ -660,6 +693,7 @@ TriggerActions.prototype.actionSeven = () => {
       duration: 1800,
       begin: () => {
         animObj.navFadeOut(6, 2);
+        animObj.hideCards("techCards");
       },
     })
     .add(
@@ -737,6 +771,7 @@ TriggerActions.prototype.actionEight = () => {
       opacity: 1,
       begin: () => {
         animObj.navFadeOut(6, 4);
+        animObj.hideCards("techCards");
       },
       complete: (anim) => {
         document.querySelector(".second-svg").style.display = "none";
@@ -811,11 +846,16 @@ TriggerActions.prototype.actionTen = () => {
   btn3.className = "nav act-2";
   btn4.className = "nav act-3";
 
-  console.log(card);
+  console.log(cards);
   cards.forEach((e) => {
     e.style.display = "none";
   });
   cardObj.shown = false;
+
+  tech.forEach((e) => {
+    e.style.display = "none";
+  });
+  techCardObj.shown = false;
 
   document.querySelector("#screen").style.display = "block";
   document.querySelector(".first-svg").style.display = "block";
@@ -921,6 +961,11 @@ TriggerActions.prototype.actionEleven = () => {
   btn2.className = "nav act-0";
   btn3.className = "nav act-5";
   btn4.className = "nav act-6";
+
+  tech.forEach((e) => {
+    e.style.display = "none";
+  });
+  techCardObj.shown = false;
 
   document.querySelector(".first-svg").style.display = "block";
   document.querySelector(".second-svg").style.display = "block";
@@ -1032,6 +1077,7 @@ TriggerActions.prototype.actionTwelve = () => {
       {
         begin: () => {
           animObj.navFadeIn(6);
+          animObj.showCards("techCards", 6);
         },
       },
       "-=1200"
