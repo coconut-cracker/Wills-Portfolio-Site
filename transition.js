@@ -1,5 +1,6 @@
-const card = Array.from(document.querySelectorAll(".card"));
-const cardObj = { cards: card, shown: false };
+const cards = Array.from(document.querySelectorAll(".card"));
+const cardObj = { cards, shown: false };
+
 // console.log(cardObj.shown);
 
 function Animations() {
@@ -14,7 +15,7 @@ function Animations() {
           targets: ".first-card, .second-card",
           zIndex: z,
           complete: () => {
-            card.forEach((e) => {
+            cards.forEach((e) => {
               e.style.display = "block";
             });
           },
@@ -52,7 +53,7 @@ function Animations() {
         easing: "easeInOutQuad",
         duration: 300,
         complete: () => {
-          card.forEach((e) => {
+          cards.forEach((e) => {
             e.style.display = "none";
             console.log("HideCards called: Card set to display none");
           });
@@ -120,7 +121,9 @@ function Animations() {
       targets: "#title",
       top: ["50%", "10%"],
       scale: 0.8,
-      duration: 2000 * r,
+      opacity: [1, 0],
+      easing: "easeOutExpo",
+      duration: 900 * r,
     });
   };
 
@@ -129,6 +132,7 @@ function Animations() {
       targets: "#title",
       top: "50%",
       scale: 1,
+      opacity: [0, 1],
       duration: 2200,
     });
   };
@@ -161,7 +165,7 @@ function TriggerActions() {}
 TriggerActions.prototype.actionOne = () => {
   console.log("Home to What page (1 -> 2)");
 
-  // card.forEach((e) => {
+  // cards.forEach((e) => {
   //   e.style.display = "block";
   // });
 
@@ -490,6 +494,7 @@ TriggerActions.prototype.actionFive = () => {
       {
         begin: () => {
           animObj.navFadeIn(6);
+          animObj.showCards(6);
         },
       },
       "-=800"
@@ -572,8 +577,8 @@ TriggerActions.prototype.actionSeven = () => {
   btn3.className = "nav act-2";
   btn4.className = "nav act-3";
 
-  console.log(card);
-  card.forEach((e) => {
+  console.log(cards);
+  cards.forEach((e) => {
     e.style.display = "none";
   });
   cardObj.shown = false;
@@ -756,7 +761,7 @@ TriggerActions.prototype.actionTen = () => {
   btn4.className = "nav act-3";
 
   console.log(card);
-  card.forEach((e) => {
+  cards.forEach((e) => {
     e.style.display = "none";
   });
   cardObj.shown = false;
