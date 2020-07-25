@@ -1,45 +1,95 @@
 const cards = Array.from(document.querySelectorAll(".card"));
 const cardObj = { cards, shown: false };
 
-// console.log(cardObj.shown);
+const tech = Array.from(document.querySelectorAll(".tech"));
+const techCardObj = { tech, shown: false };
+
+// const tech =
+console.log(techCardObj);
 
 function Animations() {
-  Animations.prototype.showCards = (z) => {
-    if (!cardObj.shown) {
-      console.log(cardObj.shown);
-      console.log("shown = false");
+  Animations.prototype.showCards = (item, z) => {
+    switch (item) {
+      case "projectCards":
+        if (!cardObj.shown) {
+          console.log(cardObj.shown);
+          console.log("shown = false");
 
-      anime
-        .timeline({ loop: false })
-        .add({
-          targets: ".first-card, .second-card",
-          zIndex: z,
-          complete: () => {
-            cards.forEach((e) => {
-              e.style.display = "block";
+          anime
+            .timeline({ loop: false })
+            .add({
+              targets: ".first-card, .second-card",
+              zIndex: z,
+              complete: () => {
+                cards.forEach((e) => {
+                  e.style.display = "block";
+                });
+              },
+            })
+            .add({
+              targets: ".first-card",
+              translateX: [1000, 0],
+              opacity: 1,
+              duration: 1400,
+            })
+            .add(
+              {
+                targets: ".second-card",
+                translateX: [1000, 0],
+                opacity: 1,
+                duration: 1400,
+              },
+              "-=1000"
+            );
+
+          cardObj.shown = true;
+          console.log(cardObj.shown);
+        } else {
+          return;
+        }
+        break;
+      case "techCards":
+        if (!techCardObj.shown) {
+          console.log(techCardObj.shown);
+          console.log("shown = false");
+
+          anime
+            .timeline({ loop: false })
+            .add({
+              targets: ".tech",
+              zIndex: z,
+              complete: () => {
+                tech.forEach((e) => {
+                  e.style.display = "block";
+                });
+                console.log(tech);
+              },
+            })
+            .add({
+              targets: ".tech",
+
+              // translateX: -500,
+              opacity: 1,
+              duration: 1400,
             });
-          },
-        })
-        .add({
-          targets: ".first-card",
-          translateX: [1000, 0],
-          opacity: 1,
-          duration: 1400,
-        })
-        .add(
-          {
-            targets: ".second-card",
-            translateX: [1000, 0],
-            opacity: 1,
-            duration: 1400,
-          },
-          "-=1000"
-        );
+          // .add(
+          //   {
+          //     targets: ".tech",
+          //     translateX: [1000, 0],
+          //     opacity: 1,
+          //     duration: 1400,
+          //   },
+          //   "-=1000"
+          // );
 
-      cardObj.shown = true;
-      console.log(cardObj.shown);
-    } else {
-      return;
+          techCardObj.shown = true;
+          console.log(techCardObj.shown);
+        } else {
+          return;
+        }
+
+      default:
+        return;
     }
   };
 
@@ -206,7 +256,7 @@ TriggerActions.prototype.actionOne = () => {
       {
         complete: () => {
           animObj.navFadeIn(4);
-          animObj.showCards(4);
+          animObj.showCards("projectCards", 4);
         },
       },
       "-=2100"
@@ -282,6 +332,7 @@ TriggerActions.prototype.actionTwo = () => {
       {
         begin: () => {
           animObj.navFadeIn(6);
+          animObj.showCards("techCards", 6);
         },
       },
       "-=1000"
@@ -494,7 +545,7 @@ TriggerActions.prototype.actionFive = () => {
       {
         begin: () => {
           animObj.navFadeIn(6);
-          animObj.showCards(6);
+          animObj.showCards("techCards", 6);
         },
       },
       "-=800"
@@ -696,7 +747,7 @@ TriggerActions.prototype.actionEight = () => {
       {
         begin: () => {
           animObj.navFadeIn(4);
-          animObj.showCards(4);
+          animObj.showCards("projectCards", 4);
         },
       },
       "-=1200"
@@ -929,7 +980,7 @@ TriggerActions.prototype.actionEleven = () => {
       {
         begin: () => {
           animObj.navFadeIn(4);
-          animObj.showCards(4);
+          animObj.showCards("projectCards", 4);
         },
       },
       "-=1000"

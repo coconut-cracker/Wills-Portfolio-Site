@@ -223,6 +223,12 @@ a {
   height: 100vh;
   width: 100vw;
   margin: auto;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-self: center;
+  justify-items: center;
+  text-align: center;
   /* border: aquamarine 2px solid; */
 }
 
@@ -347,7 +353,26 @@ a {
   height: 60%;
   width: 400px;
   border-radius: 3px;
-  /* border: pink 1px solid; */
+  border: pink 1px solid;
+  margin: 50px;
+  padding: 30px;
+  font-family: var(--body-font);
+  opacity: 0;
+  display: none;
+}
+
+/* FIX THIS -- Put in a card container for less repeated code. How will that affect z-index and overlapping? */
+.tech {
+  position: absolute;
+  align-self: center;
+  justify-self: center;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(110%, -50%); */
+  height: 60%;
+  width: 400px;
+  border-radius: 3px;
+  border: pink 1px solid;
   margin: 50px;
   padding: 30px;
   font-family: var(--body-font);
